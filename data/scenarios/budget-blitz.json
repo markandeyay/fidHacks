@@ -1,0 +1,60 @@
+{
+  "freshman": [
+    {
+      "difficulty": "freshman",
+      "monthlyIncome": 1200,
+      "fixedCosts": { "rent": 400 },
+      "chaosCardPool": [
+        { "id": "c1", "title": "Laptop screen cracked", "description": "Your laptop screen cracked. Repair costs $200.", "hit": -200, "forcedCategory": "fun", "contextTag": "general" },
+        { "id": "c2", "title": "Parking ticket", "description": "You got a parking ticket on campus.", "hit": -75, "forcedCategory": "transport", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    }
+  ],
+  "sophomore": [
+    {
+      "difficulty": "sophomore",
+      "monthlyIncome": 1600,
+      "fixedCosts": { "rent": 550, "transport": 100 },
+      "chaosCardPool": [
+        { "id": "c1", "title": "Medical copay", "description": "Unexpected doctor visit. Copay is $150.", "hit": -150, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "c2", "title": "Roommate ghosted", "description": "Your roommate left without paying their half of utilities.", "hit": -120, "forcedCategory": "rent", "contextTag": "general" },
+        { "id": "c3", "title": "Textbook emergency", "description": "Professor changed required textbook mid-semester.", "hit": -85, "forcedCategory": "fun", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    }
+  ],
+  "junior": [
+    {
+      "difficulty": "junior",
+      "monthlyIncome": 2200,
+      "fixedCosts": { "rent": 700, "transport": 120, "health": 80 },
+      "chaosCardPool": [
+        { "id": "c1", "title": "Safety rideshare premium", "description": "Late night study session required a premium rideshare.", "hit": -45, "forcedCategory": "transport", "contextTag": "gendered" },
+        { "id": "c2", "title": "Prescription refill", "description": "Monthly prescription cost increased.", "hit": -60, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "c3", "title": "Personal care products", "description": "Unexpected personal care costs.", "hit": -35, "forcedCategory": "personal_care", "contextTag": "gendered" },
+        { "id": "c4", "title": "Phone repair", "description": "Phone screen shattered.", "hit": -150, "forcedCategory": "fun", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    }
+  ],
+  "senior": [
+    {
+      "difficulty": "senior",
+      "monthlyIncome": 3500,
+      "fixedCosts": { "rent": 900, "transport": 200, "health": 150, "personal_care": 50 },
+      "chaosCardPool": [
+        { "id": "c1", "title": "Car repair", "description": "Your car needs a new alternator.", "hit": -400, "forcedCategory": "transport", "contextTag": "emergency" },
+        { "id": "c2", "title": "Emergency vet bill", "description": "Your pet needs emergency care.", "hit": -350, "forcedCategory": "fun", "contextTag": "emergency" },
+        { "id": "c3", "title": "Insurance premium hike", "description": "Health insurance premiums increased unexpectedly.", "hit": -80, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "c4", "title": "Therapy session", "description": "Additional therapy session this month.", "hit": -120, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "c5", "title": "Identity theft protection", "description": "Had to sign up for credit monitoring.", "hit": -25, "forcedCategory": "personal_care", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    }
+  ]
+}

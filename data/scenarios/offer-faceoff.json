@@ -1,0 +1,121 @@
+{
+  "freshman": [
+    {
+      "difficulty": "freshman",
+      "offerA": {
+        "id": "ofa-f1a",
+        "company": "Campus Café",
+        "role": "Shift Supervisor",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$15/hour, 20 hrs/week", "rawValue": "$15/hour", "formula": "15 * 20 * 52", "trueDollarValue": 15600 },
+          { "id": "b2", "type": "pto_days", "label": "5 unpaid days off", "rawValue": "5 days", "formula": "0 (unpaid)", "trueDollarValue": 0 },
+          { "id": "b3", "type": "food", "label": "Free meals during shifts", "rawValue": "$8/meal", "formula": "8 * 5 * 52", "trueDollarValue": 2080 }
+        ],
+        "trueTotalCompYear1": 17680
+      },
+      "offerB": {
+        "id": "ofb-f1b",
+        "company": "City Diner",
+        "role": "Server",
+        "benefits": [
+          { "id": "b4", "type": "base_salary", "label": "$7.25/hour + tips, 25 hrs/week", "rawValue": "$7.25/hour", "formula": "7.25 * 25 * 52 + estimated tips 150/week * 52", "trueDollarValue": 17225 },
+          { "id": "b5", "type": "pto_days", "label": "No paid time off", "rawValue": "0 days", "formula": "0", "trueDollarValue": 0 }
+        ],
+        "trueTotalCompYear1": 17225
+      },
+      "optimalChoice": "A",
+      "optimalReasoning": "Campus Café offers guaranteed income plus free meals. City Diner's tips are variable and unreliable."
+    }
+  ],
+  "sophomore": [
+    {
+      "difficulty": "sophomore",
+      "offerA": {
+        "id": "ofa-s1a",
+        "company": "TechTutors Inc",
+        "role": "Coding Tutor",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$25/hour, 15 hrs/week", "rawValue": "$25/hour", "formula": "25 * 15 * 52", "trueDollarValue": 19500 },
+          { "id": "b2", "type": "remote_stipend", "label": "$100/month remote work stipend", "rawValue": "$100/mo", "formula": "100 * 12", "trueDollarValue": 1200 },
+          { "id": "b3", "type": "tuition_reimbursement", "label": "$500/semester tuition help", "rawValue": "$500/sem", "formula": "500 * 2", "trueDollarValue": 1000 }
+        ],
+        "trueTotalCompYear1": 21700
+      },
+      "offerB": {
+        "id": "ofb-s1b",
+        "company": "CodeCamp Partners",
+        "role": "Teaching Assistant",
+        "benefits": [
+          { "id": "b4", "type": "base_salary", "label": "$28/hour, 12 hrs/week", "rawValue": "$28/hour", "formula": "28 * 12 * 52", "trueDollarValue": 17472 },
+          { "id": "b5", "type": "commuter_benefit", "label": "$50/month transit pass", "rawValue": "$50/mo", "formula": "50 * 12", "trueDollarValue": 600 },
+          { "id": "b6", "type": "wellness_stipend", "label": "$200/year wellness budget", "rawValue": "$200/yr", "formula": "200", "trueDollarValue": 200 }
+        ],
+        "trueTotalCompYear1": 18272
+      },
+      "optimalChoice": "A",
+      "optimalReasoning": "TechTutors has higher total comp due to tuition reimbursement and remote stipend."
+    }
+  ],
+  "junior": [
+    {
+      "difficulty": "junior",
+      "offerA": {
+        "id": "ofa-j1a",
+        "company": "DataDriven Co",
+        "role": "Data Analyst Intern",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$30/hour, 40 hrs/week, 12 weeks", "rawValue": "$30/hour", "formula": "30 * 40 * 12", "trueDollarValue": 14400 },
+          { "id": "b2", "type": "housing_stipend", "label": "$2,500 housing stipend", "rawValue": "$2,500", "formula": "2500", "trueDollarValue": 2500 },
+          { "id": "b3", "type": "401k_match", "label": "No 401k match for interns", "rawValue": "0%", "formula": "0", "trueDollarValue": 0 }
+        ],
+        "trueTotalCompYear1": 16900
+      },
+      "offerB": {
+        "id": "ofb-j1b",
+        "company": "Analytics Pro",
+        "role": "Junior Data Scientist",
+        "benefits": [
+          { "id": "b4", "type": "base_salary", "label": "$55,000/year", "rawValue": "$55,000", "formula": "55000", "trueDollarValue": 55000 },
+          { "id": "b5", "type": "401k_match", "label": "50% match up to 6%", "rawValue": "50% up to 6%", "formula": "55000 * 0.06 * 0.5", "trueDollarValue": 1650 },
+          { "id": "b6", "type": "health_insurance", "label": "80% premium covered", "rawValue": "80%", "formula": "400 * 12 * 0.8", "trueDollarValue": 3840 }
+        ],
+        "trueTotalCompYear1": 60490
+      },
+      "optimalChoice": "B",
+      "optimalReasoning": "Analytics Pro is a full-time role with benefits. The 401k match and health insurance add significant value."
+    }
+  ],
+  "senior": [
+    {
+      "difficulty": "senior",
+      "offerA": {
+        "id": "ofa-se1a",
+        "company": "CloudNine Tech",
+        "role": "Software Engineer I",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$110,000 base salary", "rawValue": "$110,000", "formula": "110000", "trueDollarValue": 110000 },
+          { "id": "b2", "type": "signing_bonus", "label": "$10,000 signing bonus", "rawValue": "$10,000", "formula": "10000", "trueDollarValue": 10000 },
+          { "id": "b3", "type": "rsu_grant", "label": "$30,000 RSUs vesting over 4 years", "rawValue": "$30,000", "formula": "30000 / 4", "trueDollarValue": 7500 },
+          { "id": "b4", "type": "401k_match", "label": "100% match up to 4%", "rawValue": "100% up to 4%", "formula": "110000 * 0.04", "trueDollarValue": 4400 },
+          { "id": "b5", "type": "health_insurance", "label": "100% premium covered", "rawValue": "100%", "formula": "500 * 12", "trueDollarValue": 6000 }
+        ],
+        "vesting": { "totalShares": 100, "pricePerShare": 300, "cliffMonths": 12, "totalMonths": 48 },
+        "trueTotalCompYear1": 137900
+      },
+      "offerB": {
+        "id": "ofb-se1b",
+        "company": "StartupRocket",
+        "role": "Founding Engineer",
+        "benefits": [
+          { "id": "b6", "type": "base_salary", "label": "$95,000 base salary", "rawValue": "$95,000", "formula": "95000", "trueDollarValue": 95000 },
+          { "id": "b7", "type": "options_grant", "label": "0.5% equity (estimated $50k/yr at current valuation)", "rawValue": "0.5%", "formula": "50000 (illiquid, risky)", "trueDollarValue": 25000 },
+          { "id": "b8", "type": "remote_stipend", "label": "$300/month remote stipend", "rawValue": "$300/mo", "formula": "300 * 12", "trueDollarValue": 3600 },
+          { "id": "b9", "type": "pto_days", "label": "Unlimited PTO (estimated 15 days used)", "rawValue": "Unlimited", "formula": "95000 / 260 * 15", "trueDollarValue": 5481 }
+        ],
+        "trueTotalCompYear1": 129081
+      },
+      "optimalChoice": "A",
+      "optimalReasoning": "CloudNine offers higher guaranteed compensation with better benefits. StartupRocket's equity is risky and illiquid."
+    }
+  ]
+}

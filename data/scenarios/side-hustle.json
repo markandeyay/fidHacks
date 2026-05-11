@@ -1,0 +1,90 @@
+{
+  "freshman": [
+    {
+      "difficulty": "freshman",
+      "hustleType": "Etsy print shop",
+      "semester": "Fall 2024",
+      "lineItems": [
+        { "id": "l1", "description": "Etsy gross revenue Sept-Dec", "amount": 1200, "correctBucket": "taxable_income", "ruling": "All revenue from sales is taxable income." },
+        { "id": "l2", "description": "Printer ink and paper", "amount": 150, "correctBucket": "deductible_expense", "ruling": "Supplies used to create products are deductible business expenses." },
+        { "id": "l3", "description": "Personal Netflix subscription", "amount": 60, "correctBucket": "non_deductible", "ruling": "Personal entertainment expenses are not deductible." },
+        { "id": "l4", "description": "Etsy platform fees", "amount": 85, "correctBucket": "deductible_expense", "ruling": "Platform fees are ordinary and necessary business expenses." },
+        { "id": "l5", "description": "Shipping supplies", "amount": 45, "correctBucket": "deductible_expense", "ruling": "Shipping materials used for business are deductible." },
+        { "id": "l6", "description": "Coffee with friends", "amount": 25, "correctBucket": "non_deductible", "ruling": "Personal social expenses are not deductible." }
+      ],
+      "hoursWorked": 80,
+      "campusJobHourlyEquivalent": 12,
+      "showsQuarterlyEstimates": false,
+      "llcDecisionApplicable": false
+    }
+  ],
+  "sophomore": [
+    {
+      "difficulty": "sophomore",
+      "hustleType": "Tutoring",
+      "semester": "Spring 2025",
+      "lineItems": [
+        { "id": "l1", "description": "Tutoring payments received (Venmo)", "amount": 2400, "correctBucket": "taxable_income", "ruling": "All payments for services rendered are taxable income, even via Venmo." },
+        { "id": "l2", "description": "Whiteboard and markers", "amount": 35, "correctBucket": "deductible_expense", "ruling": "Teaching supplies are deductible business expenses." },
+        { "id": "l3", "description": "Gas for driving to sessions", "amount": 120, "correctBucket": "deductible_expense", "ruling": "Business mileage and transportation are deductible." },
+        { "id": "l4", "description": "New laptop (used 80% for tutoring)", "amount": 800, "correctBucket": "deductible_expense", "ruling": "Portion used for business is deductible. Full amount simplified for this exercise." },
+        { "id": "l5", "description": "Meals while tutoring", "amount": 90, "correctBucket": "non_deductible", "ruling": "Meals during work are generally not deductible for self-employed tutors." },
+        { "id": "l6", "description": "Flyer printing for advertising", "amount": 40, "correctBucket": "deductible_expense", "ruling": "Marketing and advertising costs are deductible." },
+        { "id": "l7", "description": "Personal cell phone bill", "amount": 65, "correctBucket": "non_deductible", "ruling": "Personal phone bills are not deductible unless exclusively for business." },
+        { "id": "l8", "description": "Coffee for study sessions", "amount": 30, "correctBucket": "non_deductible", "ruling": "Client entertainment is limited; coffee for students is not deductible." }
+      ],
+      "hoursWorked": 120,
+      "campusJobHourlyEquivalent": 14,
+      "showsQuarterlyEstimates": false,
+      "llcDecisionApplicable": false
+    }
+  ],
+  "junior": [
+    {
+      "difficulty": "junior",
+      "hustleType": "DoorDash",
+      "semester": "Summer 2025",
+      "lineItems": [
+        { "id": "l1", "description": "DoorDash gross earnings", "amount": 4800, "correctBucket": "taxable_income", "ruling": "All gig economy earnings are self-employment income." },
+        { "id": "l2", "description": "Car insurance (business portion)", "amount": 300, "correctBucket": "deductible_expense", "ruling": "Portion of insurance used for business is deductible." },
+        { "id": "l3", "description": "Phone mount and charger for car", "amount": 25, "correctBucket": "deductible_expense", "ruling": "Equipment used exclusively for work is deductible." },
+        { "id": "l4", "description": "Car maintenance and repairs", "amount": 450, "correctBucket": "deductible_expense", "ruling": "Business vehicle expenses are deductible." },
+        { "id": "l5", "description": "Personal car payment", "amount": 320, "correctBucket": "non_deductible", "ruling": "Personal vehicle costs are not deductible; only business portion is." },
+        { "id": "l6", "description": "DoorDash insulated bag", "amount": 15, "correctBucket": "deductible_expense", "ruling": "Required equipment for the platform is deductible." },
+        { "id": "l7", "description": "Gas receipts", "amount": 380, "correctBucket": "deductible_expense", "ruling": "Fuel for business driving is deductible." },
+        { "id": "l8", "description": "Music streaming subscription", "amount": 10, "correctBucket": "non_deductible", "ruling": "Personal entertainment subscriptions are not deductible." },
+        { "id": "l9", "description": "Tolls and parking", "amount": 65, "correctBucket": "deductible_expense", "ruling": "Business tolls and parking fees are deductible." },
+        { "id": "l10", "description": "New tires", "amount": 280, "correctBucket": "deductible_expense", "ruling": "Vehicle maintenance for business use is deductible." }
+      ],
+      "hoursWorked": 200,
+      "campusJobHourlyEquivalent": 15,
+      "showsQuarterlyEstimates": true,
+      "llcDecisionApplicable": false
+    }
+  ],
+  "senior": [
+    {
+      "difficulty": "senior",
+      "hustleType": "Web Development Freelance",
+      "semester": "Full Year 2025",
+      "lineItems": [
+        { "id": "l1", "description": "Client payments received", "amount": 15000, "correctBucket": "taxable_income", "ruling": "All client payments for services are taxable self-employment income." },
+        { "id": "l2", "description": "Adobe Creative Cloud subscription", "amount": 600, "correctBucket": "deductible_expense", "ruling": "Software used for business is deductible." },
+        { "id": "l3", "description": "Co-working space membership", "amount": 1200, "correctBucket": "deductible_expense", "ruling": "Office and workspace expenses are deductible." },
+        { "id": "l4", "description": "New monitor and keyboard", "amount": 350, "correctBucket": "deductible_expense", "ruling": "Equipment used for business is deductible." },
+        { "id": "l5", "description": "Personal gym membership", "amount": 480, "correctBucket": "non_deductible", "ruling": "Personal health expenses are not business deductions." },
+        { "id": "l6", "description": "Business meals with clients", "amount": 220, "correctBucket": "deductible_expense", "ruling": "50% of business meals are deductible. Full amount shown for simplicity." },
+        { "id": "l7", "description": "Domain names and hosting", "amount": 180, "correctBucket": "deductible_expense", "ruling": "Website and hosting costs are ordinary business expenses." },
+        { "id": "l8", "description": "Personal rent", "amount": 9600, "correctBucket": "non_deductible", "ruling": "Personal living expenses are not deductible. Home office portion could be, but not simplified here." },
+        { "id": "l9", "description": "Online course for skill upgrade", "amount": 200, "correctBucket": "deductible_expense", "ruling": "Education that maintains or improves skills is deductible." },
+        { "id": "l10", "description": "PayPal fees on invoices", "amount": 425, "correctBucket": "deductible_expense", "ruling": "Payment processing fees are deductible business expenses." },
+        { "id": "l11", "description": "Vacation to Miami", "amount": 1200, "correctBucket": "non_deductible", "ruling": "Personal travel is not deductible." },
+        { "id": "l12", "description": "Business liability insurance", "amount": 350, "correctBucket": "deductible_expense", "ruling": "Insurance for business protection is deductible." }
+      ],
+      "hoursWorked": 400,
+      "campusJobHourlyEquivalent": 18,
+      "showsQuarterlyEstimates": true,
+      "llcDecisionApplicable": true
+    }
+  ]
+}

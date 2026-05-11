@@ -1,0 +1,62 @@
+{
+  "401k_match": {
+    "type": "401k_match",
+    "formula": "salary * match_rate * vesting_factor",
+    "inputs": ["salary", "match_rate", "vesting_factor"],
+    "worked_example": "For a $60,000 salary with 50% match up to 6%: $60,000 * 0.06 * 0.5 = $1,800/year"
+  },
+  "rsu_grant": {
+    "type": "rsu_grant",
+    "formula": "total_grant_value / vesting_years",
+    "inputs": ["total_grant_value", "vesting_years"],
+    "worked_example": "$40,000 RSU grant vesting over 4 years = $10,000/year"
+  },
+  "options_grant": {
+    "type": "options_grant",
+    "formula": "(fmv - strike_price) * shares * probability_of_liquidity",
+    "inputs": ["fmv", "strike_price", "shares", "probability_of_liquidity"],
+    "worked_example": "Options with $10 strike, $50 FMV, 1000 shares, 20% liquidity chance: ($50-$10) * 1000 * 0.2 = $8,000 expected value"
+  },
+  "signing_bonus": {
+    "type": "signing_bonus",
+    "formula": "bonus_amount * (1 - clawback_risk)",
+    "inputs": ["bonus_amount", "clawback_risk"],
+    "worked_example": "$10,000 signing bonus with 10% clawback risk = $9,000 expected value"
+  },
+  "health_insurance": {
+    "type": "health_insurance",
+    "formula": "monthly_premium * 12 * employer_coverage_pct",
+    "inputs": ["monthly_premium", "employer_coverage_pct"],
+    "worked_example": "$500/month premium, 80% covered by employer: $500 * 12 * 0.8 = $4,800/year value"
+  },
+  "pto_days": {
+    "type": "pto_days",
+    "formula": "(annual_salary / 260) * pto_days",
+    "inputs": ["annual_salary", "pto_days"],
+    "worked_example": "$60,000 salary, 15 PTO days: ($60,000/260) * 15 = $3,461 value"
+  },
+  "remote_stipend": {
+    "type": "remote_stipend",
+    "formula": "monthly_stipend * 12",
+    "inputs": ["monthly_stipend"],
+    "worked_example": "$200/month remote stipend = $2,400/year"
+  },
+  "tuition_reimbursement": {
+    "type": "tuition_reimbursement",
+    "formula": "min(actual_tuition, max_reimbursement)",
+    "inputs": ["actual_tuition", "max_reimbursement"],
+    "worked_example": "$5,000 tuition with $5,250 max reimbursement = $5,000 value"
+  },
+  "commuter_benefit": {
+    "type": "commuter_benefit",
+    "formula": "monthly_benefit * 12",
+    "inputs": ["monthly_benefit"],
+    "worked_example": "$100/month transit pass = $1,200/year"
+  },
+  "wellness_stipend": {
+    "type": "wellness_stipend",
+    "formula": "annual_stipend * utilization_rate",
+    "inputs": ["annual_stipend", "utilization_rate"],
+    "worked_example": "$500 wellness stipend, 70% utilized = $350 value"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "freshman": [
+    {
+      "difficulty": "freshman",
+      "startingCash": 1000,
+      "timelineYears": 10,
+      "tickIntervalMs": 2000,
+      "lifeEvents": [
+        { "id": "le1", "yearIndex": 3, "title": "First job starts", "description": "You start your first part-time job and can contribute $50/month.", "effect": { "cashFlow": 600, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "le2", "yearIndex": 7, "title": "Market downturn", "description": "The market drops 15%. Do you panic or hold?", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } }
+      ],
+      "structuredDecisions": [],
+      "marketSeed": 42
+    }
+  ],
+  "sophomore": [
+    {
+      "difficulty": "sophomore",
+      "startingCash": 3000,
+      "timelineYears": 15,
+      "tickIntervalMs": 2500,
+      "lifeEvents": [
+        { "id": "le1", "yearIndex": 2, "title": "Summer internship", "description": "You earn $3,000 over the summer. Invest it?", "effect": { "cashFlow": 3000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "le2", "yearIndex": 5, "title": "Car repair needed", "description": "Your car needs $800 in repairs. Withdraw or rebalance?", "effect": { "cashFlow": -800, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "le3", "yearIndex": 10, "title": "Market boom", "description": "The market is up 25% this year. What do you do?", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "rebalance"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "sd1", "yearIndex": 4, "prompt": "Your employer offers a 401k match of 50% up to 6% of salary. Do you contribute?", "options": [{ "label": "Contribute 6%", "correctness": 1.0 }, { "label": "Contribute 3%", "correctness": 0.5 }, { "label": "Don't contribute", "correctness": 0.0 }] }
+      ],
+      "marketSeed": 123
+    }
+  ],
+  "junior": [
+    {
+      "difficulty": "junior",
+      "startingCash": 5000,
+      "timelineYears": 20,
+      "tickIntervalMs": 3000,
+      "lifeEvents": [
+        { "id": "le1", "yearIndex": 1, "title": "First real job", "description": "You start your career with a $45k salary. You can invest $200/month.", "effect": { "cashFlow": 2400, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "le2", "yearIndex": 5, "title": "Medical emergency", "description": "Unexpected $2,000 medical bill. What do you do?", "effect": { "cashFlow": -2000, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "le3", "yearIndex": 8, "title": "Market crash", "description": "Major market crash. Your portfolio is down 30%.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
+        { "id": "le4", "yearIndex": 12, "title": "Promotion raise", "description": "You got promoted! You can increase contributions by $150/month.", "effect": { "cashFlow": 1800, "forcedChoice": ["hold", "rebalance"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "sd1", "yearIndex": 2, "prompt": "You receive a $1,000 bonus. What do you do?", "options": [{ "label": "Invest all of it", "correctness": 1.0 }, { "label": "Invest half, spend half", "correctness": 0.6 }, { "label": "Spend all of it", "correctness": 0.0 }] },
+        { "id": "sd2", "yearIndex": 6, "prompt": "A friend recommends a 'hot stock' guaranteed to double. What do you do?", "options": [{ "label": "Stick to your plan", "correctness": 1.0 }, { "label": "Invest a small amount", "correctness": 0.4 }, { "label": "Invest heavily", "correctness": 0.0 }] }
+      ],
+      "marketSeed": 777
+    }
+  ],
+  "senior": [
+    {
+      "difficulty": "senior",
+      "startingCash": 10000,
+      "timelineYears": 30,
+      "tickIntervalMs": 3600,
+      "lifeEvents": [
+        { "id": "le1", "yearIndex": 2, "title": "First home down payment", "description": "You're saving for a house. Need $20,000 in 3 years.", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "le2", "yearIndex": 5, "title": "You got laid off", "description": "Unexpected job loss. 6 months of expenses needed.", "effect": { "cashFlow": -8000, "forcedChoice": ["withdraw", "rebalance"] } },
+        { "id": "le3", "yearIndex": 10, "title": "Market recession", "description": "Extended recession. Portfolio down 20% over 2 years.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
+        { "id": "le4", "yearIndex": 15, "title": "Child on the way", "description": "Growing family. Need to rebalance for stability.", "effect": { "cashFlow": -5000, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "le5", "yearIndex": 20, "title": "Inheritance received", "description": "You inherit $25,000. How do you invest it?", "effect": { "cashFlow": 25000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "le6", "yearIndex": 25, "title": "Pre-retirement check", "description": "5 years to retirement. Time to de-risk?", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "hold"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "sd1", "yearIndex": 1, "prompt": "Employer offers 401k match: 100% up to 5%. Contribute?", "options": [{ "label": "Max out the match (5%)", "correctness": 1.0 }, { "label": "Contribute 3%", "correctness": 0.6 }, { "label": "Skip it", "correctness": 0.0 }] },
+        { "id": "sd2", "yearIndex": 8, "prompt": "Should you open a Roth IRA or Traditional IRA?", "options": [{ "label": "Roth IRA (pay taxes now)", "correctness": 0.9 }, { "label": "Traditional IRA (defer taxes)", "correctness": 0.7 }, { "label": "Neither", "correctness": 0.0 }] },
+        { "id": "sd3", "yearIndex": 14, "prompt": "Your portfolio is 80% stocks at age 40. Should you rebalance?", "options": [{ "label": "Shift to 60/40 stocks/bonds", "correctness": 1.0 }, { "label": "Keep 80/20", "correctness": 0.5 }, { "label": "Go 100% bonds", "correctness": 0.2 }] },
+        { "id": "sd4", "yearIndex": 22, "prompt": "Should you pay off mortgage early or invest extra?", "options": [{ "label": "Invest extra (higher expected return)", "correctness": 0.8 }, { "label": "Pay off mortgage (guaranteed return)", "correctness": 0.7 }, { "label": "Spend the extra money", "correctness": 0.0 }] }
+      ],
+      "marketSeed": 2025
+    }
+  ]
+}

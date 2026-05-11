@@ -1,0 +1,146 @@
+{
+  "freshman": [
+    {
+      "id": "neg-f1",
+      "difficulty": "freshman",
+      "role": "Campus library assistant",
+      "company": "State University Library",
+      "initialOffer": 28000,
+      "hiddenCeiling": 32000,
+      "context": "You are a sophomore applying for a part-time library assistant position. The role involves shelving books, helping students find resources, and managing checkouts.",
+      "hasEquity": false,
+      "deadlinePressure": false
+    },
+    {
+      "id": "neg-f2",
+      "difficulty": "freshman",
+      "role": "Tutor — Intro to Economics",
+      "company": "Academic Success Center",
+      "initialOffer": 18,
+      "hiddenCeiling": 22,
+      "context": "Peer tutoring position for intro economics. You have a 3.9 GPA in econ and prior tutoring experience in high school.",
+      "hasEquity": false,
+      "deadlinePressure": false
+    },
+    {
+      "id": "neg-f3",
+      "difficulty": "freshman",
+      "role": "Barista",
+      "company": "Campus Coffee Co",
+      "initialOffer": 15,
+      "hiddenCeiling": 17,
+      "context": "Local campus coffee shop looking for morning shift barista. You have 2 years of customer service experience.",
+      "hasEquity": false,
+      "deadlinePressure": false
+    }
+  ],
+  "sophomore": [
+    {
+      "id": "neg-s1",
+      "difficulty": "sophomore",
+      "role": "IT Help Desk Technician",
+      "company": "University IT Services",
+      "initialOffer": 35000,
+      "hiddenCeiling": 42000,
+      "context": "You are a junior CS major with an A+ certification. The role involves troubleshooting hardware and software issues for faculty and staff.",
+      "hasEquity": false,
+      "deadlinePressure": true
+    },
+    {
+      "id": "neg-s2",
+      "difficulty": "sophomore",
+      "role": "Research Assistant",
+      "company": "Psychology Department",
+      "initialOffer": 16,
+      "hiddenCeiling": 20,
+      "context": "Part-time research assistant position in a cognitive psychology lab. You have completed research methods and statistics courses.",
+      "hasEquity": false,
+      "deadlinePressure": false
+    },
+    {
+      "id": "neg-s3",
+      "difficulty": "sophomore",
+      "role": "Social Media Manager",
+      "company": "Local Startup",
+      "initialOffer": 22,
+      "hiddenCeiling": 28,
+      "context": "Growing local tech startup needs someone to manage their Instagram and TikTok presence. You run a successful student meme page.",
+      "hasEquity": false,
+      "deadlinePressure": true
+    }
+  ],
+  "junior": [
+    {
+      "id": "neg-j1",
+      "difficulty": "junior",
+      "role": "Software Engineering Intern",
+      "company": "TechFlow Solutions",
+      "initialOffer": 65000,
+      "hiddenCeiling": 78000,
+      "context": "Summer internship at a mid-size SaaS company in Austin. You have two previous internships and a strong GitHub portfolio.",
+      "hasEquity": true,
+      "deadlinePressure": true,
+      "competingOffers": [72000]
+    },
+    {
+      "id": "neg-j2",
+      "difficulty": "junior",
+      "role": "Junior Data Analyst",
+      "company": "HealthFirst Analytics",
+      "initialOffer": 58000,
+      "hiddenCeiling": 70000,
+      "context": "Entry-level data analyst position at a healthcare analytics firm. You have SQL, Python, and Tableau experience from coursework and projects.",
+      "hasEquity": false,
+      "deadlinePressure": false
+    },
+    {
+      "id": "neg-j3",
+      "difficulty": "junior",
+      "role": "Product Design Intern",
+      "company": "CreativeStudio",
+      "initialOffer": 55000,
+      "hiddenCeiling": 68000,
+      "context": "Design internship at a digital agency. You have a strong portfolio with Figma prototypes and user research experience.",
+      "hasEquity": true,
+      "deadlinePressure": true
+    }
+  ],
+  "senior": [
+    {
+      "id": "neg-se1",
+      "difficulty": "senior",
+      "role": "Software Engineer I",
+      "company": "CloudScale Inc",
+      "initialOffer": 95000,
+      "hiddenCeiling": 120000,
+      "context": "New grad software engineer role at a Series C cloud infrastructure company. You have FAANG internship experience and multiple competing offers.",
+      "hasEquity": true,
+      "deadlinePressure": true,
+      "competingOffers": [110000, 115000]
+    },
+    {
+      "id": "neg-se2",
+      "difficulty": "senior",
+      "role": "Associate Product Manager",
+      "company": "FinTech Forward",
+      "initialOffer": 88000,
+      "hiddenCeiling": 110000,
+      "context": "APM role at a growing fintech startup. You have PM internship experience and deep domain knowledge in payments from your capstone project.",
+      "hasEquity": true,
+      "deadlinePressure": true,
+      "competingOffers": [100000]
+    },
+    {
+      "id": "neg-se3",
+      "difficulty": "senior",
+      "role": "Quantitative Analyst",
+      "company": "HedgePoint Capital",
+      "initialOffer": 110000,
+      "hiddenCeiling": 140000,
+      "context": "Entry-level quant role at a mid-size hedge fund. You have a math/stats double major, programming skills in Python and R, and internship experience at a bank.",
+      "hasEquity": true,
+      "deadlinePressure": false,
+      "competingOffers": [125000, 130000]
+    }
+  ]
+}
