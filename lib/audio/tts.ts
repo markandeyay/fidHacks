@@ -1,3 +1,5 @@
+import { startTalkingIndicator, stopTalkingIndicator } from '@/components/avatars';
+
 let selectedVoice: SpeechSynthesisVoice | null = null;
 let voicesLoaded = false;
 
@@ -58,35 +60,23 @@ export function speak(text: string, onEnd?: () => void): void {
     utterance.voice = selectedVoice;
   }
 
-  if (onEnd) utterance.onend = onEnd;
+  utterance.onstart = () => startTalkingIndicator();
+  utterance.onend = () => {
+    stopTalkingIndicator();
+    onEnd?.();
+  };
+  utterance.onerror = () => stopTalkingIndicator();
+
   speechSynthesis.speak(utterance);
 }
 
 export function cancelSpeech(): void {
   if (typeof window === 'undefined') return;
   speechSynthesis.cancel();
+  stopTalkingIndicator();
 }
 
 export async function speakWithGemini(text: string): Promise<void> {
-  // Try the Gemini audio endpoint first
-  try {
-    const res = await fetch('/api/negotiation/audio', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text }),
-    });
-    const data = await res.json();
-
-    if (data.audio) {
-      const audio = new Audio(`data:${data.mimeType || 'audio/mp3'};base64,${data.audio}`);
-      await audio.play();
-      return;
-    }
-  } catch {
-    // Will fall through to Web Speech below
-  }
-
-  // Reliable fallback: Web Speech API (instant, free, works offline)
   await ensureVoiceLoaded();
   speak(text);
 }

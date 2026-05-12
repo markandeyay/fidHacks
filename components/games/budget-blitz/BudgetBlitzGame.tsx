@@ -26,7 +26,9 @@ import { IncomeStack } from './IncomeStack';
 import { CategoryBucket } from './CategoryBucket';
 import { ChaosCardOverlay } from './ChaosCard';
 import { CountdownTimer } from './CountdownTimer';
-import { Shield, Wallet, Layers } from 'lucide-react';
+import { Shield, Layers } from 'lucide-react';
+import { BudgetBlitzAvatar } from '@/components/avatars';
+import { WindowCard } from '@/components/paper';
 
 const ALL_CATEGORIES: BudgetCategory[] = [
   'rent',
@@ -79,11 +81,18 @@ function getCategoryColor(
   allocated: number,
   income: number
 ): 'green' | 'amber' | 'red' {
+  /**
+   * Color semantics:
+   *  - green: healthy band [0.8x, 1.5x] of benchmark
+   *  - red:   busted, > 1.5x benchmark (over-spending)
+   *  - amber: anything below 0.8x of benchmark (under-allocated / tight)
+   */
   const benchmark = getCategoryBenchmark(category, income);
-  if (allocated >= benchmark * 0.8 && allocated <= benchmark * 1.5) return 'green';
-  if (allocated >= benchmark * 0.4 && allocated < benchmark * 0.8) return 'amber';
-  if (allocated > benchmark * 1.5) return 'red';
-  return 'red';
+  if (benchmark === 0) return 'amber';
+  const ratio = allocated / benchmark;
+  if (ratio > 1.5) return 'red';
+  if (ratio >= 0.8) return 'green';
+  return 'amber';
 }
 
 function getCategoryLabel(cat: BudgetCategory): string {
@@ -108,6 +117,7 @@ export function BudgetBlitzGame({ scenario, onRestart }: BudgetBlitzGameProps) {
   const router = useRouter();
   const initSession = useSessionStore((s) => s.init);
   const addScore = useSessionStore((s) => s.addScore);
+  const session = useSessionStore((s) => s.session);
 
   const fixedTotal = Object.values(scenario.fixedCosts).reduce(
     (sum, val) => sum + (val || 0),
@@ -196,8 +206,7 @@ export function BudgetBlitzGame({ scenario, onRestart }: BudgetBlitzGameProps) {
     };
 
     const score = scoreBudgetBlitz(state);
-    score.sessionId = useSessionStore.getState().session?.sessionId || '';
-    addScore(score);
+    addScore({ ...score, sessionId: session?.sessionId ?? '' });
 
     setTimeout(() => {
       router.push('/debrief/budget-blitz');
@@ -322,8 +331,18 @@ export function BudgetBlitzGame({ scenario, onRestart }: BudgetBlitzGameProps) {
     >
       <div className="space-y-4">
         {/* Header Bar */}
-        <div className="card p-4 flex flex-wrap items-center justify-between gap-3">
+        <div
+          className="flex flex-wrap items-center justify-between gap-3"
+          style={{
+            background: 'var(--paper-cream)',
+            border: '3px solid var(--paper-black)',
+            boxShadow: '4px 4px 0 var(--paper-black)',
+            padding: 14,
+            transform: 'rotate(-0.5deg)',
+          }}
+        >
           <div className="flex items-center gap-5">
+            <BudgetBlitzAvatar size={48} />
             <CountdownTimer
               timeRemainingMs={timeRemainingMs}
               totalMs={scenario.timerSeconds * 1000}
@@ -424,20 +443,15 @@ export function BudgetBlitzGame({ scenario, onRestart }: BudgetBlitzGameProps) {
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="card p-8 max-w-sm mx-4 text-center"
+                className="max-w-sm mx-4"
               >
-                <div className="w-12 h-12 rounded-full bg-fid-green-light flex items-center justify-center mx-auto mb-4">
-                  <Wallet className="w-6 h-6 text-fid-green" />
-                </div>
-                <h3 className="text-lg font-bold text-text-heading mb-1">
-                  Month Complete
-                </h3>
-                <p className="text-sm text-text-muted mb-4">
-                  Calculating your score...
-                </p>
-                <div className="progress-bar">
-                  <div className="progress-bar-fill animate-pulse-ring" style={{ width: '100%' }} />
-                </div>
+                <WindowCard title="MONTH COMPLETE ⊙ ✕" variant="info" showControls>
+                  <div style={{ textAlign: 'center', padding: '8px 4px' }}>
+                    <div style={{ fontFamily: 'var(--font-marker)', fontSize: 28 }}>MONTH COMPLETE</div>
+                    <p style={{ fontFamily: 'var(--font-patrick)', fontSize: 16, margin: '8px 0' }}>Calculating your score...</p>
+                    <div className="progress-bar"><div className="progress-bar-fill animate-pulse-ring" style={{ width: '100%' }} /></div>
+                  </div>
+                </WindowCard>
               </motion.div>
             </motion.div>
           )}

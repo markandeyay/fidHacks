@@ -104,7 +104,6 @@ The hackathon win condition: a judge can sit down, play any of the five games en
 │  /api/scenario/generate    → AI router → Gemini → Zod → JSON  │
 │  /api/scenario/fallback    → static JSON from /data            │
 │  /api/negotiation/turn     → Gemini (recruiter persona)        │
-│  /api/avatar/speak         → D-ID Talks (returns video URL)    │
 │  /api/score/compute        → pure function, server-side guard  │
 └──────────────────────────────┬─────────────────────────────────┘
                                │
@@ -978,10 +977,6 @@ Response: {
 ```
 
 Calls Gemini with recruiter persona prompt. Validates response with Zod. On Gemini failure: returns a canned response that holds the offer steady ("Tell me more about why that number works for you?") and emotion `neutral` so the game can continue.
-
-### `POST /api/avatar/speak` *(not used at runtime — build-time only)*
-
-Used during the asset-prep phase to generate the looping emotion clips via D-ID. Not in the runtime hot path.
 
 ### `POST /api/score/compute`
 

@@ -1,48 +1,52 @@
 'use client';
 
-import { Difficulty } from '@/types/game';
 import { motion } from 'framer-motion';
+import { Difficulty } from '@/types/game';
+import { PaperCard, MarkerText, LightningStar } from '@/components/paper';
 
-interface DifficultyPickerProps {
+const DIFFICULTIES: { value: Difficulty; label: string; color: 'mint' | 'cream' | 'yellow' | 'coral'; tilt: number; emoji: string }[] = [
+  { value: 'freshman', label: 'Freshman', color: 'mint', tilt: -3, emoji: '🌱' },
+  { value: 'sophomore', label: 'Sophomore', color: 'cream', tilt: 2, emoji: '📘' },
+  { value: 'junior', label: 'Junior', color: 'yellow', tilt: -1, emoji: '⚡' },
+  { value: 'senior', label: 'Senior', color: 'coral', tilt: 4, emoji: '🔥' },
+];
+
+interface Props {
   selected: Difficulty | null;
   onSelect: (d: Difficulty) => void;
 }
 
-const DIFFICULTIES: { value: Difficulty; label: string; desc: string; color: string; bg: string }[] = [
-  { value: 'freshman', label: 'Freshman', desc: 'Just starting out', color: '#009A44', bg: '#E6F4EC' },
-  { value: 'sophomore', label: 'Sophomore', desc: 'Building confidence', color: '#2563EB', bg: '#DBEAFE' },
-  { value: 'junior', label: 'Junior', desc: 'Real-world scenarios', color: '#D97706', bg: '#FEF3C7' },
-  { value: 'senior', label: 'Senior', desc: 'Expert complexity', color: '#7C3AED', bg: '#EDE9FE' },
-];
-
-export function DifficultyPicker({ selected, onSelect }: DifficultyPickerProps) {
+export function DifficultyPicker({ selected, onSelect }: Props) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-      {DIFFICULTIES.map((diff, i) => (
-        <motion.button
-          key={diff.value}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.05 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onSelect(diff.value)}
-          className={`p-4 rounded-xl border-2 text-left transition-all ${
-            selected === diff.value
-              ? 'border-current shadow-md'
-              : 'border-border-default hover:border-border-strong bg-white'
-          }`}
-          style={selected === diff.value ? { borderColor: diff.color, backgroundColor: diff.bg } : {}}
-        >
-          <div
-            className="text-sm font-bold mb-1"
-            style={{ color: selected === diff.value ? diff.color : '#0F172A' }}
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 18 }}>
+      {DIFFICULTIES.map((d) => {
+        const isSelected = selected === d.value;
+        return (
+          <motion.button
+            key={d.value}
+            onClick={() => onSelect(d.value)}
+            whileTap={{ scale: 0.97 }}
+            style={{ background: 'transparent', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left' }}
           >
-            {diff.label}
-          </div>
-          <div className="text-xs text-text-muted">{diff.desc}</div>
-        </motion.button>
-      ))}
+            <PaperCard
+              color={d.color}
+              tilt={isSelected ? d.tilt - 1 : d.tilt}
+              tape={d.value === 'junior' ? 'tc' : 'tl'}
+              tapeColor={d.color === 'yellow' ? 'cream' : 'yellow'}
+              hover={!isSelected}
+              style={{ padding: '24px 18px', minHeight: 140, position: 'relative', transform: `rotate(${isSelected ? d.tilt - 1 : d.tilt}deg) scale(${isSelected ? 1.05 : 1})` }}
+            >
+              <div style={{ fontSize: 36 }}>{d.emoji}</div>
+              <MarkerText as="div" size="lg">{d.label}</MarkerText>
+              {isSelected && (
+                <div style={{ position: 'absolute', top: -22, right: -22 }}>
+                  <LightningStar size={56} variant={1} animate />
+                </div>
+              )}
+            </PaperCard>
+          </motion.button>
+        );
+      })}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Mic } from 'lucide-react';
 import { startListening, stopListening } from '@/lib/audio/stt';
+import { PaperButton, StickerLabel } from '@/components/paper';
 
 interface InputBarProps {
   onSend: (message: string) => void;
@@ -45,10 +46,19 @@ export function InputBar({ onSend, onAccept, onWalkAway, disabled, isLoading }: 
   }, []);
 
   return (
-    <div className="card p-4 space-y-3">
-      {/* Text input row */}
-      <div className="flex items-center gap-2">
-        <div className="relative flex-1">
+    <div
+      style={{
+        background: 'var(--paper-cream)',
+        border: '3px solid var(--paper-black)',
+        boxShadow: '4px 4px 0 var(--paper-black)',
+        padding: 16,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 12,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ flex: 1, position: 'relative' }}>
           <input
             ref={inputRef}
             type="text"
@@ -57,18 +67,24 @@ export function InputBar({ onSend, onAccept, onWalkAway, disabled, isLoading }: 
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder={isListening ? 'Listening...' : 'Type your response...'}
             disabled={disabled}
-            className="input-field pr-16"
+            className="input-field"
+            style={{ paddingRight: 48 }}
           />
           <button
             onClick={handleSend}
             disabled={disabled || !text.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-fid-green hover:bg-fid-green-light rounded-lg transition-colors disabled:opacity-30"
+            aria-label="send"
+            style={{
+              position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
+              width: 36, height: 36, background: 'var(--paper-yellow)',
+              border: '2px solid var(--paper-black)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: disabled || !text.trim() ? 'not-allowed' : 'pointer', opacity: disabled || !text.trim() ? 0.4 : 1,
+            }}
           >
-            <Send className="w-4 h-4" />
+            <Send size={16} strokeWidth={3} />
           </button>
         </div>
 
-        {/* Voice button */}
         <motion.button
           whileTap={{ scale: 0.95 }}
           onMouseDown={startSTT}
@@ -76,41 +92,40 @@ export function InputBar({ onSend, onAccept, onWalkAway, disabled, isLoading }: 
           onTouchStart={startSTT}
           onTouchEnd={stopSTT}
           disabled={disabled}
-          className={`p-2.5 rounded-lg border-2 transition-colors ${
-            isListening
-              ? 'border-accent-red bg-red-50 text-accent-red'
-              : 'border-border-default text-text-muted hover:border-fid-green hover:text-fid-green'
-          } disabled:opacity-30`}
-          title="Hold to talk"
+          aria-label="hold to talk"
+          style={{
+            width: 48, height: 48,
+            background: isListening ? 'var(--paper-cherry)' : 'var(--paper-coral)',
+            color: isListening ? 'var(--paper-cream)' : 'var(--paper-black)',
+            border: '3px solid var(--paper-black)',
+            boxShadow: '3px 3px 0 var(--paper-black)',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1,
+          }}
         >
-          <Mic className="w-5 h-5" />
+          <Mic size={20} strokeWidth={3} />
         </motion.button>
       </div>
 
       {isListening && interimText && (
-        <div className="text-xs text-text-muted italic">{interimText}</div>
+        <div style={{ fontFamily: 'var(--font-patrick)', fontSize: 14, fontStyle: 'italic', color: 'var(--paper-teal-dk)' }}>
+          {interimText}
+        </div>
       )}
 
       {isLoading && (
-        <div className="text-sm text-fid-green font-medium">Recruiter is thinking...</div>
+        <div>
+          <StickerLabel color="mint" size="sm" tilt={-2}>RECRUITER IS THINKING...</StickerLabel>
+        </div>
       )}
 
-      {/* Actions */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={onAccept}
-          disabled={disabled}
-          className="flex-1 btn-primary text-sm"
-        >
-          Accept Offer
-        </button>
-        <button
-          onClick={onWalkAway}
-          disabled={disabled}
-          className="flex-1 px-4 py-2.5 border-2 border-accent-red text-accent-red rounded-lg font-semibold text-sm hover:bg-red-50 transition-colors disabled:opacity-30"
-        >
-          Walk Away
-        </button>
+      <div style={{ display: 'flex', gap: 10 }}>
+        <PaperButton color="mint" onClick={onAccept} disabled={disabled} style={{ flex: 1 }}>
+          ACCEPT OFFER
+        </PaperButton>
+        <PaperButton color="cherry" onClick={onWalkAway} disabled={disabled} style={{ flex: 1 }}>
+          WALK AWAY
+        </PaperButton>
       </div>
     </div>
   );

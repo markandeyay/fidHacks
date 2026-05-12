@@ -17,10 +17,12 @@ import { simulateGhosts } from '@/lib/market/simulator';
 import { scoreMarket } from '@/lib/scoring/market';
 import { useSessionStore } from '@/stores/sessionStore';
 import { TrendingUp, DollarSign, BarChart3 } from 'lucide-react';
+import { MarketAvatar } from '@/components/avatars';
 import { PortfolioCockpit } from './PortfolioCockpit';
 import { NetWorthGraph } from './NetWorthGraph';
 import { LifeEventCard } from './LifeEventCard';
 import { GhostLineOverlay } from './GhostLineOverlay';
+import { WindowCard, PaperCard, PaperButton, StickerLabel, MarkerText } from '@/components/paper';
 
 interface MarketGameProps {
   scenario: MarketScenario;
@@ -242,9 +244,7 @@ export function MarketGame({ scenario }: MarketGameProps) {
         status: state.status,
       };
       const score = scoreMarket(gameState);
-      if (session) {
-        addScore({ ...score, sessionId: session.sessionId });
-      }
+      addScore({ ...score, sessionId: session?.sessionId ?? '' });
       const timeout = setTimeout(() => {
         router.push('/debrief/market');
       }, 3000);
@@ -264,7 +264,11 @@ export function MarketGame({ scenario }: MarketGameProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            className="space-y-5"
           >
+            <div className="flex items-center justify-center">
+              <MarketAvatar size={80} />
+            </div>
             <PortfolioCockpit
               timelineYears={scenario.timelineYears}
               startingCash={scenario.startingCash}
@@ -281,46 +285,51 @@ export function MarketGame({ scenario }: MarketGameProps) {
             exit={{ opacity: 0 }}
             className="space-y-5"
           >
-            <div className="card p-4">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center">
-                  <div className="text-[11px] text-text-muted uppercase tracking-wide mb-1">
+            <div>
+              <div className="flex items-center justify-center mb-4">
+                <MarketAvatar size={64} />
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <PaperCard color="cream" hover={false} tilt={-1} style={{ padding: 12, textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'var(--font-marker), Impact, sans-serif', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', color: '#0A0A0A', marginBottom: 4 }}>
                     Year
                   </div>
                   <div className="flex items-center justify-center gap-1.5">
-                    <BarChart3 className="w-4 h-4 text-fid-green" />
-                    <span className="text-lg font-bold text-text-heading tabular-nums">
+                    <BarChart3 className="w-4 h-4" style={{ color: '#1F3FAF' }} />
+                    <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: 18, fontWeight: 700, color: '#0A0A0A' }}>
                       {yearDisplay}/{scenario.timelineYears}
                     </span>
                   </div>
                   {status === 'paused' &&
                     !pendingLifeEvent &&
                     !pendingStructuredDecision && (
-                      <span className="badge badge-amber mt-1 text-[10px]">Paused</span>
+                      <div className="mt-1.5 flex justify-center">
+                        <StickerLabel color="yellow" size="sm" tilt={-2}>Paused</StickerLabel>
+                      </div>
                     )}
-                </div>
-                <div className="text-center">
-                  <div className="text-[11px] text-text-muted uppercase tracking-wide mb-1">
+                </PaperCard>
+                <PaperCard color="yellow" hover={false} tilt={0.8} style={{ padding: 12, textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'var(--font-marker), Impact, sans-serif', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', color: '#0A0A0A', marginBottom: 4 }}>
                     Net Worth
                   </div>
                   <div className="flex items-center justify-center gap-1.5">
-                    <DollarSign className="w-4 h-4 text-fid-green" />
-                    <span className="text-lg font-bold text-text-heading tabular-nums">
+                    <DollarSign className="w-4 h-4" style={{ color: '#0A0A0A' }} />
+                    <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: 18, fontWeight: 700, color: '#0A0A0A' }}>
                       {formatCurrency(currentNetWorth)}
                     </span>
                   </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-[11px] text-text-muted uppercase tracking-wide mb-1">
+                </PaperCard>
+                <PaperCard color="mint" hover={false} tilt={-0.6} style={{ padding: 12, textAlign: 'center' }}>
+                  <div style={{ fontFamily: 'var(--font-marker), Impact, sans-serif', fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', color: '#0A0A0A', marginBottom: 4 }}>
                     Status
                   </div>
                   <div className="flex items-center justify-center gap-1.5">
-                    <TrendingUp className="w-4 h-4 text-fid-green" />
-                    <span className="text-sm font-medium text-fid-green">
+                    <TrendingUp className="w-4 h-4" style={{ color: '#0A0A0A' }} />
+                    <span style={{ fontFamily: 'var(--font-marker), Impact, sans-serif', fontSize: 14, letterSpacing: 1, textTransform: 'uppercase', color: '#0A0A0A' }}>
                       {status === 'running' ? 'Simulating' : 'Paused'}
                     </span>
                   </div>
-                </div>
+                </PaperCard>
               </div>
             </div>
 
@@ -331,7 +340,7 @@ export function MarketGame({ scenario }: MarketGameProps) {
                 <motion.div
                   animate={{ opacity: [0.4, 1, 0.4] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="text-xs text-text-muted"
+                  style={{ fontFamily: 'var(--font-patrick), cursive', fontSize: 14, color: '#0A0A0A' }}
                 >
                   Simulating market data...
                 </motion.div>
@@ -348,46 +357,59 @@ export function MarketGame({ scenario }: MarketGameProps) {
             exit={{ opacity: 0 }}
             className="space-y-5"
           >
-            <div className="card p-6 space-y-4">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-fid-green flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-white" />
+            <WindowCard variant="success" title="COMPLETE ⊙ ✕" showControls={true}>
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    background: '#A8D5A2',
+                    border: '2px solid #0A0A0A',
+                    boxShadow: '2px 2px 0 #0A0A0A',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <TrendingUp className="w-4 h-4" style={{ color: '#0A0A0A' }} />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-text-heading">Simulation Complete</h3>
-                  <p className="text-xs text-text-muted">
+                  <MarkerText as="h3" size="md" color="#0A0A0A">
+                    SIMULATION COMPLETE
+                  </MarkerText>
+                  <p style={{ fontFamily: 'var(--font-patrick), cursive', fontSize: 13, color: '#0A0A0A', opacity: 0.75, marginTop: 2 }}>
                     Redirecting to debrief...
                   </p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="rounded-lg bg-white border border-fid-green/20 p-3.5">
-                  <div className="text-[10px] text-text-muted uppercase tracking-wide font-medium mb-1">
+                <PaperCard color="cobalt" hover={false} tilt={-1} style={{ padding: 12 }}>
+                  <div style={{ fontFamily: 'var(--font-marker), Impact, sans-serif', fontSize: 10, letterSpacing: 1, textTransform: 'uppercase', color: '#F5EBD8', marginBottom: 4 }}>
                     Your Net Worth
                   </div>
-                  <div className="text-xl font-bold text-fid-green-dark tabular-nums">
+                  <div style={{ fontFamily: 'var(--font-mono), monospace', fontSize: 20, fontWeight: 700, color: '#F5EBD8' }}>
                     {formatCurrency(ticks[ticks.length - 1]?.netWorth ?? currentNetWorth)}
                   </div>
-                </div>
-                <div className="rounded-lg bg-white border border-border-default p-3.5">
-                  <div className="text-[10px] text-text-muted uppercase tracking-wide font-medium mb-1">
+                </PaperCard>
+                <PaperCard color="cherry" hover={false} tilt={0.8} style={{ padding: 12 }}>
+                  <div style={{ fontFamily: 'var(--font-marker), Impact, sans-serif', fontSize: 10, letterSpacing: 1, textTransform: 'uppercase', color: '#F5EBD8', marginBottom: 4 }}>
                     Panic Seller
                   </div>
-                  <div className="text-xl font-bold text-accent-red tabular-nums">
+                  <div style={{ fontFamily: 'var(--font-mono), monospace', fontSize: 20, fontWeight: 700, color: '#F5EBD8' }}>
                     {formatCurrency(ticks[ticks.length - 1]?.ghostNetWorth_panic ?? 0)}
                   </div>
-                </div>
-                <div className="rounded-lg bg-white border border-border-default p-3.5">
-                  <div className="text-[10px] text-text-muted uppercase tracking-wide font-medium mb-1">
+                </PaperCard>
+                <PaperCard color="mint" hover={false} tilt={-0.5} style={{ padding: 12 }}>
+                  <div style={{ fontFamily: 'var(--font-marker), Impact, sans-serif', fontSize: 10, letterSpacing: 1, textTransform: 'uppercase', color: '#0A0A0A', marginBottom: 4 }}>
                     Consistent Investor
                   </div>
-                  <div className="text-xl font-bold text-accent-blue tabular-nums">
+                  <div style={{ fontFamily: 'var(--font-mono), monospace', fontSize: 20, fontWeight: 700, color: '#0A0A0A' }}>
                     {formatCurrency(ticks[ticks.length - 1]?.ghostNetWorth_consistent ?? 0)}
                   </div>
-                </div>
+                </PaperCard>
               </div>
-            </div>
+            </WindowCard>
 
             <NetWorthGraph ticks={ticks} showGhosts={true} />
             <GhostLineOverlay show={true} />
@@ -403,43 +425,48 @@ export function MarketGame({ scenario }: MarketGameProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-fid-navy/40 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ background: 'rgba(10,10,10,0.55)' }}
           >
             <motion.div
               initial={{ scale: 0.95, y: 12 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 12 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="card p-6 max-w-md w-full"
+              className="max-w-md w-full"
             >
-              <div className="mb-1">
-                <span className="badge badge-purple text-[11px]">
-                  Decision &middot; Year {pendingStructuredDecision.yearIndex + 1}
-                </span>
-              </div>
-              <p className="text-sm text-text-body leading-relaxed mb-5">
-                {pendingStructuredDecision.prompt}
-              </p>
-              <div className="space-y-2">
-                {pendingStructuredDecision.options.map((option, idx) => (
-                  <motion.button
-                    key={idx}
-                    whileHover={{ scale: 1.005, x: 1 }}
-                    whileTap={{ scale: 0.995 }}
-                    onClick={() => handleStructuredDecision(idx)}
-                    className="w-full p-4 rounded-lg border border-border-default bg-white text-left hover:border-border-strong hover:bg-bg-hover transition-colors"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="w-5 h-5 rounded-full bg-fid-navy text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">
-                        {idx + 1}
-                      </span>
-                      <span className="text-sm font-medium text-text-heading">
-                        {option.label}
-                      </span>
-                    </div>
-                  </motion.button>
-                ))}
-              </div>
+              <WindowCard variant="info" title="DECISION ⊙ ✕" showControls={true}>
+                <div style={{ marginBottom: 10 }}>
+                  <StickerLabel color="cobalt" size="sm" tilt={-2}>
+                    YEAR {pendingStructuredDecision.yearIndex + 1}
+                  </StickerLabel>
+                </div>
+                <p style={{ fontFamily: 'var(--font-patrick), cursive', fontSize: 16, color: '#0A0A0A', lineHeight: 1.45, marginBottom: 16 }}>
+                  {pendingStructuredDecision.prompt}
+                </p>
+                <div className="flex flex-col gap-3">
+                  {pendingStructuredDecision.options.map((option, idx) => (
+                    <motion.div
+                      key={idx}
+                      whileHover={{ scale: 1.01, y: -2 }}
+                      whileTap={{ scale: 0.99 }}
+                      onClick={() => handleStructuredDecision(idx)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <PaperCard color="cream" hover={false} tilt={idx % 2 === 0 ? -0.6 : 0.6} style={{ padding: 12 }}>
+                        <div className="flex items-center gap-3">
+                          <StickerLabel color="yellow" size="sm" tilt={-3}>
+                            {idx + 1}
+                          </StickerLabel>
+                          <span style={{ fontFamily: 'var(--font-patrick), cursive', fontSize: 15, color: '#0A0A0A', fontWeight: 600 }}>
+                            {option.label}
+                          </span>
+                        </div>
+                      </PaperCard>
+                    </motion.div>
+                  ))}
+                </div>
+              </WindowCard>
             </motion.div>
           </motion.div>
         )}

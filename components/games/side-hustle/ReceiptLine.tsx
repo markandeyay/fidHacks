@@ -4,6 +4,8 @@ import { ReceiptLineItem, LineItemBucket } from '@/types/sideHustle';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { Check, X } from 'lucide-react';
+import { seededTilt } from '@/lib/design/tilt';
+import { StickerLabel } from '@/components/paper';
 
 interface ReceiptLineProps {
   item: ReceiptLineItem;
@@ -18,9 +20,22 @@ const BUCKET_LABELS: Record<LineItemBucket, string> = {
   non_deductible: 'Non-Deductible',
 };
 
+const BUCKET_STICKER: Record<LineItemBucket, 'mint' | 'coral' | 'cherry'> = {
+  taxable_income: 'cherry',
+  deductible_expense: 'mint',
+  non_deductible: 'coral',
+};
+
 export function ReceiptLine({ item, assignedBucket, showRuling, dragHandle }: ReceiptLineProps) {
   const [expanded, setExpanded] = useState(false);
   const isCorrect = assignedBucket === item.correctBucket;
+  const tilt = seededTilt(item.id, 1.5);
+
+  const borderColor = assignedBucket
+    ? isCorrect
+      ? 'var(--paper-mint-dk, #6BAE5C)'
+      : 'var(--paper-cherry)'
+    : 'var(--paper-black)';
 
   return (
     <motion.div
@@ -28,43 +43,47 @@ export function ReceiptLine({ item, assignedBucket, showRuling, dragHandle }: Re
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       onClick={() => setExpanded((c) => !c)}
-      className={`card cursor-pointer transition-colors group ${
-        assignedBucket
-          ? isCorrect
-            ? 'border-fid-green/40'
-            : 'border-accent-red/40'
-          : ''
-      }`}
+      className="cursor-pointer group"
+      style={{
+        background: 'var(--paper-cream)',
+        border: `2px dashed ${borderColor}`,
+        boxShadow: '2px 2px 0 var(--paper-black)',
+        padding: '8px 12px',
+        transform: `rotate(${tilt}deg)`,
+      }}
     >
-      <div className="flex items-center gap-2 px-3 py-2.5">
+      <div className="flex items-center gap-2">
         {dragHandle && <div className="shrink-0">{dragHandle}</div>}
 
         {!assignedBucket ? (
-          <div className="w-4 h-4 rounded-full border-2 border-border-strong shrink-0" />
+          <div
+            className="w-4 h-4 shrink-0"
+            style={{ border: '2px solid var(--paper-black)', borderRadius: '50%' }}
+          />
         ) : isCorrect ? (
-          <Check className="w-4 h-4 text-fid-green shrink-0" />
+          <Check className="w-4 h-4 shrink-0" style={{ color: 'var(--paper-mint-dk, #6BAE5C)' }} />
         ) : (
-          <X className="w-4 h-4 text-accent-red shrink-0" />
+          <X className="w-4 h-4 shrink-0" style={{ color: 'var(--paper-cherry)' }} />
         )}
 
-        <span className="flex-1 truncate text-sm text-text-heading">{item.description}</span>
+        <span
+          className="font-mono flex-1 truncate text-sm"
+          style={{ color: 'var(--paper-black)' }}
+        >
+          {item.description}
+        </span>
 
-        <span className="text-sm text-text-heading shrink-0 tabular-nums font-semibold">
+        <span
+          className="font-mono text-sm shrink-0 tabular-nums font-semibold"
+          style={{ color: 'var(--paper-black)' }}
+        >
           ${item.amount.toLocaleString()}
         </span>
 
         {assignedBucket && (
-          <span
-            className={`badge shrink-0 ${
-              assignedBucket === 'taxable_income'
-                ? 'badge-green'
-                : assignedBucket === 'deductible_expense'
-                  ? 'badge-blue'
-                  : 'badge-red'
-            }`}
-          >
+          <StickerLabel color={BUCKET_STICKER[assignedBucket]} size="sm" tilt={-2}>
             {BUCKET_LABELS[assignedBucket]}
-          </span>
+          </StickerLabel>
         )}
       </div>
 
@@ -76,7 +95,14 @@ export function ReceiptLine({ item, assignedBucket, showRuling, dragHandle }: Re
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="px-3 pb-2.5 text-xs text-text-muted leading-relaxed border-t border-border-default pt-2 mx-3">
+            <div
+              className="font-patrick leading-relaxed pt-2 mt-2"
+              style={{
+                borderTop: '1px dashed var(--paper-black)',
+                fontSize: 13,
+                color: 'var(--paper-black)',
+              }}
+            >
               {item.ruling}
             </div>
           </motion.div>

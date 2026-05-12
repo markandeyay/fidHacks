@@ -16,6 +16,7 @@ import { SideHustleScenario, LineItemBucket, SideHustleGameState } from '@/types
 import { useSessionStore } from '@/stores/sessionStore';
 import { scoreSideHustle } from '@/lib/scoring/sideHustle';
 import { ArrowRight, RotateCcw } from 'lucide-react';
+import { SideHustleAvatar } from '@/components/avatars';
 import { ReceiptLine } from './ReceiptLine';
 import { DraggableReceiptLine } from './DraggableReceiptLine';
 import { BucketTray } from './BucketTray';
@@ -23,6 +24,7 @@ import { DroppableBucketTray } from './DroppableBucketTray';
 import { TaxPanel, calculateTaxOwed } from './TaxPanel';
 import { HourlyRatePanel } from './HourlyRatePanel';
 import { LLCToggle } from './LLCToggle';
+import { PaperCard, PaperButton, StickerLabel, MarkerText } from '@/components/paper';
 
 interface SideHustleGameProps {
   scenario: SideHustleScenario;
@@ -106,9 +108,7 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
       status: 'finished',
     };
     const score = scoreSideHustle(state);
-    if (session) {
-      addScore({ ...score, sessionId: session.sessionId });
-    }
+    addScore({ ...score, sessionId: session?.sessionId ?? '' });
     router.push('/debrief/side-hustle');
   }, [scenario, playerSorts, taxOwedPlayer, taxOwedCorrect, llcChoice, session, addScore, router]);
 
@@ -122,33 +122,108 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
   return (
     <div className="space-y-6">
       {/* Scenario Header */}
-      <div className="card p-4 flex items-center justify-between flex-wrap gap-3">
+      <div
+        style={{
+          background: 'var(--paper-cream)',
+          border: '3px solid var(--paper-black)',
+          boxShadow: '4px 4px 0 var(--paper-black)',
+          padding: 16,
+        }}
+        className="flex items-center justify-between flex-wrap gap-3"
+      >
         <div className="flex items-center gap-4 flex-wrap">
+          <SideHustleAvatar size={48} />
           <div className="flex items-center gap-2">
-            <span className="text-xs text-text-muted">Hustle:</span>
-            <span className="text-sm font-semibold text-text-heading">{scenario.hustleType}</span>
+            <span
+              className="font-marker"
+              style={{
+                fontFamily: 'var(--font-marker), Impact, sans-serif',
+                fontSize: 13,
+                letterSpacing: 1,
+                color: 'var(--paper-black)',
+              }}
+            >
+              HUSTLE:
+            </span>
+            <span
+              className="font-mono"
+              style={{ fontSize: 14, fontWeight: 600, color: 'var(--paper-black)' }}
+            >
+              {scenario.hustleType}
+            </span>
           </div>
-          <span className="text-border-strong hidden sm:inline">|</span>
+          <span style={{ color: 'var(--paper-black)' }} className="hidden sm:inline">
+            |
+          </span>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-text-muted">Semester:</span>
-            <span className="text-sm text-text-heading">{scenario.semester}</span>
+            <span
+              className="font-marker"
+              style={{
+                fontFamily: 'var(--font-marker), Impact, sans-serif',
+                fontSize: 13,
+                letterSpacing: 1,
+                color: 'var(--paper-black)',
+              }}
+            >
+              SEMESTER:
+            </span>
+            <span
+              className="font-mono"
+              style={{ fontSize: 14, color: 'var(--paper-black)' }}
+            >
+              {scenario.semester}
+            </span>
           </div>
-          <span className="text-border-strong hidden sm:inline">|</span>
+          <span style={{ color: 'var(--paper-black)' }} className="hidden sm:inline">
+            |
+          </span>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-text-muted">Progress:</span>
-            <div className="flex items-center gap-2">
-              <div className="w-24 progress-bar">
-                <div className="progress-bar-fill" style={{ width: `${sortedPercent}%` }} />
-              </div>
-              <span className="text-xs font-semibold text-text-heading tabular-nums">
-                {sortedCount}/{scenario.lineItems.length}
-              </span>
+            <span
+              className="font-marker"
+              style={{
+                fontFamily: 'var(--font-marker), Impact, sans-serif',
+                fontSize: 13,
+                letterSpacing: 1,
+                color: 'var(--paper-black)',
+              }}
+            >
+              PROGRESS:
+            </span>
+            <div
+              style={{
+                width: 96,
+                height: 12,
+                border: '2px solid var(--paper-black)',
+                background: 'var(--paper-cream)',
+                position: 'relative',
+              }}
+            >
+              <div
+                style={{
+                  width: `${sortedPercent}%`,
+                  height: '100%',
+                  background: 'var(--paper-mint)',
+                  transition: 'width 0.2s',
+                }}
+              />
             </div>
+            <span
+              className="font-mono tabular-nums"
+              style={{ fontSize: 12, fontWeight: 700, color: 'var(--paper-black)' }}
+            >
+              {sortedCount}/{scenario.lineItems.length}
+            </span>
           </div>
         </div>
         <button
           onClick={handleRestart}
-          className="text-text-muted hover:text-fid-green transition-colors p-1.5"
+          style={{
+            color: 'var(--paper-black)',
+            padding: 6,
+            border: '2px solid var(--paper-black)',
+            background: 'var(--paper-yellow)',
+            boxShadow: '2px 2px 0 var(--paper-black)',
+          }}
           title="Restart"
         >
           <RotateCcw className="w-4 h-4" />
@@ -158,9 +233,11 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
       {/* Phase 1: Sorting */}
       {status === 'sorting' && (
         <div className="space-y-5">
-          <div className="flex items-center gap-2">
-            <span className="badge badge-green">Phase 1</span>
-            <span className="text-sm font-semibold text-text-heading">Sort Receipts</span>
+          <div className="flex items-center gap-3">
+            <StickerLabel color="mint" size="md" tilt={-2}>
+              Phase 1
+            </StickerLabel>
+            <MarkerText size="md">SORT RECEIPTS</MarkerText>
           </div>
 
           <DndContext
@@ -171,11 +248,30 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
               {/* Unassigned stack */}
               <div className="lg:col-span-1 space-y-3">
-                <div className="card px-3 py-2 flex items-center justify-between">
-                  <span className="text-xs font-semibold text-text-heading">Unassigned</span>
-                  <span className="badge badge-amber">{unassigned.length} items</span>
+                <div
+                  style={{
+                    background: 'var(--paper-cream)',
+                    border: '3px solid var(--paper-black)',
+                    boxShadow: '3px 3px 0 var(--paper-black)',
+                    padding: '8px 12px',
+                  }}
+                  className="flex items-center justify-between"
+                >
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-marker), Impact, sans-serif',
+                      fontSize: 14,
+                      letterSpacing: 1,
+                      color: 'var(--paper-black)',
+                    }}
+                  >
+                    UNASSIGNED
+                  </span>
+                  <StickerLabel color="yellow" size="sm" tilt={2}>
+                    {unassigned.length} items
+                  </StickerLabel>
                 </div>
-                <div className="space-y-1.5 min-h-[120px]">
+                <div className="space-y-2 min-h-[120px]">
                   <AnimatePresence mode="popLayout">
                     {unassigned.map((item) => (
                       <DraggableReceiptLine key={item.id} item={item} />
@@ -185,10 +281,28 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="card px-4 py-6 text-center bg-fid-green-light border-fid-green/30"
+                      style={{
+                        background: 'var(--paper-mint)',
+                        border: '3px solid var(--paper-black)',
+                        boxShadow: '3px 3px 0 var(--paper-black)',
+                        padding: 16,
+                        textAlign: 'center',
+                      }}
                     >
-                      <p className="text-fid-green-dark text-sm font-semibold">All items sorted</p>
-                      <p className="text-text-muted text-xs mt-1">
+                      <p
+                        style={{
+                          fontFamily: 'var(--font-marker), Impact, sans-serif',
+                          fontSize: 16,
+                          letterSpacing: 1,
+                          color: 'var(--paper-black)',
+                        }}
+                      >
+                        ALL ITEMS SORTED
+                      </p>
+                      <p
+                        className="font-patrick"
+                        style={{ fontSize: 13, color: 'var(--paper-black)', marginTop: 4 }}
+                      >
                         All {scenario.lineItems.length} items assigned to buckets
                       </p>
                     </motion.div>
@@ -220,10 +334,28 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
 
             <DragOverlay dropAnimation={null}>
               {activeItem ? (
-                <div className="card px-3 py-2 shadow-sm opacity-90 rotate-1 max-w-[260px]">
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-text-heading truncate">{activeItem.description}</span>
-                    <span className="text-text-heading font-semibold tabular-nums ml-auto flex-shrink-0">
+                <div
+                  style={{
+                    background: 'var(--paper-cream)',
+                    border: '2px dashed var(--paper-black)',
+                    boxShadow: '4px 4px 0 var(--paper-black)',
+                    padding: '8px 12px',
+                    transform: 'rotate(2deg)',
+                    maxWidth: 260,
+                    opacity: 0.95,
+                  }}
+                >
+                  <div className="flex items-center gap-2 font-mono" style={{ fontSize: 13 }}>
+                    <span
+                      className="truncate"
+                      style={{ color: 'var(--paper-black)' }}
+                    >
+                      {activeItem.description}
+                    </span>
+                    <span
+                      className="tabular-nums font-semibold ml-auto flex-shrink-0"
+                      style={{ color: 'var(--paper-black)' }}
+                    >
                       ${activeItem.amount.toLocaleString()}
                     </span>
                   </div>
@@ -232,14 +364,14 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
             </DragOverlay>
 
             <div className="flex items-center justify-end pt-4">
-              <button
+              <PaperButton
+                color="yellow"
                 onClick={() => setStatus('reviewing')}
                 disabled={!allSorted}
-                className="btn-primary inline-flex items-center gap-2"
               >
                 Continue to Review
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </PaperButton>
             </div>
           </DndContext>
         </div>
@@ -252,9 +384,11 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
           animate={{ opacity: 1 }}
           className="space-y-8"
         >
-          <div className="flex items-center gap-2">
-            <span className="badge badge-blue">Phase 2</span>
-            <span className="text-sm font-semibold text-text-heading">Review Sorted</span>
+          <div className="flex items-center gap-3">
+            <StickerLabel color="cobalt" size="md" tilt={-2}>
+              Phase 2
+            </StickerLabel>
+            <MarkerText size="md">REVIEW SORTED</MarkerText>
           </div>
 
           {/* Sorted review buckets */}
@@ -277,9 +411,11 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
             )}
           </div>
 
-          <div className="flex items-center gap-2 pt-4">
-            <span className="badge badge-purple">Phase 3</span>
-            <span className="text-sm font-semibold text-text-heading">Tax Analysis</span>
+          <div className="flex items-center gap-3 pt-4">
+            <StickerLabel color="cherry" size="md" tilt={-2}>
+              Phase 3
+            </StickerLabel>
+            <MarkerText size="md">TAX ANALYSIS</MarkerText>
           </div>
 
           <TaxPanel
@@ -307,46 +443,75 @@ export default function SideHustleGame({ scenario }: SideHustleGameProps) {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="card"
+              className="space-y-4"
             >
-              <div className="px-4 py-3 border-b border-border-default">
-                <span className="text-sm font-semibold text-text-heading">Quarterly Estimates</span>
-              </div>
-              <div className="p-4">
-                <p className="text-sm text-text-muted mb-4">
-                  The IRS requires quarterly estimated tax payments. Estimated annual tax: $
-                  {calculateTaxOwed(correctTotals.taxable, correctTotals.deductions).toLocaleString()}
-                </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {[
-                    { label: 'Q1', sub: 'Apr 15' },
-                    { label: 'Q2', sub: 'Jun 15' },
-                    { label: 'Q3', sub: 'Sep 15' },
-                    { label: 'Q4', sub: 'Jan 15' },
-                  ].map((q) => {
-                    const quarterly = Math.round(
-                      calculateTaxOwed(correctTotals.taxable, correctTotals.deductions) / 4
-                    );
-                    return (
-                      <div key={q.label} className="card p-3 text-center">
-                        <p className="text-xs text-text-muted mb-1">
-                          {q.label} <span className="text-text-muted/50">{q.sub}</span>
+              <MarkerText size="md">QUARTERLY ESTIMATES</MarkerText>
+              <p
+                className="font-patrick"
+                style={{ fontSize: 15, color: 'var(--paper-black)' }}
+              >
+                The IRS requires quarterly estimated tax payments. Estimated annual tax: $
+                {calculateTaxOwed(correctTotals.taxable, correctTotals.deductions).toLocaleString()}
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: 'Q1', sub: 'Apr 15' },
+                  { label: 'Q2', sub: 'Jun 15' },
+                  { label: 'Q3', sub: 'Sep 15' },
+                  { label: 'Q4', sub: 'Jan 15' },
+                ].map((q, idx) => {
+                  const tilts = [-2, 1.5, -1, 2];
+                  const quarterly = Math.round(
+                    calculateTaxOwed(correctTotals.taxable, correctTotals.deductions) / 4
+                  );
+                  return (
+                    <PaperCard
+                      key={q.label}
+                      color="cream"
+                      tilt={tilts[idx]}
+                      tape={idx % 2 === 0 ? 'tl' : 'tr'}
+                      tapeColor={idx % 2 === 0 ? 'yellow' : 'coral'}
+                      hover={false}
+                    >
+                      <div style={{ padding: 12, textAlign: 'center' }}>
+                        <p
+                          style={{
+                            fontFamily: 'var(--font-marker), Impact, sans-serif',
+                            fontSize: 14,
+                            letterSpacing: 1,
+                            color: 'var(--paper-black)',
+                          }}
+                        >
+                          {q.label}
                         </p>
-                        <p className="tabular-nums text-base font-bold text-fid-green-dark">
+                        <p
+                          className="font-patrick"
+                          style={{ fontSize: 11, color: 'var(--paper-black)', marginBottom: 6 }}
+                        >
+                          {q.sub}
+                        </p>
+                        <p
+                          className="font-mono tabular-nums"
+                          style={{
+                            fontSize: 20,
+                            fontWeight: 700,
+                            color: 'var(--paper-black)',
+                          }}
+                        >
                           ${quarterly.toLocaleString()}
                         </p>
                       </div>
-                    );
-                  })}
-                </div>
+                    </PaperCard>
+                  );
+                })}
               </div>
             </motion.div>
           )}
 
           <div className="flex justify-end pt-4">
-            <button onClick={handleFinish} className="btn-primary">
+            <PaperButton color="yellow" onClick={handleFinish}>
               Finish &amp; See Score
-            </button>
+            </PaperButton>
           </div>
         </motion.div>
       )}

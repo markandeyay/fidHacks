@@ -2,6 +2,7 @@
 
 import { LineItemBucket } from '@/types/sideHustle';
 import { motion } from 'framer-motion';
+import { StickerLabel } from '@/components/paper';
 
 interface BucketTrayProps {
   bucket: LineItemBucket;
@@ -12,25 +13,25 @@ interface BucketTrayProps {
 
 const CONFIG: Record<
   LineItemBucket,
-  { label: string; accentColor: string; borderClass: string; bgClass: string }
+  { label: string; bg: string; fg: string; tilt: number }
 > = {
   taxable_income: {
-    label: 'Taxable Income',
-    accentColor: 'text-fid-green-dark',
-    borderClass: 'border-fid-green/40',
-    bgClass: 'bg-fid-green-light',
+    label: 'TAXABLE INCOME ⇣',
+    bg: 'var(--paper-cherry)',
+    fg: 'var(--paper-cream)',
+    tilt: -1,
   },
   deductible_expense: {
-    label: 'Deductible Expense',
-    accentColor: 'text-accent-blue',
-    borderClass: 'border-accent-blue/40',
-    bgClass: 'bg-accent-blue/10',
+    label: 'DEDUCTIBLE ⇣',
+    bg: 'var(--paper-mint)',
+    fg: 'var(--paper-black)',
+    tilt: 1,
   },
   non_deductible: {
-    label: 'Non-Deductible',
-    accentColor: 'text-accent-red',
-    borderClass: 'border-accent-red/40',
-    bgClass: 'bg-accent-red/5',
+    label: 'NON-DEDUCTIBLE ⇣',
+    bg: 'var(--paper-coral)',
+    fg: 'var(--paper-black)',
+    tilt: -1.5,
   },
 };
 
@@ -40,20 +41,36 @@ export function BucketTray({ bucket, count, children, isOver }: BucketTrayProps)
   return (
     <motion.div layout>
       <div
-        className={`card overflow-hidden ${
-          isOver ? 'ring-2 ring-fid-green/60 border-fid-green' : cfg.borderClass
-        }`}
+        style={{
+          background: cfg.bg,
+          color: cfg.fg,
+          border: '3px solid var(--paper-black)',
+          boxShadow: isOver
+            ? '6px 6px 0 var(--paper-black)'
+            : '4px 4px 0 var(--paper-black)',
+          padding: 14,
+          minHeight: 200,
+          transform: `rotate(${cfg.tilt}deg)`,
+          transition: 'box-shadow 0.15s, transform 0.15s',
+        }}
       >
-        <div
-          className={`px-3 py-2 border-b ${
-            isOver ? 'border-fid-green bg-fid-green-light' : `${cfg.borderClass} ${cfg.bgClass}`
-          } flex items-center justify-between`}
-        >
-          <span className={`text-xs font-semibold ${cfg.accentColor}`}>{cfg.label}</span>
-          <span className="badge badge-amber">{count}</span>
+        <div className="flex items-center justify-between mb-3">
+          <span
+            style={{
+              fontFamily: 'var(--font-marker), Impact, sans-serif',
+              fontSize: 18,
+              letterSpacing: 1,
+              color: cfg.fg,
+            }}
+          >
+            {cfg.label}
+          </span>
+          <StickerLabel color="yellow" size="sm" tilt={3}>
+            {count}
+          </StickerLabel>
         </div>
 
-        <div className="min-h-[160px] p-2 space-y-1.5">{children}</div>
+        <div className="space-y-2">{children}</div>
       </div>
     </motion.div>
   );

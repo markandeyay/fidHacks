@@ -28,7 +28,7 @@ export async function callGemini<T>({
   }
 
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash-exp',
+    model: 'gemini-2.5-flash',
     generationConfig: {
       temperature,
       responseMimeType: 'application/json',

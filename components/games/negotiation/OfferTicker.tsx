@@ -1,44 +1,35 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, animate } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { MarkerText, StickerLabel } from '@/components/paper';
 
-interface OfferTickerProps {
-  value: number;
-}
+interface Props { value: number }
 
-export function OfferTicker({ value }: OfferTickerProps) {
-  const [display, setDisplay] = useState(value);
-  const [changed, setChanged] = useState(false);
-  const prevRef = useRef(value);
-
-  useEffect(() => {
-    if (value === prevRef.current) return;
-    prevRef.current = value;
-    setChanged(true);
-    const t = setTimeout(() => setChanged(false), 700);
-    const controls = animate(display, value, {
-      duration: 0.6,
-      ease: 'easeOut',
-      onUpdate: (v) => setDisplay(Math.round(v)),
-    });
-    return () => { controls.stop(); clearTimeout(t); };
-  }, [value, display]);
-
-  const formatted = display < 1000
-    ? `$${display.toFixed(2)}`
-    : `$${display.toLocaleString()}`;
-
+export function OfferTicker({ value }: Props) {
+  const isHourly = value < 1000;
+  const display = isHourly ? `$${value.toFixed(2)}` : `$${value.toLocaleString()}`;
   return (
-    <div className="text-center">
-      <div className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">Current Offer</div>
+    <div style={{ position: 'relative', textAlign: 'center', padding: '14px 8px' }}>
+      <div style={{ marginBottom: 4 }}>
+        <StickerLabel color="coral" size="sm" tilt={-3}>CURRENT OFFER</StickerLabel>
+      </div>
       <motion.div
-        animate={{ scale: changed ? 1.08 : 1 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-        className="text-3xl font-extrabold text-fid-green"
+        key={value}
+        initial={{ scale: 1, y: 0 }}
+        animate={{ scale: [1, 1.18, 1], y: [0, -6, 0] }}
+        transition={{ duration: 0.5 }}
+        style={{
+          fontFamily: 'var(--font-marker), Impact, sans-serif',
+          fontSize: 44,
+          lineHeight: 1,
+          color: 'var(--paper-black)',
+        }}
       >
-        {formatted}
+        {display}
       </motion.div>
+      {isHourly && (
+        <div style={{ fontFamily: 'var(--font-patrick)', fontSize: 14, marginTop: 4 }}>per hour</div>
+      )}
     </div>
   );
 }

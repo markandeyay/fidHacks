@@ -1,26 +1,32 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { WindowCard } from '@/components/paper';
 
-interface WeakMoveIndicatorProps {
-  visible: boolean;
-}
+interface Props { visible: boolean }
 
-export function WeakMoveIndicator({ visible }: WeakMoveIndicatorProps) {
+export function WeakMoveIndicator({ visible }: Props) {
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -16 }}
-          className="absolute top-2 left-1/2 -translate-x-1/2 z-50"
+          initial={{ x: 400, opacity: 0, rotate: 8 }}
+          animate={{ x: 0, opacity: 1, rotate: 4 }}
+          exit={{ x: 400, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 220, damping: 22 }}
+          style={{
+            position: 'fixed',
+            top: 90,
+            right: 24,
+            zIndex: 60,
+            maxWidth: 320,
+          }}
         >
-          <div className="flex items-center gap-2 bg-accent-red text-white px-4 py-2.5 rounded-lg shadow-lg text-sm font-semibold">
-            <AlertTriangle className="w-4 h-4" />
-            Be specific — use data or competing offers to move the needle
-          </div>
+          <WindowCard variant="warning" title="WEAK MOVE ✕" showControls tilt={4}>
+            <p style={{ margin: 0, fontFamily: 'var(--font-patrick), cursive', fontSize: 16 }}>
+              Vague hedging won't move the offer. Try specifics: market data, competing offers, or measurable achievements.
+            </p>
+          </WindowCard>
         </motion.div>
       )}
     </AnimatePresence>

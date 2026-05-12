@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { ArrowLeft, RotateCcw } from 'lucide-react';
 import { ReactNode } from 'react';
+import { TornBanner, MarkerText, StickerLabel, LightningStar } from '@/components/paper';
+import { ForteCat } from '@/components/mascot/ForteCat';
 
 interface GameShellProps {
   title: string;
@@ -13,40 +15,43 @@ interface GameShellProps {
 
 export function GameShell({ title, subtitle, children, onRestart }: GameShellProps) {
   return (
-    <div className="min-h-screen bg-bg-subtle">
-      {/* Header */}
-      <header className="bg-white border-b border-border-default sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-3 min-w-0">
-            <Link href="/" className="text-text-muted hover:text-fid-green transition-colors p-1.5 -ml-1.5">
-              <ArrowLeft className="w-4 h-4" />
+    <div style={{ minHeight: '100vh', background: 'var(--paper-teal)', position: 'relative' }}>
+      {/* Decorative scattered stars */}
+      <div aria-hidden style={{ position: 'absolute', top: 80, left: 40, opacity: 0.55, pointerEvents: 'none' }}>
+        <LightningStar size={48} variant={2} />
+      </div>
+      <div aria-hidden style={{ position: 'absolute', top: 200, right: 60, opacity: 0.5, pointerEvents: 'none' }}>
+        <LightningStar size={64} variant={3} />
+      </div>
+
+      {/* Header torn banner */}
+      <TornBanner color="cream" style={{ position: 'sticky', top: 0, zIndex: 50, paddingTop: 14, paddingBottom: 14, boxShadow: '0 4px 0 rgba(10,10,10,0.4)' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <Link href="/" aria-label="back" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38, background: 'var(--paper-yellow)', border: '3px solid var(--paper-black)', boxShadow: '3px 3px 0 var(--paper-black)', color: 'var(--paper-black)', transform: 'rotate(-3deg)' }}>
+              <ArrowLeft size={18} strokeWidth={3} />
             </Link>
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="w-5 h-5 rounded bg-fid-green flex items-center justify-center flex-shrink-0">
-                <span className="text-white font-bold text-[10px]">F</span>
-              </div>
-              <h1 className="font-bold text-sm text-text-heading truncate">{title}</h1>
-              {subtitle && (
-                <span className="text-xs text-text-muted hidden sm:inline truncate">· {subtitle}</span>
-              )}
-            </div>
+            <ForteCat emotion="idle" size={42} animate />
+            <MarkerText as="h1" size="lg">{title}</MarkerText>
+            {subtitle && (
+              <StickerLabel color="coral" size="sm" tilt={2}>{subtitle}</StickerLabel>
+            )}
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {onRestart && (
               <button
                 onClick={onRestart}
-                className="text-text-muted hover:text-fid-green transition-colors p-1.5"
                 title="Restart"
+                style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38, background: 'var(--paper-coral)', border: '3px solid var(--paper-black)', boxShadow: '3px 3px 0 var(--paper-black)', color: 'var(--paper-black)', cursor: 'pointer', transform: 'rotate(3deg)' }}
               >
-                <RotateCcw className="w-4 h-4" />
+                <RotateCcw size={18} strokeWidth={3} />
               </button>
             )}
           </div>
         </div>
-      </header>
+      </TornBanner>
 
-      {/* Content */}
-      <main className="max-w-6xl mx-auto px-4 py-6">
+      <main style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 20px 80px', position: 'relative', zIndex: 2 }}>
         {children}
       </main>
     </div>

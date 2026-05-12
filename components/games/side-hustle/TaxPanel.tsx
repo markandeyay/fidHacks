@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Calculator } from 'lucide-react';
+import { WindowCard, PaperButton, StickerLabel } from '@/components/paper';
 
 interface TaxPanelProps {
   taxableIncome: number;
@@ -54,25 +54,30 @@ export function TaxPanel({ taxableIncome, deductions, onSubmit }: TaxPanelProps)
     onSubmit(Math.round(val), correctTax);
   };
 
+  const diff = Math.round(parseFloat(input) || 0) - correctTax;
+  const closeEnough = Math.abs(diff) / correctTax < 0.1;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="card"
-    >
-      <div className="px-4 py-3 border-b border-border-default flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Calculator className="w-4 h-4 text-fid-green" />
-          <span className="text-sm font-semibold text-text-heading">Tax Calculator</span>
-        </div>
-        <span className="badge badge-blue">2025 Single Filer</span>
+    <WindowCard variant="info" title="TAX FORM ⊙ ✕" seed="tax-panel">
+      <div className="flex items-center justify-end mb-2">
+        <StickerLabel color="cobalt" size="sm" tilt={-2}>
+          2025 SINGLE FILER
+        </StickerLabel>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border-default">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Brackets Table */}
-        <div className="p-4 space-y-1">
-          <p className="text-xs text-text-muted font-semibold uppercase tracking-wider mb-3">
-            Tax Brackets
+        <div className="space-y-1">
+          <p
+            className="mb-3"
+            style={{
+              fontFamily: 'var(--font-marker), Impact, sans-serif',
+              fontSize: 14,
+              letterSpacing: 1,
+              color: 'var(--paper-black)',
+            }}
+          >
+            TAX BRACKETS
           </p>
           {BRACKETS.slice(0, 6).map((b, i) => {
             const prev = i === 0 ? 0 : BRACKETS[i - 1].limit;
@@ -80,54 +85,76 @@ export function TaxPanel({ taxableIncome, deductions, onSubmit }: TaxPanelProps)
             return (
               <div
                 key={i}
-                className={`flex justify-between text-xs py-1.5 px-2 rounded ${
-                  active ? 'text-text-heading bg-bg-subtle' : 'text-text-muted/50'
-                }`}
+                className="font-mono flex justify-between py-1 px-2"
+                style={{
+                  fontSize: 12,
+                  background: active ? 'rgba(168,213,162,0.35)' : 'transparent',
+                  color: active ? 'var(--paper-black)' : 'rgba(10,10,10,0.45)',
+                  border: active ? '1px dashed var(--paper-black)' : '1px dashed transparent',
+                }}
               >
                 <span className="tabular-nums">
                   ${prev.toLocaleString()} &ndash;{' '}
                   {b.limit === Infinity ? 'above' : `$${b.limit.toLocaleString()}`}
                 </span>
-                <span className={`tabular-nums font-bold ${active ? 'text-fid-green-dark' : ''}`}>
+                <span className="tabular-nums font-bold">
                   {(b.rate * 100).toFixed(0)}%
                 </span>
               </div>
             );
           })}
-          <div className="text-xs text-text-muted pt-2 border-t border-border-default mt-2">
+          <p
+            className="font-patrick pt-2 mt-2"
+            style={{
+              borderTop: '1px dashed var(--paper-black)',
+              fontSize: 13,
+              color: 'var(--paper-black)',
+            }}
+          >
             Self-employment tax: 15.3% on 92.35% of net earnings
-          </div>
+          </p>
         </div>
 
         {/* Calculator */}
-        <div className="p-4 space-y-4">
-          <div className="space-y-1.5">
-            <div className="flex justify-between text-sm">
-              <span className="text-text-muted">Taxable income</span>
-              <span className="tabular-nums font-medium">${taxableIncome.toLocaleString()}</span>
+        <div className="space-y-4">
+          <div className="space-y-1.5 font-mono" style={{ fontSize: 13, color: 'var(--paper-black)' }}>
+            <div className="flex justify-between">
+              <span>Taxable income</span>
+              <span className="tabular-nums font-semibold">${taxableIncome.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-text-muted">Deductions</span>
-              <span className="text-accent-blue tabular-nums font-medium">
+            <div className="flex justify-between">
+              <span>Deductions</span>
+              <span className="tabular-nums font-semibold">
                 -${deductions.toLocaleString()}
               </span>
             </div>
-            <div className="flex justify-between text-sm border-t border-border-default pt-1.5">
-              <span className="text-text-muted font-semibold">Net income</span>
-              <span className="tabular-nums font-bold text-text-heading">
-                ${netIncome.toLocaleString()}
-              </span>
+            <div
+              className="flex justify-between pt-1.5"
+              style={{ borderTop: '1px dashed var(--paper-black)' }}
+            >
+              <span className="font-semibold">Net income</span>
+              <span className="tabular-nums font-bold">${netIncome.toLocaleString()}</span>
             </div>
           </div>
 
           {!submitted ? (
             <div className="space-y-3">
-              <p className="text-xs text-text-muted font-semibold uppercase tracking-wider">
-                Your Tax Estimate
+              <p
+                style={{
+                  fontFamily: 'var(--font-marker), Impact, sans-serif',
+                  fontSize: 14,
+                  letterSpacing: 1,
+                  color: 'var(--paper-black)',
+                }}
+              >
+                YOUR TAX ESTIMATE
               </p>
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-stretch">
                 <div className="relative flex-1">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-sm">
+                  <span
+                    className="font-mono absolute left-3 top-1/2 -translate-y-1/2"
+                    style={{ fontSize: 14, color: 'var(--paper-black)' }}
+                  >
                     $
                   </span>
                   <input
@@ -135,56 +162,52 @@ export function TaxPanel({ taxableIncome, deductions, onSubmit }: TaxPanelProps)
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-                    className="input-field pl-8"
+                    className="input-field font-mono"
+                    style={{ paddingLeft: 28 }}
                     placeholder="0.00"
                   />
                 </div>
-                <button
-                  onClick={handleSubmit}
-                  className="btn-primary"
-                >
+                <PaperButton color="yellow" size="md" onClick={handleSubmit}>
                   Submit
-                </button>
+                </PaperButton>
               </div>
             </div>
           ) : (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="space-y-2"
+              className="space-y-2 font-mono"
+              style={{ fontSize: 13, color: 'var(--paper-black)' }}
             >
-              <div className="flex justify-between text-sm">
-                <span className="text-text-muted">Your estimate</span>
-                <span className="tabular-nums font-medium">
+              <div className="flex justify-between">
+                <span>Your estimate</span>
+                <span className="tabular-nums font-semibold">
                   ${Math.round(parseFloat(input) || 0).toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-text-muted">Correct tax</span>
-                <span className="text-fid-green tabular-nums font-bold">
+              <div className="flex justify-between">
+                <span>Correct tax</span>
+                <span className="tabular-nums font-bold">
                   ${correctTax.toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between text-sm border-t border-border-default pt-1.5">
-                <span className="text-text-muted">Difference</span>
-                <span
-                  className={`tabular-nums font-bold ${
-                    Math.abs((parseFloat(input) || 0) - correctTax) / correctTax < 0.1
-                      ? 'text-fid-green'
-                      : 'text-accent-red'
-                  }`}
+              <div
+                className="flex justify-between pt-1.5 items-center"
+                style={{ borderTop: '1px dashed var(--paper-black)' }}
+              >
+                <span>Difference</span>
+                <StickerLabel
+                  color={closeEnough ? 'mint' : 'cherry'}
+                  size="sm"
+                  tilt={-2}
                 >
-                  {(() => {
-                    const diff = Math.round(parseFloat(input) || 0) - correctTax;
-                    const sign = diff >= 0 ? '+' : '';
-                    return `${sign}$${Math.abs(diff).toLocaleString()}`;
-                  })()}
-                </span>
+                  {diff >= 0 ? '+' : ''}${Math.abs(diff).toLocaleString()}
+                </StickerLabel>
               </div>
             </motion.div>
           )}
         </div>
       </div>
-    </motion.div>
+    </WindowCard>
   );
 }

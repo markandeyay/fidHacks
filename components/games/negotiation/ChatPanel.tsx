@@ -1,87 +1,100 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NegotiationTurn } from '@/types/negotiation';
+import { PaperCard, MarkerText, StickerLabel } from '@/components/paper';
+import { seededTilt } from '@/lib/design/tilt';
 
-interface ChatPanelProps {
+interface Props {
   turns: NegotiationTurn[];
 }
 
-function formatMoney(val: number): string {
-  return val < 1000 ? `$${val.toFixed(2)}/hr` : `$${val.toLocaleString()}`;
-}
+export function ChatPanel({ turns }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
 
-export function ChatPanel({ turns }: ChatPanelProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    if (ref.current) ref.current.scrollTop = ref.current.scrollHeight;
   }, [turns]);
 
-  const qualityBadge = (q?: string) => {
-    if (q === 'strong') return 'badge badge-green';
-    if (q === 'neutral') return 'badge badge-amber';
-    if (q === 'weak') return 'badge badge-red';
-    return '';
-  };
-
-  const qualityLabel = (q?: string) => {
-    if (q === 'strong') return 'Strong';
-    if (q === 'neutral') return 'Neutral';
-    if (q === 'weak') return 'Weak';
-    return '';
-  };
-
   return (
-    <div ref={scrollRef} className="h-96 overflow-y-auto card divide-y divide-border-default">
-      {turns.length === 0 && (
-        <div className="p-8 text-center text-text-muted text-sm">
-          Waiting for the recruiter to speak...
-        </div>
-      )}
-
-      {turns.map((turn, i) => {
-        const isPlayer = turn.speaker === 'player';
-        return (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25 }}
-            className={isPlayer ? 'bg-fid-green-light/30' : ''}
-          >
-            <div className="p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className={`text-sm font-bold ${isPlayer ? 'text-fid-green' : 'text-accent-blue'}`}>
-                  {isPlayer ? 'You' : 'Recruiter'}
-                </span>
-                {isPlayer && turn.moveQuality && (
-                  <span className={qualityBadge(turn.moveQuality)}>{qualityLabel(turn.moveQuality)}</span>
-                )}
-                {turn.currentOffer !== undefined && (
-                  <span className="ml-auto text-sm font-bold text-text-heading">
-                    {formatMoney(turn.currentOffer)}
-                  </span>
-                )}
+    <div
+      ref={ref}
+      style={{
+        background: 'var(--paper-cream)',
+        border: '3px solid var(--paper-black)',
+        boxShadow: '4px 4px 0 var(--paper-black)',
+        padding: 18,
+        minHeight: 360,
+        maxHeight: 460,
+        overflowY: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 16,
+      }}
+    >
+      <AnimatePresence initial={false}>
+        {turns.map((turn, idx) => {
+          const isPlayer = turn.speaker === 'player';
+          const tilt = seededTilt(`${turn.speaker}-${idx}-${turn.text.slice(0, 8)}`, 2);
+          return (
+            <motion.div
+              key={`${idx}-${turn.speaker}`}
+              initial={{ opacity: 0, y: -20, rotate: 0 }}
+              animate={{ opacity: 1, y: 0, rotate: tilt }}
+              transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+              style={{ display: 'flex', justifyContent: isPlayer ? 'flex-end' : 'flex-start' }}
+            >
+              <div style={{ maxWidth: '85%' }}>
+                <div style={{ display: 'flex', justifyContent: isPlayer ? 'flex-end' : 'flex-start', marginBottom: 4 }}>
+                  <StickerLabel
+                    color={isPlayer ? 'yellow' : 'cobalt'}
+                    size="sm"
+                    tilt={isPlayer ? 3 : -3}
+                  >
+                    {isPlayer ? 'YOU' : 'ALEX (RECRUITER)'}
+                  </StickerLabel>
+                </div>
+                <PaperCard
+                  color={isPlayer ? 'yellow' : 'cream'}
+                  tilt={0}
+                  hover={false}
+                  tape={idx % 3 === 0 ? (isPlayer ? 'tr' : 'tl') : 'none'}
+                  tapeColor={isPlayer ? 'cream' : 'coral'}
+                  style={{ padding: '14px 16px' }}
+                >
+                  <p style={{ margin: 0, fontFamily: 'var(--font-patrick), cursive', fontSize: 18, lineHeight: 1.35, color: 'var(--paper-black)' }}>
+                    {turn.text}
+                  </p>
+                  {turn.speaker === 'recruiter' && turn.currentOffer !== undefined && (
+                    <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <StickerLabel color="mint" size="sm" tilt={-2}>
+                        OFFER: ${turn.currentOffer < 1000 ? turn.currentOffer.toFixed(2) + '/hr' : turn.currentOffer.toLocaleString()}
+                      </StickerLabel>
+                    </div>
+                  )}
+                  {turn.speaker === 'player' && turn.moveQuality && (
+                    <div style={{ marginTop: 8, display: 'flex', gap: 6 }}>
+                      <StickerLabel
+                        color={turn.moveQuality === 'strong' ? 'mint' : turn.moveQuality === 'weak' ? 'cherry' : 'cream'}
+                        size="sm"
+                        tilt={2}
+                      >
+                        {turn.moveQuality.toUpperCase()} MOVE
+                      </StickerLabel>
+                      {turn.offerDelta !== undefined && turn.offerDelta > 0 && (
+                        <StickerLabel color="yellow" size="sm" tilt={-2}>
+                          +${turn.offerDelta.toLocaleString()}
+                        </StickerLabel>
+                      )}
+                    </div>
+                  )}
+                </PaperCard>
               </div>
-
-              <p className="text-sm text-text-body leading-relaxed">{turn.text}</p>
-
-              {isPlayer && turn.offerDelta && turn.offerDelta !== 0 && (
-                <div className={`mt-2 text-sm font-bold ${turn.offerDelta > 0 ? 'text-fid-green' : 'text-accent-red'}`}>
-                  {turn.offerDelta > 0 ? '+' : ''}{formatMoney(turn.offerDelta)}
-                </div>
-              )}
-
-              {turn.filler && (
-                <div className="mt-2 text-xs text-accent-red font-medium">
-                  Weak move — be more specific next time.
-                </div>
-              )}
-            </div>
-          </motion.div>
-        );
-      })}
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
     </div>
   );
 }

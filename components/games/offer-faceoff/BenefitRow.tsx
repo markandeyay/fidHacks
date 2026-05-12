@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BenefitLineItem } from '@/types/offer';
 import { BenefitCalculator } from './BenefitCalculator';
-import { HelpCircle, CheckCircle2, DollarSign } from 'lucide-react';
+import { StickerLabel } from '@/components/paper';
+import { CheckCircle2 } from 'lucide-react';
 
 interface BenefitRowProps {
   benefit: BenefitLineItem;
@@ -19,13 +20,11 @@ export function BenefitRow({ benefit, playerValue, onChange, isRevealed, index =
   const [inputValue, setInputValue] = useState(
     playerValue !== undefined ? String(playerValue) : ''
   );
-  const [focused, setFocused] = useState(false);
 
   const isCorrect = playerValue !== undefined && Math.abs(playerValue - benefit.trueDollarValue) <= 50;
   const isValued = playerValue !== undefined;
 
   const handleBlur = () => {
-    setFocused(false);
     const num = parseFloat(inputValue);
     if (!isNaN(num) && num >= 0) {
       onChange(num);
@@ -54,48 +53,90 @@ export function BenefitRow({ benefit, playerValue, onChange, isRevealed, index =
         initial={{ opacity: 0, y: 4 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.04, duration: 0.2 }}
-        className={`rounded-lg p-3 transition-all duration-200 ${
-          isCorrect && isRevealed
-            ? 'bg-fid-green-light/50 border border-fid-green/20'
-            : !isCorrect && isRevealed && isValued
-              ? 'bg-red-50/50 border border-accent-red/10'
-              : isValued
-                ? 'bg-bg-subtle border border-transparent'
-                : focused
-                  ? 'bg-bg-subtle border border-fid-green/20'
-                  : 'bg-bg-subtle border border-transparent'
-        }`}
+        style={{
+          background: 'var(--paper-cream)',
+          borderBottom: '2px solid var(--paper-black)',
+          padding: '12px 4px',
+        }}
       >
-        <div className="flex items-center gap-2 mb-1.5">
-          <span className="text-[11px] font-medium text-text-body leading-tight flex-1 min-w-0">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 }}>
+          <span
+            style={{
+              fontFamily: 'var(--font-patrick), cursive',
+              fontSize: 16,
+              lineHeight: 1.2,
+              flex: 1,
+              minWidth: 0,
+              color: 'var(--paper-black)',
+            }}
+          >
             {benefit.label}
           </span>
           <button
             onClick={() => setShowCalculator(true)}
             disabled={isRevealed}
-            className="flex-shrink-0 flex items-center gap-1 text-[10px] font-medium text-fid-green hover:text-fid-green-dark transition-colors px-2 py-1 rounded-full bg-fid-green-light hover:bg-fid-green-light/80 disabled:opacity-40 disabled:cursor-not-allowed"
             title="Open calculator"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              padding: 0,
+              cursor: isRevealed ? 'not-allowed' : 'pointer',
+              opacity: isRevealed ? 0.4 : 1,
+            }}
           >
-            <HelpCircle className="w-3 h-3" />
-            <span className="hidden sm:inline">Calc</span>
+            <StickerLabel color="yellow" size="sm" tilt={-3}>
+              ? Calc
+            </StickerLabel>
           </button>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1">
-            <div className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none">
-              <DollarSign className="w-3.5 h-3.5" />
-            </div>
+        {benefit.rawValue && (
+          <div
+            style={{
+              fontFamily: 'var(--font-mono), monospace',
+              fontSize: 11,
+              color: 'var(--paper-black)',
+              opacity: 0.7,
+              marginBottom: 6,
+            }}
+          >
+            Listed: {benefit.rawValue}
+          </div>
+        )}
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ position: 'relative', flex: 1 }}>
+            <span
+              style={{
+                position: 'absolute',
+                left: 10,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                fontFamily: 'var(--font-mono), monospace',
+                fontSize: 13,
+                color: 'var(--paper-black)',
+                opacity: 0.6,
+                pointerEvents: 'none',
+              }}
+            >
+              $
+            </span>
             <input
               type="number"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onBlur={handleBlur}
               onKeyDown={handleKeyDown}
-              onFocus={() => setFocused(true)}
               disabled={isRevealed}
               placeholder="Enter value"
-              className="input-field text-xs py-2 pl-7 pr-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-bg-subtle"
+              className="input-field"
+              style={{
+                fontFamily: 'var(--font-mono), monospace',
+                fontSize: 13,
+                padding: '8px 10px 8px 22px',
+                width: '100%',
+                opacity: isRevealed ? 0.6 : 1,
+              }}
             />
           </div>
 
@@ -106,9 +147,9 @@ export function BenefitRow({ benefit, playerValue, onChange, isRevealed, index =
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
-                className="flex-shrink-0"
+                style={{ flexShrink: 0 }}
               >
-                <CheckCircle2 className="w-5 h-5 text-fid-green" />
+                <CheckCircle2 className="w-5 h-5" style={{ color: '#1F8A4C' }} />
               </motion.span>
             )}
           </AnimatePresence>
@@ -118,14 +159,28 @@ export function BenefitRow({ benefit, playerValue, onChange, isRevealed, index =
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="mt-1.5 text-[10px] text-fid-green-dark"
+            style={{
+              marginTop: 6,
+              fontFamily: 'var(--font-mono), monospace',
+              fontSize: 11,
+              color: 'var(--paper-black)',
+            }}
           >
             True value: ${benefit.trueDollarValue.toLocaleString()}
           </motion.div>
         )}
 
         {benefit.hint && !isValued && !isRevealed && (
-          <div className="mt-1.5 text-[10px] text-text-muted italic">
+          <div
+            style={{
+              marginTop: 6,
+              fontFamily: 'var(--font-patrick), cursive',
+              fontSize: 12,
+              fontStyle: 'italic',
+              color: 'var(--paper-black)',
+              opacity: 0.7,
+            }}
+          >
             Hint: {benefit.hint}
           </div>
         )}

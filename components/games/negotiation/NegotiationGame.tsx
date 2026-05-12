@@ -7,7 +7,7 @@ import { NegotiationScenario, NegotiationTurn, AvatarEmotion, NegotiationGameSta
 import { scoreNegotiation } from '@/lib/scoring/negotiation';
 import { useSessionStore } from '@/stores/sessionStore';
 import { speakWithGemini, cancelSpeech, ensureVoiceLoaded } from '@/lib/audio/tts';
-import { AvatarStage } from './AvatarStage';
+import { NegotiationAvatar } from '@/components/avatars';
 import { OfferTicker } from './OfferTicker';
 import { ChatPanel } from './ChatPanel';
 import { InputBar } from './InputBar';
@@ -35,12 +35,14 @@ export function NegotiationGame({ scenario }: NegotiationGameProps) {
   const [weakMoveVisible, setWeakMoveVisible] = useState(false);
   const [ttsReady, setTtsReady] = useState(false);
 
+  // Refs for latest values without stale closures
   const turnsRef = useRef(turns);
   turnsRef.current = turns;
   const currentOfferRef = useRef(currentOffer);
   currentOfferRef.current = currentOffer;
   const statusRef = useRef(status);
   statusRef.current = status;
+  const finishInitiatedRef = useRef(false);
 
   // Init session + pre-load voice
   useEffect(() => { initSession(); }, [initSession]);
@@ -70,29 +72,31 @@ export function NegotiationGame({ scenario }: NegotiationGameProps) {
     }
   }, [gamePhase, ttsReady, scenario]);
 
-  // Finish game
-  const finishGame = useCallback(() => {
-    cancelSpeech();
-    const state: NegotiationGameState = {
-      scenario,
-      turns: turnsRef.current,
-      currentOffer: currentOfferRef.current,
-      status: statusRef.current,
-      startedAt,
-    };
-    const score = scoreNegotiation(state);
-    score.sessionId = session?.sessionId || '';
-    addScore(score);
-    router.push('/debrief/negotiation');
-  }, [scenario, startedAt, session, addScore, router]);
-
+  // Finish game — trigger once when status becomes non-active
   useEffect(() => {
-    if (status !== 'active' && gamePhase !== 'finished') {
+    if (status !== 'active' && !finishInitiatedRef.current) {
+      finishInitiatedRef.current = true;
       setGamePhase('finished');
-      const timer = setTimeout(() => finishGame(), 1000);
-      return () => clearTimeout(timer);
+      // Small delay so the user sees the "Computing your score..." screen
+      const timer = setTimeout(() => {
+        cancelSpeech();
+        const state: NegotiationGameState = {
+          scenario,
+          turns: turnsRef.current,
+          currentOffer: currentOfferRef.current,
+          status: statusRef.current,
+          startedAt,
+        };
+        const score = scoreNegotiation(state);
+        addScore({ ...score, sessionId: session?.sessionId ?? '' });
+        router.push('/debrief/negotiation');
+      }, 1800);
+      // Do NOT return a cleanup that clears this timer — it must fire.
+      // Only cleanup on actual unmount is handled by React's default behavior.
+      // We suppress the lint warning by not returning anything.
+      void timer;
     }
-  }, [status, gamePhase, finishGame]);
+  }, [status, scenario, startedAt, session, addScore, router]);
 
   const playerTurnCount = turns.filter((t) => t.speaker === 'player').length;
 
@@ -118,7 +122,11 @@ export function NegotiationGame({ scenario }: NegotiationGameProps) {
         });
         const data = await res.json();
 
-        const newOfferValue = data.newOffer > 0 ? Math.min(data.newOffer, scenario.hiddenCeiling) : currentOfferRef.current;
+        // Safety clamp: never go below current offer, never above ceiling
+        const newOfferValue = Math.max(
+          currentOfferRef.current,
+          Math.min(data.newOffer ?? currentOfferRef.current, scenario.hiddenCeiling)
+        );
         const delta = newOfferValue - currentOfferRef.current;
 
         const updatedPlayerTurn: NegotiationTurn = {
@@ -165,17 +173,23 @@ export function NegotiationGame({ scenario }: NegotiationGameProps) {
 
   // Auto-end at max turns
   useEffect(() => {
-    if (playerTurnCount >= MAX_PLAYER_TURNS && gamePhase === 'playing') setStatus('walked_away');
+    if (playerTurnCount >= MAX_PLAYER_TURNS && gamePhase === 'playing') {
+      setStatus('walked_away');
+    }
   }, [playerTurnCount, gamePhase]);
 
   const handleAccept = useCallback(() => {
     if (isLoading) return;
+    setEmotion('impressed');
+    speakWithGemini("Great, I'll send the paperwork over.");
     setStatus('accepted');
     setTurns((prev) => [...prev, { turnIndex: prev.length, speaker: 'player', text: 'I accept the offer.', moveQuality: 'strong', capitulated: false }]);
   }, [isLoading]);
 
   const handleWalkAway = useCallback(() => {
     if (isLoading) return;
+    setEmotion('closing');
+    speakWithGemini('Understood. Best of luck.');
     setStatus('walked_away');
     setTurns((prev) => [...prev, { turnIndex: prev.length, speaker: 'player', text: 'I respectfully walk away from this offer.', moveQuality: 'strong' }]);
   }, [isLoading]);
@@ -186,48 +200,49 @@ export function NegotiationGame({ scenario }: NegotiationGameProps) {
 
       <AnimatePresence mode="wait">
         {gamePhase === 'intro' && (
-          <motion.div key="intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="flex items-center justify-center py-16">
-            <div className="text-center space-y-4">
-              <div className="text-sm font-medium text-text-muted">
-                {ttsReady ? 'Connecting to recruiter...' : 'Loading voice engine...'}
-              </div>
+          <motion.div key="intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '60px 0' }}>
+            <div style={{ textAlign: 'center', fontFamily: 'var(--font-marker)', fontSize: 22, color: 'var(--paper-cream)' }}>
+              {ttsReady ? 'CONNECTING TO RECRUITER...' : 'LOADING VOICE ENGINE...'}
             </div>
           </motion.div>
         )}
 
         {gamePhase === 'playing' && (
           <motion.div key="playing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
               {/* Sidebar */}
               <div className="md:col-span-1 space-y-4">
-                <div className="card p-4 text-center">
-                  <AvatarStage emotion={emotion} size={140} />
+                <div style={{ background: 'var(--paper-cream)', border: '3px solid var(--paper-black)', boxShadow: '4px 4px 0 var(--paper-black)', padding: 14, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: 'rotate(-1.5deg)' }}>
+                  <NegotiationAvatar emotion={emotion} size={180} />
                 </div>
-                <div className="card p-4">
+                <div style={{ background: 'var(--paper-yellow)', border: '3px solid var(--paper-black)', boxShadow: '4px 4px 0 var(--paper-black)', padding: 4, transform: 'rotate(2deg)' }}>
                   <OfferTicker value={currentOffer} />
                 </div>
-                <div className="card p-3">
-                  <div className="flex items-center justify-between text-xs mb-2">
-                    <span className="text-text-muted">Turn</span>
-                    <span className="font-bold text-text-heading">{playerTurnCount}/{MAX_PLAYER_TURNS}</span>
+                <div style={{ background: 'var(--paper-cream)', border: '3px solid var(--paper-black)', boxShadow: '4px 4px 0 var(--paper-black)', padding: 12, transform: 'rotate(-1deg)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12, marginBottom: 6 }}>
+                    <span>TURN</span><span><strong>{playerTurnCount}</strong>/{MAX_PLAYER_TURNS}</span>
                   </div>
                   <div className="progress-bar">
                     <div className="progress-bar-fill" style={{ width: `${(playerTurnCount / MAX_PLAYER_TURNS) * 100}%` }} />
                   </div>
-                  {scenario.hasEquity && (
-                    <div className="mt-2 badge badge-green text-[10px]">Equity on table</div>
-                  )}
-                  {emotion !== 'neutral' && (
-                    <div className="mt-1 badge badge-blue text-[10px] capitalize">
-                      {emotion.replace('_', ' ')}
-                    </div>
-                  )}
+                  <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                    {scenario.hasEquity && (
+                      <span className="badge badge-green">EQUITY</span>
+                    )}
+                    {emotion !== 'neutral' && (
+                      <span className="badge badge-blue">{emotion.replace('_', ' ').toUpperCase()}</span>
+                    )}
+                  </div>
                 </div>
               </div>
 
               {/* Main */}
               <div className="md:col-span-3 space-y-4 flex flex-col">
+                {playerTurnCount >= MAX_PLAYER_TURNS - 1 && playerTurnCount < MAX_PLAYER_TURNS && gamePhase === 'playing' && (
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <span className="badge badge-amber" style={{ fontSize: 13 }}>⚠ FINAL ROUND</span>
+                  </div>
+                )}
                 <ChatPanel turns={turns} />
                 <InputBar
                   onSend={handleSend}
@@ -242,13 +257,12 @@ export function NegotiationGame({ scenario }: NegotiationGameProps) {
         )}
 
         {gamePhase === 'finished' && (
-          <motion.div key="finished" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="flex items-center justify-center py-16">
-            <div className="text-center space-y-3">
-              <div className="text-lg font-bold text-fid-green">
-                {status === 'accepted' ? 'Offer Accepted' : 'Negotiation Ended'}
+          <motion.div key="finished" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '60px 0' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: 'var(--font-marker)', fontSize: 36, color: 'var(--paper-yellow)' }}>
+                {status === 'accepted' ? 'OFFER ACCEPTED!' : 'NEGOTIATION ENDED'}
               </div>
-              <div className="text-sm text-text-muted">Computing your score...</div>
+              <div style={{ marginTop: 8, fontFamily: 'var(--font-patrick)', fontSize: 18, color: 'var(--paper-cream)' }}>Computing your score...</div>
             </div>
           </motion.div>
         )}

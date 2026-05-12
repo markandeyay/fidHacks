@@ -2,26 +2,32 @@
 
 import { useState, useEffect } from 'react';
 import { GameShell } from '@/components/shared/GameShell';
-import { DifficultyPicker } from '@/components/shared/DifficultyPicker';
+import { GameIntro } from '@/components/shared/GameIntro';
 import { NegotiationGame } from '@/components/games/negotiation/NegotiationGame';
 import { loadScenario } from '@/lib/ai/scenarios';
 import { NegotiationScenario } from '@/types/negotiation';
 import { Difficulty } from '@/types/game';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MessageSquare } from 'lucide-react';
 
 export default function NegotiationPage() {
   const [phase, setPhase] = useState<'picking' | 'loading' | 'intro' | 'playing'>('picking');
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [scenario, setScenario] = useState<NegotiationScenario | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSelect = async (d: Difficulty) => {
     setDifficulty(d);
+    setError(null);
     setPhase('loading');
     try {
       const s = await loadScenario<NegotiationScenario>('negotiation', d);
       setScenario(s);
       setPhase('intro');
-    } catch { setPhase('picking'); }
+    } catch {
+      setError('Failed to load scenario. Please try again.');
+      setPhase('picking');
+    }
   };
 
   useEffect(() => {
@@ -35,14 +41,17 @@ export default function NegotiationPage() {
     <GameShell title="Negotiation Room">
       <AnimatePresence mode="wait">
         {phase === 'picking' && (
-          <motion.div key="picker" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="max-w-2xl mx-auto space-y-8">
-            <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold text-text-heading">Choose Your Level</h2>
-              <p className="text-text-muted">Select a difficulty to begin the salary negotiation simulation.</p>
-            </div>
-            <DifficultyPicker selected={difficulty} onSelect={handleSelect} />
-          </motion.div>
+          <GameIntro
+            key="picker"
+            icon={<MessageSquare className="w-8 h-8 text-fid-green" />}
+            title="Negotiation Room"
+            description="Talk salary with an AI recruiter. Win the offer."
+            selected={difficulty}
+            onSelect={handleSelect}
+            loading={false}
+            error={error}
+            onRetry={() => difficulty && handleSelect(difficulty)}
+          />
         )}
 
         {phase === 'loading' && (

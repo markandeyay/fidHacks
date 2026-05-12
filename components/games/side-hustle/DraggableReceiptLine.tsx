@@ -30,9 +30,10 @@ export function DraggableReceiptLine({ item }: DraggableReceiptLineProps) {
           <div
             {...attributes}
             {...listeners}
-            className="p-0.5 hover:bg-fid-green-light rounded cursor-grab active:cursor-grabbing select-none"
+            className="p-0.5 cursor-grab active:cursor-grabbing select-none"
+            style={{ color: 'var(--paper-black)' }}
           >
-            <GripVertical className="w-4 h-4 text-text-muted group-hover:text-fid-green transition-colors" />
+            <GripVertical className="w-4 h-4" />
           </div>
         }
       />

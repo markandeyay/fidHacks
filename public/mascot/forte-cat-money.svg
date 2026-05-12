@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280">
+  <rect x="80" y="6" width="80" height="18" fill="#A8D5A2" opacity="0.7" stroke="#0A0A0A" stroke-width="1.5" transform="rotate(-4 120 15)"/>
+  <polygon points="120,30 60,90 30,80 50,150 70,180 120,210 170,180 190,150 210,80 180,90" fill="#0A0A0A"/>
+  <polygon points="70,80 60,15 100,75" fill="#0A0A0A"/>
+  <polygon points="170,80 180,15 140,75" fill="#0A0A0A"/>
+  <ellipse cx="120" cy="130" rx="55" ry="55" fill="#F5EBD8"/>
+  <ellipse cx="98" cy="125" rx="22" ry="18" fill="none" stroke="#1F3FAF" stroke-width="5"/>
+  <ellipse cx="142" cy="125" rx="22" ry="18" fill="none" stroke="#1F3FAF" stroke-width="5"/>
+  <rect x="116" y="122" width="8" height="5" fill="#1F3FAF"/>
+  <!-- $ eyes -->
+  <text x="98" y="135" text-anchor="middle" font-family="Impact, sans-serif" font-size="22" fill="#6BAE5C" font-weight="bold">$</text>
+  <text x="142" y="135" text-anchor="middle" font-family="Impact, sans-serif" font-size="22" fill="#6BAE5C" font-weight="bold">$</text>
+  <polygon points="115,150 125,150 120,158" fill="#F4A0A0" stroke="#0A0A0A" stroke-width="1.5"/>
+  <path d="M 100 168 Q 120 184 140 168" fill="none" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round"/>
+  <rect x="100" y="220" width="40" height="50" fill="#FFD93D" stroke="#0A0A0A" stroke-width="3"/>
+  <!-- Sparkles -->
+  <polygon points="35,40 38,48 46,48 39,53 42,62 35,57 28,62 31,53 24,48 32,48" fill="#FFD93D" stroke="#0A0A0A" stroke-width="1.5"/>
+  <polygon points="205,40 208,48 216,48 209,53 212,62 205,57 198,62 201,53 194,48 202,48" fill="#FFD93D" stroke="#0A0A0A" stroke-width="1.5"/>
+  <polygon points="120,260 123,268 131,268 124,273 127,282 120,277 113,282 116,273 109,268 117,268" fill="#FFD93D" stroke="#0A0A0A" stroke-width="1.5"/>
+</svg>

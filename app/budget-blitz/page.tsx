@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { GameShell } from '@/components/shared/GameShell';
-import { DifficultyPicker } from '@/components/shared/DifficultyPicker';
+import { GameIntro } from '@/components/shared/GameIntro';
 import { BudgetBlitzGame } from '@/components/games/budget-blitz/BudgetBlitzGame';
 import { loadScenario } from '@/lib/ai/scenarios';
 import { BudgetBlitzScenario, ChaosCard } from '@/types/budget';
 import { Difficulty } from '@/types/game';
-import { motion, AnimatePresence } from 'framer-motion';
-import { DollarSign, Loader2 } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { DollarSign } from 'lucide-react';
 
 function buildPersonalScenario(
   difficulty: Difficulty,
@@ -126,40 +126,19 @@ export default function BudgetBlitzPage() {
     >
       <AnimatePresence mode="wait">
         {!scenario ? (
-          <motion.div
+          <GameIntro
             key="setup"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            className="max-w-2xl mx-auto space-y-8"
-          >
-            <div className="card p-6 space-y-8 animate-fade-in">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-fid-green-light flex items-center justify-center">
-                  <DollarSign className="w-5 h-5 text-fid-green" />
-                </div>
-                <div>
-                  <h2 className="text-base font-bold text-text-heading">
-                    Budget Blitz
-                  </h2>
-                  <p className="text-sm text-text-muted">
-                    Allocate your monthly income across categories before the
-                    timer expires. Drag income tiles into buckets. Chaos events
-                    will test your buffer. Survive the month.
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-text-heading mb-3">
-                  Select Difficulty
-                </label>
-                <DifficultyPicker
-                  selected={difficulty}
-                  onSelect={setDifficulty}
-                />
-              </div>
-
+            icon={<DollarSign className="w-8 h-8 text-fid-green" />}
+            title="Budget Blitz"
+            description="Allocate your monthly income across categories before the timer expires."
+            selected={difficulty}
+            onSelect={setDifficulty}
+            loading={loading}
+            error={error}
+            ctaLabel="Run My Month"
+            onCta={startGame}
+            ctaDisabled={!difficulty || loading}
+            extra={
               <div className="border-t border-border-default pt-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -240,29 +219,8 @@ export default function BudgetBlitzPage() {
                   )}
                 </AnimatePresence>
               </div>
-
-              {error && (
-                <div className="badge badge-red text-xs p-3 rounded-lg">
-                  {error}
-                </div>
-              )}
-
-              <button
-                onClick={startGame}
-                disabled={!difficulty || loading}
-                className="btn-primary w-full flex items-center justify-center gap-2"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Loading...
-                  </>
-                ) : (
-                  'Run My Month'
-                )}
-              </button>
-            </div>
-          </motion.div>
+            }
+          />
         ) : (
           <motion.div
             key="game"

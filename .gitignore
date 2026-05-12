@@ -1,4 +1,11 @@
 node_modules/
 .next/
 .env.local
+.env*.local
+dev.out
+dev.err
+e2e-screenshots/
+avatar-screenshots/
+frontend-screenshots/
+coverage/
 *.tsbuildinfo

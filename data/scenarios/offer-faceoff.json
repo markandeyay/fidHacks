@@ -4,7 +4,7 @@
       "difficulty": "freshman",
       "offerA": {
         "id": "ofa-f1a",
-        "company": "Campus Café",
+        "company": "Campus Cafe",
         "role": "Shift Supervisor",
         "benefits": [
           { "id": "b1", "type": "base_salary", "label": "$15/hour, 20 hrs/week", "rawValue": "$15/hour", "formula": "15 * 20 * 52", "trueDollarValue": 15600 },
@@ -24,7 +24,57 @@
         "trueTotalCompYear1": 17225
       },
       "optimalChoice": "A",
-      "optimalReasoning": "Campus Café offers guaranteed income plus free meals. City Diner's tips are variable and unreliable."
+      "optimalReasoning": "Campus Cafe offers guaranteed income plus free meals. City Diner's tips are variable and unreliable."
+    },
+    {
+      "difficulty": "freshman",
+      "offerA": {
+        "id": "ofa-f2a",
+        "company": "Starlight Cinemas",
+        "role": "Usher",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$10/hour, 20 hrs/week", "rawValue": "$10/hour", "formula": "10 * 20 * 52", "trueDollarValue": 10400 },
+          { "id": "b2", "type": "food", "label": "Free popcorn and soda during shifts", "rawValue": "$5/shift", "formula": "5 * 3 * 52", "trueDollarValue": 780 }
+        ],
+        "trueTotalCompYear1": 11180
+      },
+      "offerB": {
+        "id": "ofb-f2b",
+        "company": "GreenMart",
+        "role": "Bagger",
+        "benefits": [
+          { "id": "b3", "type": "base_salary", "label": "$12/hour, 22 hrs/week", "rawValue": "$12/hour", "formula": "12 * 22 * 52", "trueDollarValue": 13728 },
+          { "id": "b4", "type": "food", "label": "15% employee discount, estimated $20/week savings", "rawValue": "15%", "formula": "20 * 52", "trueDollarValue": 1040 }
+        ],
+        "trueTotalCompYear1": 14768
+      },
+      "optimalChoice": "B",
+      "optimalReasoning": "GreenMart pays a higher hourly wage and offers a meaningful employee discount on groceries."
+    },
+    {
+      "difficulty": "freshman",
+      "offerA": {
+        "id": "ofa-f3a",
+        "company": "FitLife Gym",
+        "role": "Front Desk",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$14/hour, 18 hrs/week", "rawValue": "$14/hour", "formula": "14 * 18 * 52", "trueDollarValue": 13104 },
+          { "id": "b2", "type": "wellness_stipend", "label": "Free gym membership valued at $35/month", "rawValue": "$35/mo", "formula": "35 * 12", "trueDollarValue": 420 }
+        ],
+        "trueTotalCompYear1": 13524
+      },
+      "offerB": {
+        "id": "ofb-f3b",
+        "company": "SupportCall Inc",
+        "role": "Call Center Rep",
+        "benefits": [
+          { "id": "b3", "type": "base_salary", "label": "$15/hour, 15 hrs/week", "rawValue": "$15/hour", "formula": "15 * 15 * 52", "trueDollarValue": 11700 },
+          { "id": "b4", "type": "commuter_benefit", "label": "$25/month transit subsidy", "rawValue": "$25/mo", "formula": "25 * 12", "trueDollarValue": 300 }
+        ],
+        "trueTotalCompYear1": 12000
+      },
+      "optimalChoice": "A",
+      "optimalReasoning": "FitLife Gym provides a higher effective wage plus a valuable free gym membership."
     }
   ],
   "sophomore": [
@@ -54,6 +104,57 @@
       },
       "optimalChoice": "A",
       "optimalReasoning": "TechTutors has higher total comp due to tuition reimbursement and remote stipend."
+    },
+    {
+      "difficulty": "sophomore",
+      "offerA": {
+        "id": "ofa-s2a",
+        "company": "State University Research",
+        "role": "Research Assistant",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$22/hour, 10 hrs/week", "rawValue": "$22/hour", "formula": "22 * 10 * 52", "trueDollarValue": 11440 },
+          { "id": "b2", "type": "tuition_reimbursement", "label": "$300/semester tuition help", "rawValue": "$300/sem", "formula": "300 * 2", "trueDollarValue": 600 }
+        ],
+        "trueTotalCompYear1": 12040
+      },
+      "offerB": {
+        "id": "ofb-s2b",
+        "company": "DevSide Hustle",
+        "role": "Freance Web Developer",
+        "benefits": [
+          { "id": "b3", "type": "base_salary", "label": "$35/hour, 8 hrs/week", "rawValue": "$35/hour", "formula": "35 * 8 * 52", "trueDollarValue": 14560 },
+          { "id": "b4", "type": "remote_stipend", "label": "$75/month internet stipend", "rawValue": "$75/mo", "formula": "75 * 12", "trueDollarValue": 900 }
+        ],
+        "trueTotalCompYear1": 15460
+      },
+      "optimalChoice": "B",
+      "optimalReasoning": "Freelance web development pays a significantly higher hourly rate and includes a remote work stipend."
+    },
+    {
+      "difficulty": "sophomore",
+      "offerA": {
+        "id": "ofa-s3a",
+        "company": "BioLab Sciences",
+        "role": "Lab Assistant",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$24/hour, 14 hrs/week", "rawValue": "$24/hour", "formula": "24 * 14 * 52", "trueDollarValue": 17472 },
+          { "id": "b2", "type": "commuter_benefit", "label": "$40/month transit pass", "rawValue": "$40/mo", "formula": "40 * 12", "trueDollarValue": 480 },
+          { "id": "b3", "type": "wellness_stipend", "label": "$250/year wellness budget", "rawValue": "$250/yr", "formula": "250", "trueDollarValue": 250 }
+        ],
+        "trueTotalCompYear1": 18202
+      },
+      "offerB": {
+        "id": "ofb-s3b",
+        "company": "TrendMedia Agency",
+        "role": "Social Media Manager",
+        "benefits": [
+          { "id": "b4", "type": "base_salary", "label": "$20/hour, 15 hrs/week", "rawValue": "$20/hour", "formula": "20 * 15 * 52", "trueDollarValue": 15600 },
+          { "id": "b5", "type": "remote_stipend", "label": "$50/month remote work stipend", "rawValue": "$50/mo", "formula": "50 * 12", "trueDollarValue": 600 }
+        ],
+        "trueTotalCompYear1": 16200
+      },
+      "optimalChoice": "A",
+      "optimalReasoning": "BioLab Sciences offers more hours at a higher rate plus commuter and wellness benefits."
     }
   ],
   "junior": [
@@ -83,6 +184,60 @@
       },
       "optimalChoice": "B",
       "optimalReasoning": "Analytics Pro is a full-time role with benefits. The 401k match and health insurance add significant value."
+    },
+    {
+      "difficulty": "junior",
+      "offerA": {
+        "id": "ofa-j2a",
+        "company": "Meridian Financial",
+        "role": "Junior Financial Analyst",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$58,000/year", "rawValue": "$58,000", "formula": "58000", "trueDollarValue": 58000 },
+          { "id": "b2", "type": "401k_match", "label": "50% match up to 4%", "rawValue": "50% up to 4%", "formula": "58000 * 0.04 * 0.5", "trueDollarValue": 1160 },
+          { "id": "b3", "type": "health_insurance", "label": "75% premium covered", "rawValue": "75%", "formula": "450 * 12 * 0.75", "trueDollarValue": 4050 }
+        ],
+        "trueTotalCompYear1": 63210
+      },
+      "offerB": {
+        "id": "ofb-j2b",
+        "company": "Creative Studio",
+        "role": "Graphic Design Intern",
+        "benefits": [
+          { "id": "b4", "type": "base_salary", "label": "$22/hour, 40 hrs/week, 12 weeks", "rawValue": "$22/hour", "formula": "22 * 40 * 12", "trueDollarValue": 10560 },
+          { "id": "b5", "type": "housing_stipend", "label": "$2,000 housing stipend", "rawValue": "$2,000", "formula": "2000", "trueDollarValue": 2000 },
+          { "id": "b6", "type": "wellness_stipend", "label": "$500 wellness budget", "rawValue": "$500", "formula": "500", "trueDollarValue": 500 }
+        ],
+        "trueTotalCompYear1": 13060
+      },
+      "optimalChoice": "A",
+      "optimalReasoning": "Meridian Financial is a full-time salaried position with a 401k match and health insurance."
+    },
+    {
+      "difficulty": "junior",
+      "offerA": {
+        "id": "ofa-j3a",
+        "company": "Precision Accounting",
+        "role": "Accounting Intern",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$26/hour, 40 hrs/week, 14 weeks", "rawValue": "$26/hour", "formula": "26 * 40 * 14", "trueDollarValue": 14560 },
+          { "id": "b2", "type": "housing_stipend", "label": "$2,000 housing stipend", "rawValue": "$2,000", "formula": "2000", "trueDollarValue": 2000 },
+          { "id": "b3", "type": "commuter_benefit", "label": "$300 total commuter benefit", "rawValue": "$300", "formula": "300", "trueDollarValue": 300 }
+        ],
+        "trueTotalCompYear1": 16860
+      },
+      "offerB": {
+        "id": "ofb-j3b",
+        "company": " Apex Sales Group",
+        "role": "Junior Sales Rep",
+        "benefits": [
+          { "id": "b4", "type": "base_salary", "label": "$45,000/year", "rawValue": "$45,000", "formula": "45000", "trueDollarValue": 45000 },
+          { "id": "b5", "type": "annual_bonus", "label": "10% performance bonus", "rawValue": "10%", "formula": "45000 * 0.10", "trueDollarValue": 4500 },
+          { "id": "b6", "type": "401k_match", "label": "25% match up to 6%", "rawValue": "25% up to 6%", "formula": "45000 * 0.06 * 0.25", "trueDollarValue": 675 }
+        ],
+        "trueTotalCompYear1": 50175
+      },
+      "optimalChoice": "B",
+      "optimalReasoning": "Apex Sales Group offers a full-time base salary plus a performance bonus and 401k match."
     }
   ],
   "senior": [
@@ -112,10 +267,78 @@
           { "id": "b8", "type": "remote_stipend", "label": "$300/month remote stipend", "rawValue": "$300/mo", "formula": "300 * 12", "trueDollarValue": 3600 },
           { "id": "b9", "type": "pto_days", "label": "Unlimited PTO (estimated 15 days used)", "rawValue": "Unlimited", "formula": "95000 / 260 * 15", "trueDollarValue": 5481 }
         ],
+        "vesting": { "totalShares": 500, "pricePerShare": 100, "cliffMonths": 12, "totalMonths": 48 },
         "trueTotalCompYear1": 129081
       },
       "optimalChoice": "A",
       "optimalReasoning": "CloudNine offers higher guaranteed compensation with better benefits. StartupRocket's equity is risky and illiquid."
+    },
+    {
+      "difficulty": "senior",
+      "offerA": {
+        "id": "ofa-se2a",
+        "company": "Stability Corp",
+        "role": "Software Engineer",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$110,000 base salary", "rawValue": "$110,000", "formula": "110000", "trueDollarValue": 110000 },
+          { "id": "b2", "type": "signing_bonus", "label": "$8,000 signing bonus", "rawValue": "$8,000", "formula": "8000", "trueDollarValue": 8000 },
+          { "id": "b3", "type": "rsu_grant", "label": "$20,000 RSUs vesting over 4 years", "rawValue": "$20,000", "formula": "20000 / 4", "trueDollarValue": 5000 },
+          { "id": "b4", "type": "401k_match", "label": "50% match up to 4%", "rawValue": "50% up to 4%", "formula": "110000 * 0.04 * 0.5", "trueDollarValue": 2200 },
+          { "id": "b5", "type": "health_insurance", "label": "100% premium covered", "rawValue": "100%", "formula": "480 * 12", "trueDollarValue": 5760 }
+        ],
+        "vesting": { "totalShares": 100, "pricePerShare": 200, "cliffMonths": 12, "totalMonths": 48 },
+        "trueTotalCompYear1": 130960
+      },
+      "offerB": {
+        "id": "ofb-se2b",
+        "company": "GrowthTech Inc",
+        "role": "Senior Software Engineer",
+        "benefits": [
+          { "id": "b6", "type": "base_salary", "label": "$115,000 base salary", "rawValue": "$115,000", "formula": "115000", "trueDollarValue": 115000 },
+          { "id": "b7", "type": "signing_bonus", "label": "$10,000 signing bonus", "rawValue": "$10,000", "formula": "10000", "trueDollarValue": 10000 },
+          { "id": "b8", "type": "rsu_grant", "label": "$32,000 RSUs vesting over 4 years", "rawValue": "$32,000", "formula": "32000 / 4", "trueDollarValue": 8000 },
+          { "id": "b9", "type": "401k_match", "label": "100% match up to 3%", "rawValue": "100% up to 3%", "formula": "115000 * 0.03", "trueDollarValue": 3450 },
+          { "id": "b10", "type": "health_insurance", "label": "90% premium covered", "rawValue": "90%", "formula": "520 * 12 * 0.9", "trueDollarValue": 5616 }
+        ],
+        "vesting": { "totalShares": 160, "pricePerShare": 200, "cliffMonths": 12, "totalMonths": 48 },
+        "trueTotalCompYear1": 142066
+      },
+      "optimalChoice": "B",
+      "optimalReasoning": "GrowthTech Inc offers a higher base salary, larger RSU grant, and a competitive 401k match."
+    },
+    {
+      "difficulty": "senior",
+      "offerA": {
+        "id": "ofa-se3a",
+        "company": "FinTech Giant",
+        "role": "Software Engineer II",
+        "benefits": [
+          { "id": "b1", "type": "base_salary", "label": "$130,000 base salary", "rawValue": "$130,000", "formula": "130000", "trueDollarValue": 130000 },
+          { "id": "b2", "type": "signing_bonus", "label": "$20,000 signing bonus", "rawValue": "$20,000", "formula": "20000", "trueDollarValue": 20000 },
+          { "id": "b3", "type": "rsu_grant", "label": "$50,000 RSUs vesting over 4 years", "rawValue": "$50,000", "formula": "50000 / 4", "trueDollarValue": 12500 },
+          { "id": "b4", "type": "401k_match", "label": "100% match up to 5%", "rawValue": "100% up to 5%", "formula": "130000 * 0.05", "trueDollarValue": 6500 },
+          { "id": "b5", "type": "health_insurance", "label": "100% premium covered", "rawValue": "100%", "formula": "600 * 12", "trueDollarValue": 7200 }
+        ],
+        "vesting": { "totalShares": 250, "pricePerShare": 200, "cliffMonths": 12, "totalMonths": 48 },
+        "trueTotalCompYear1": 176200
+      },
+      "offerB": {
+        "id": "ofb-se3b",
+        "company": "StratConsult Partners",
+        "role": "Junior Consultant",
+        "benefits": [
+          { "id": "b6", "type": "base_salary", "label": "$125,000 base salary", "rawValue": "$125,000", "formula": "125000", "trueDollarValue": 125000 },
+          { "id": "b7", "type": "signing_bonus", "label": "$12,000 signing bonus", "rawValue": "$12,000", "formula": "12000", "trueDollarValue": 12000 },
+          { "id": "b8", "type": "rsu_grant", "label": "$36,000 RSUs vesting over 4 years", "rawValue": "$36,000", "formula": "36000 / 4", "trueDollarValue": 9000 },
+          { "id": "b9", "type": "401k_match", "label": "50% match up to 6%", "rawValue": "50% up to 6%", "formula": "125000 * 0.06 * 0.5", "trueDollarValue": 3750 },
+          { "id": "b10", "type": "health_insurance", "label": "100% premium covered", "rawValue": "100%", "formula": "580 * 12", "trueDollarValue": 6960 },
+          { "id": "b11", "type": "annual_bonus", "label": "5% annual performance bonus", "rawValue": "5%", "formula": "125000 * 0.05", "trueDollarValue": 6250 }
+        ],
+        "vesting": { "totalShares": 180, "pricePerShare": 200, "cliffMonths": 12, "totalMonths": 48 },
+        "trueTotalCompYear1": 162960
+      },
+      "optimalChoice": "A",
+      "optimalReasoning": "FinTech Giant provides a higher base salary, larger signing bonus, more valuable RSU grant, and a superior 401k match."
     }
   ]
 }

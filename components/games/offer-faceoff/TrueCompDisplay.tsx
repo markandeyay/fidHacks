@@ -30,11 +30,35 @@ export function TrueCompDisplay({ total, label = 'Total Compensation' }: TrueCom
   }).format(displayValue);
 
   return (
-    <div className="flex items-center justify-between">
-      <span className="text-xs font-medium text-text-muted">{label}</span>
-      <span className="text-lg font-extrabold text-fid-green tracking-tight">
+    <div
+      style={{
+        background: 'var(--paper-yellow)',
+        border: '3px solid var(--paper-black)',
+        boxShadow: '4px 4px 0 var(--paper-black)',
+        padding: 14,
+        textAlign: 'center',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: 'var(--font-marker), Impact, sans-serif',
+          fontSize: 14,
+          letterSpacing: 1,
+          textTransform: 'uppercase',
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          fontFamily: 'var(--font-mono), monospace',
+          fontSize: 28,
+          fontWeight: 700,
+          marginTop: 4,
+        }}
+      >
         {formattedValue}
-      </span>
+      </div>
     </div>
   );
 }

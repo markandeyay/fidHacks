@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Clock } from 'lucide-react';
+import { PaperCard } from '@/components/paper';
 
 interface VestingSchedule {
   totalShares: number;
@@ -37,15 +37,29 @@ export function EquityTimeline({ vesting }: EquityTimelineProps) {
   const progressPct = (month / vesting.totalMonths) * 100;
 
   return (
-    <div>
-      <div className="flex items-center gap-2 mb-3">
-        <TrendingUp className="w-4 h-4 text-fid-green" />
-        <span className="text-xs font-semibold uppercase tracking-wider text-text-body">
-          Equity Vesting
-        </span>
+    <PaperCard color="cream" tilt={0} hover={false} grainy={false} style={{ padding: 12 }}>
+      <div
+        style={{
+          fontFamily: 'var(--font-marker), Impact, sans-serif',
+          fontSize: 14,
+          letterSpacing: 1,
+          textTransform: 'uppercase',
+          marginBottom: 10,
+        }}
+      >
+        Equity Vesting
       </div>
 
-      <div className="bg-bg-subtle rounded-lg border border-border-default p-3 mb-3 max-h-28 overflow-y-auto">
+      <div
+        style={{
+          background: 'var(--paper-cream)',
+          border: '2px solid var(--paper-black)',
+          padding: 8,
+          marginBottom: 10,
+          maxHeight: 120,
+          overflowY: 'auto',
+        }}
+      >
         {milestones.map((m) => {
           const shares =
             m < vesting.cliffMonths
@@ -57,34 +71,65 @@ export function EquityTimeline({ vesting }: EquityTimelineProps) {
             <button
               key={m}
               onClick={() => setMonth(m)}
-              className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] transition-colors ${
-                isActive
-                  ? 'bg-fid-green-light text-fid-green-dark font-medium'
-                  : 'text-text-muted hover:bg-white'
-              }`}
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '6px 8px',
+                fontFamily: 'var(--font-mono), monospace',
+                fontSize: 11,
+                background: isActive ? 'var(--paper-yellow)' : 'transparent',
+                border: isActive ? '2px solid var(--paper-black)' : '2px solid transparent',
+                color: 'var(--paper-black)',
+                cursor: 'pointer',
+                marginBottom: 2,
+              }}
             >
-              <div className="flex items-center gap-2">
-                <Clock className="w-3 h-3" />
-                <span>Month {m}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="tabular-nums">{shares.toLocaleString()} shares</span>
-                <span className="tabular-nums font-medium">
-                  ${val.toLocaleString()}
-                </span>
-              </div>
+              <span>Month {m}</span>
+              <span>
+                {shares.toLocaleString()} sh &middot; ${val.toLocaleString()}
+              </span>
             </button>
           );
         })}
       </div>
 
-      <div className="mb-2">
-        <div className="flex justify-between text-[10px] text-text-muted mb-1.5 font-medium">
+      <div style={{ marginBottom: 8 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontFamily: 'var(--font-mono), monospace',
+            fontSize: 10,
+            marginBottom: 6,
+          }}
+        >
           <span>M0</span>
-          <span className="text-fid-green font-semibold">M{month}</span>
+          <span style={{ fontWeight: 700 }}>M{month}</span>
           <span>M{vesting.totalMonths}</span>
         </div>
-        <div className="relative">
+        <div
+          style={{
+            position: 'relative',
+            background: 'var(--paper-cream)',
+            border: '2px solid var(--paper-black)',
+            height: 14,
+            padding: 0,
+          }}
+        >
+          <div
+            aria-hidden
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              width: `${progressPct}%`,
+              background: 'var(--paper-yellow)',
+              borderRight: progressPct > 0 && progressPct < 100 ? '2px solid var(--paper-black)' : 'none',
+            }}
+          />
           <input
             type="range"
             min={0}
@@ -92,28 +137,41 @@ export function EquityTimeline({ vesting }: EquityTimelineProps) {
             step={1}
             value={month}
             onChange={(e) => setMonth(parseInt(e.target.value))}
-            className="w-full h-2 rounded-full appearance-none cursor-pointer bg-border-default"
             style={{
-              background: `linear-gradient(to right, #009A44 0%, #009A44 ${progressPct}%, #E2E8F0 ${progressPct}%, #E2E8F0 100%)`,
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              opacity: 0,
+              cursor: 'pointer',
+              margin: 0,
+              padding: 0,
             }}
           />
         </div>
       </div>
 
       <motion.div
-        className="flex items-center justify-between bg-fid-green-light rounded-lg px-3 py-2.5"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          background: 'var(--paper-yellow)',
+          border: '2px solid var(--paper-black)',
+          padding: '8px 10px',
+        }}
         key={value}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.2 }}
       >
-        <span className="text-xs text-fid-green-dark">
+        <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: 12 }}>
           {vestedShares.toLocaleString()} shares @ ${vesting.pricePerShare}
         </span>
-        <span className="text-sm font-bold text-fid-green">
+        <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: 14, fontWeight: 700 }}>
           ${value.toLocaleString()}
         </span>
       </motion.div>
-    </div>
+    </PaperCard>
   );
 }

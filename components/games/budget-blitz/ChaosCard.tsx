@@ -2,56 +2,67 @@
 
 import { motion } from 'framer-motion';
 import { ChaosCard as ChaosCardType } from '@/types/budget';
-import { AlertTriangle, ArrowRight } from 'lucide-react';
+import { WindowCard, PaperButton, StickerLabel } from '@/components/paper';
 
-interface ChaosCardOverlayProps {
+const TAG_VARIANT: Record<string, 'warning' | 'error' | 'cost' | 'info'> = {
+  general: 'warning',
+  gendered: 'cost',
+  health: 'error',
+  emergency: 'error',
+};
+
+const TAG_TITLE: Record<string, string> = {
+  general: 'ERROR',
+  gendered: 'COSTS TOO MUCH!',
+  health: 'ALERT',
+  emergency: 'EMERGENCY',
+};
+
+interface Props {
   card: ChaosCardType;
   onResolve: () => void;
 }
 
-export function ChaosCardOverlay({ card, onResolve }: ChaosCardOverlayProps) {
+export function ChaosCardOverlay({ card, onResolve }: Props) {
+  const tag = card.contextTag || 'general';
+  const variant = TAG_VARIANT[tag] || 'warning';
+  const title = `${TAG_TITLE[tag] || 'ERROR'} ✕`;
+
   return (
     <motion.div
-      initial={{ x: '100%', opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: '100%', opacity: 0 }}
-      transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-      className="fixed right-4 top-24 z-50 w-80"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 70,
+        background: 'rgba(10,10,10,0.45)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+      }}
     >
-       <div className="card border-accent-red/30 rounded-lg p-5 shadow-sm shadow-red-500/5">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center flex-shrink-0">
-            <AlertTriangle className="w-4 h-4 text-accent-red" />
+      <motion.div
+        initial={{ scale: 0.7, rotate: -8, y: -20 }}
+        animate={{ scale: 1, rotate: -2, y: 0 }}
+        transition={{ type: 'spring', stiffness: 220, damping: 18 }}
+        style={{ maxWidth: 440, width: '100%' }}
+      >
+        <WindowCard title={title} variant={variant} showControls>
+          <div style={{ marginBottom: 10 }}>
+            <StickerLabel color="yellow" size="sm" tilt={-3}>{card.title.toUpperCase()}</StickerLabel>
           </div>
-          <div className="min-w-0">
-            <h4 className="text-sm font-bold text-text-heading truncate">
-              {card.title}
-            </h4>
-            <span className="badge badge-red text-[10px]">Urgent</span>
+          <p style={{ fontFamily: 'var(--font-patrick)', fontSize: 17, lineHeight: 1.35, margin: '8px 0 14px' }}>{card.description}</p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 700, color: 'var(--paper-cherry)' }}>
+              -${Math.abs(card.hit)}
+            </div>
+            <PaperButton color="yellow" onClick={onResolve}>RESOLVE</PaperButton>
           </div>
-        </div>
-
-        <p className="text-xs text-text-body leading-relaxed mb-3">
-          {card.description}
-        </p>
-
-        <div className="flex items-center gap-2 text-xs mb-4 bg-red-50 rounded-lg p-2.5">
-          <span className="font-bold text-accent-red">
-            -${Math.abs(card.hit)}
-          </span>
-          <ArrowRight className="w-3 h-3 text-text-muted" />
-          <span className="badge badge-red text-[10px]">
-            {card.forcedCategory || 'fun'}
-          </span>
-        </div>
-
-        <button
-          onClick={onResolve}
-          className="w-full py-2.5 border-2 border-accent-red/30 text-accent-red font-semibold text-sm rounded-lg bg-white hover:bg-red-50 transition-colors"
-        >
-          Resolve
-        </button>
-      </div>
+        </WindowCard>
+      </motion.div>
     </motion.div>
   );
 }

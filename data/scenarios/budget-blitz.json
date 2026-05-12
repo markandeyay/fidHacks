@@ -2,11 +2,39 @@
   "freshman": [
     {
       "difficulty": "freshman",
-      "monthlyIncome": 1200,
+      "monthlyIncome": 1150,
       "fixedCosts": { "rent": 400 },
       "chaosCardPool": [
-        { "id": "c1", "title": "Laptop screen cracked", "description": "Your laptop screen cracked. Repair costs $200.", "hit": -200, "forcedCategory": "fun", "contextTag": "general" },
-        { "id": "c2", "title": "Parking ticket", "description": "You got a parking ticket on campus.", "hit": -75, "forcedCategory": "transport", "contextTag": "general" }
+        { "id": "f1c1", "title": "Dorm laundry disaster", "description": "Washing machine ate your clothes.", "hit": -40, "forcedCategory": "fun", "contextTag": "general" },
+        { "id": "f1c2", "title": "Lost campus ID card", "description": "Replacement student ID card fee.", "hit": -25, "forcedCategory": "personal_care", "contextTag": "general" },
+        { "id": "f1c3", "title": "Coffee spill damage", "description": "Spilled coffee on your keyboard.", "hit": -80, "forcedCategory": "fun", "contextTag": "general" },
+        { "id": "f1c4", "title": "Bike tire puncture", "description": "Flat tire needs quick replacement.", "hit": -30, "forcedCategory": "transport", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    },
+    {
+      "difficulty": "freshman",
+      "monthlyIncome": 1250,
+      "fixedCosts": { "rent": 350, "food": 200 },
+      "chaosCardPool": [
+        { "id": "f2c1", "title": "Parking ticket fine", "description": "You got a campus parking ticket.", "hit": -50, "forcedCategory": "transport", "contextTag": "general" },
+        { "id": "f2c2", "title": "Textbook price shock", "description": "Required textbook cost doubled now.", "hit": -90, "forcedCategory": "fun", "contextTag": "general" },
+        { "id": "f2c3", "title": "Phone charger broke", "description": "Need to buy a new charger.", "hit": -25, "forcedCategory": "fun", "contextTag": "general" },
+        { "id": "f2c4", "title": "Overdue library book", "description": "Library fine for late book return.", "hit": -15, "forcedCategory": "fun", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    },
+    {
+      "difficulty": "freshman",
+      "monthlyIncome": 1100,
+      "fixedCosts": { "rent": 450, "transport": 50 },
+      "chaosCardPool": [
+        { "id": "f3c1", "title": "Broken umbrella storm", "description": "Umbrella broke in heavy campus rain.", "hit": -20, "forcedCategory": "personal_care", "contextTag": "general" },
+        { "id": "f3c2", "title": "Printer jammed badly", "description": "Final paper jammed in library printer.", "hit": -15, "forcedCategory": "fun", "contextTag": "general" },
+        { "id": "f3c3", "title": "Study snack raid", "description": "Friends ate all your dorm snacks.", "hit": -35, "forcedCategory": "food", "contextTag": "general" },
+        { "id": "f3c4", "title": "Dorm lockout fee", "description": "Locked out of dorm at midnight.", "hit": -25, "forcedCategory": "rent", "contextTag": "general" }
       ],
       "timerSeconds": 90,
       "isPersonalMode": false
@@ -15,12 +43,38 @@
   "sophomore": [
     {
       "difficulty": "sophomore",
-      "monthlyIncome": 1600,
+      "monthlyIncome": 1550,
       "fixedCosts": { "rent": 550, "transport": 100 },
       "chaosCardPool": [
-        { "id": "c1", "title": "Medical copay", "description": "Unexpected doctor visit. Copay is $150.", "hit": -150, "forcedCategory": "health", "contextTag": "health" },
-        { "id": "c2", "title": "Roommate ghosted", "description": "Your roommate left without paying their half of utilities.", "hit": -120, "forcedCategory": "rent", "contextTag": "general" },
-        { "id": "c3", "title": "Textbook emergency", "description": "Professor changed required textbook mid-semester.", "hit": -85, "forcedCategory": "fun", "contextTag": "general" }
+        { "id": "s1c1", "title": "Medical copay bill", "description": "Unexpected doctor visit copay fee.", "hit": -150, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "s1c2", "title": "Roommate moved out", "description": "Roommate left without paying utilities.", "hit": -120, "forcedCategory": "rent", "contextTag": "general" },
+        { "id": "s1c3", "title": "Textbook price hike", "description": "Professor changed required textbook midterm.", "hit": -85, "forcedCategory": "fun", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    },
+    {
+      "difficulty": "sophomore",
+      "monthlyIncome": 1650,
+      "fixedCosts": { "rent": 600, "food": 150 },
+      "chaosCardPool": [
+        { "id": "s2c1", "title": "Dentist cavity filling", "description": "Cavity needs immediate dental work.", "hit": -200, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "s2c2", "title": "Laptop charger frayed", "description": "Charger cable finally gave out.", "hit": -35, "forcedCategory": "fun", "contextTag": "general" },
+        { "id": "s2c3", "title": "Grocery spoilage rot", "description": "Fridge broke and food spoiled.", "hit": -70, "forcedCategory": "food", "contextTag": "general" },
+        { "id": "s2c4", "title": "Parking ticket again", "description": "Second parking ticket this month.", "hit": -60, "forcedCategory": "transport", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    },
+    {
+      "difficulty": "sophomore",
+      "monthlyIncome": 1600,
+      "fixedCosts": { "rent": 500, "transport": 80, "food": 100 },
+      "chaosCardPool": [
+        { "id": "s3c1", "title": "Flu medicine stock", "description": "Severe flu needs OTC medicine stock.", "hit": -45, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "s3c2", "title": "Eyeglasses frame snap", "description": "Broke glasses need new frames.", "hit": -120, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "s3c3", "title": "Club dues surprise", "description": "Club membership dues increased suddenly.", "hit": -40, "forcedCategory": "fun", "contextTag": "general" },
+        { "id": "s3c4", "title": "Bus pass expired", "description": "Monthly bus pass needs renewal.", "hit": -50, "forcedCategory": "transport", "contextTag": "general" }
       ],
       "timerSeconds": 90,
       "isPersonalMode": false
@@ -29,13 +83,40 @@
   "junior": [
     {
       "difficulty": "junior",
-      "monthlyIncome": 2200,
+      "monthlyIncome": 2100,
       "fixedCosts": { "rent": 700, "transport": 120, "health": 80 },
       "chaosCardPool": [
-        { "id": "c1", "title": "Safety rideshare premium", "description": "Late night study session required a premium rideshare.", "hit": -45, "forcedCategory": "transport", "contextTag": "gendered" },
-        { "id": "c2", "title": "Prescription refill", "description": "Monthly prescription cost increased.", "hit": -60, "forcedCategory": "health", "contextTag": "health" },
-        { "id": "c3", "title": "Personal care products", "description": "Unexpected personal care costs.", "hit": -35, "forcedCategory": "personal_care", "contextTag": "gendered" },
-        { "id": "c4", "title": "Phone repair", "description": "Phone screen shattered.", "hit": -150, "forcedCategory": "fun", "contextTag": "general" }
+        { "id": "j1c1", "title": "Safety ride premium", "description": "Late night study needed rideshare.", "hit": -45, "forcedCategory": "transport", "contextTag": "gendered" },
+        { "id": "j1c2", "title": "Prescription cost jump", "description": "Monthly prescription cost increased now.", "hit": -60, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "j1c3", "title": "Personal care tax", "description": "Unexpected personal care product costs.", "hit": -35, "forcedCategory": "personal_care", "contextTag": "gendered" },
+        { "id": "j1c4", "title": "Phone screen cracked", "description": "Phone screen shattered badly today.", "hit": -150, "forcedCategory": "fun", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    },
+    {
+      "difficulty": "junior",
+      "monthlyIncome": 2300,
+      "fixedCosts": { "rent": 750, "transport": 100, "food": 200 },
+      "chaosCardPool": [
+        { "id": "j2c1", "title": "Professional clothes stain", "description": "Interview suit ruined by coffee spill.", "hit": -90, "forcedCategory": "personal_care", "contextTag": "gendered" },
+        { "id": "j2c2", "title": "Mental health session", "description": "Needed extra counseling appointment today.", "hit": -75, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "j2c3", "title": "Birth control refill", "description": "Pharmacy refill cost spiked sharply.", "hit": -40, "forcedCategory": "health", "contextTag": "gendered" },
+        { "id": "j2c4", "title": "Career fair prep", "description": "Professional headshots and print costs.", "hit": -55, "forcedCategory": "personal_care", "contextTag": "gendered" },
+        { "id": "j2c5", "title": "Grocery delivery error", "description": "Wrong order charged extra fees.", "hit": -30, "forcedCategory": "food", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    },
+    {
+      "difficulty": "junior",
+      "monthlyIncome": 2200,
+      "fixedCosts": { "rent": 680, "transport": 150, "savings": 100 },
+      "chaosCardPool": [
+        { "id": "j3c1", "title": "Safety app subscription", "description": "Paid for personal safety app.", "hit": -20, "forcedCategory": "personal_care", "contextTag": "gendered" },
+        { "id": "j3c2", "title": "Allergy shot copay", "description": "Seasonal allergy shot cost rose.", "hit": -55, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "j3c3", "title": "Internship clothes needed", "description": "Business casual wardrobe for internship.", "hit": -85, "forcedCategory": "personal_care", "contextTag": "gendered" },
+        { "id": "j3c4", "title": "Laptop battery swell", "description": "Battery swelling needs replacement part.", "hit": -120, "forcedCategory": "fun", "contextTag": "general" }
       ],
       "timerSeconds": 90,
       "isPersonalMode": false
@@ -47,11 +128,39 @@
       "monthlyIncome": 3500,
       "fixedCosts": { "rent": 900, "transport": 200, "health": 150, "personal_care": 50 },
       "chaosCardPool": [
-        { "id": "c1", "title": "Car repair", "description": "Your car needs a new alternator.", "hit": -400, "forcedCategory": "transport", "contextTag": "emergency" },
-        { "id": "c2", "title": "Emergency vet bill", "description": "Your pet needs emergency care.", "hit": -350, "forcedCategory": "fun", "contextTag": "emergency" },
-        { "id": "c3", "title": "Insurance premium hike", "description": "Health insurance premiums increased unexpectedly.", "hit": -80, "forcedCategory": "health", "contextTag": "health" },
-        { "id": "c4", "title": "Therapy session", "description": "Additional therapy session this month.", "hit": -120, "forcedCategory": "health", "contextTag": "health" },
-        { "id": "c5", "title": "Identity theft protection", "description": "Had to sign up for credit monitoring.", "hit": -25, "forcedCategory": "personal_care", "contextTag": "general" }
+        { "id": "sr1c1", "title": "Car alternator died", "description": "Car needs new alternator installed.", "hit": -400, "forcedCategory": "transport", "contextTag": "emergency" },
+        { "id": "sr1c2", "title": "Pet emergency visit", "description": "Pet needs urgent veterinary care.", "hit": -350, "forcedCategory": "fun", "contextTag": "emergency" },
+        { "id": "sr1c3", "title": "Insurance premium spike", "description": "Health insurance premiums increased sharply.", "hit": -80, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "sr1c4", "title": "Therapy copay doubled", "description": "Additional therapy session this month.", "hit": -120, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "sr1c5", "title": "Personal safety upgrade", "description": "Bought new personal safety gear.", "hit": -55, "forcedCategory": "personal_care", "contextTag": "gendered" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    },
+    {
+      "difficulty": "senior",
+      "monthlyIncome": 3700,
+      "fixedCosts": { "rent": 950, "transport": 180, "health": 120, "food": 300 },
+      "chaosCardPool": [
+        { "id": "sr2c1", "title": "Apartment flood damage", "description": "Burst pipe flooded your apartment unit.", "hit": -500, "forcedCategory": "rent", "contextTag": "emergency" },
+        { "id": "sr2c2", "title": "Wisdom teeth removal", "description": "Emergency dental surgery required now.", "hit": -600, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "sr2c3", "title": "Safety gear upgrade", "description": "New safety device for apartment door.", "hit": -70, "forcedCategory": "personal_care", "contextTag": "gendered" },
+        { "id": "sr2c4", "title": "Job relocation cost", "description": "Unexpected move for new job offer.", "hit": -300, "forcedCategory": "transport", "contextTag": "emergency" },
+        { "id": "sr2c5", "title": "Identity theft scare", "description": "Had to freeze all credit reports.", "hit": -40, "forcedCategory": "personal_care", "contextTag": "general" }
+      ],
+      "timerSeconds": 90,
+      "isPersonalMode": false
+    },
+    {
+      "difficulty": "senior",
+      "monthlyIncome": 3400,
+      "fixedCosts": { "rent": 850, "transport": 220, "health": 100, "savings": 200 },
+      "chaosCardPool": [
+        { "id": "sr3c1", "title": "Root canal needed", "description": "Severe tooth pain needs root canal.", "hit": -450, "forcedCategory": "health", "contextTag": "health" },
+        { "id": "sr3c2", "title": "Gender affirming care", "description": "New gender affirming care costs.", "hit": -150, "forcedCategory": "health", "contextTag": "gendered" },
+        { "id": "sr3c3", "title": "Car tire blowout", "description": "Highway blowout needs two new tires.", "hit": -280, "forcedCategory": "transport", "contextTag": "emergency" },
+        { "id": "sr3c4", "title": "Stolen bike loss", "description": "Bike stolen need replacement quickly.", "hit": -180, "forcedCategory": "transport", "contextTag": "general" },
+        { "id": "sr3c5", "title": "Interview travel fare", "description": "Cross country interview flight cost.", "hit": -320, "forcedCategory": "transport", "contextTag": "emergency" }
       ],
       "timerSeconds": 90,
       "isPersonalMode": false

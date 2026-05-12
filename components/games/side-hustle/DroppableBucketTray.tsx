@@ -14,12 +14,7 @@ export function DroppableBucketTray({ bucket, count, children }: DroppableBucket
   const { setNodeRef, isOver } = useDroppable({ id: bucket, data: { bucket } });
 
   return (
-    <div
-      ref={setNodeRef}
-      className={`transition-all rounded-lg ${
-        isOver ? 'ring-2 ring-fid-green/60 ring-offset-2' : ''
-      }`}
-    >
+    <div ref={setNodeRef} style={{ transition: 'all 0.15s' }}>
       <BucketTray bucket={bucket} count={count} isOver={isOver}>
         {children}
       </BucketTray>

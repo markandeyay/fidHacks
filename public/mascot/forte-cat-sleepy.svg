@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280">
+  <rect x="80" y="6" width="80" height="18" fill="#F5EBD8" opacity="0.7" stroke="#0A0A0A" stroke-width="1.5" transform="rotate(-4 120 15)"/>
+  <polygon points="120,30 60,90 30,80 50,150 70,180 120,210 170,180 190,150 210,80 180,90" fill="#0A0A0A"/>
+  <polygon points="70,80 60,15 100,75" fill="#0A0A0A"/>
+  <polygon points="170,80 180,15 140,75" fill="#0A0A0A"/>
+  <ellipse cx="120" cy="130" rx="55" ry="55" fill="#F5EBD8"/>
+  <ellipse cx="98" cy="125" rx="22" ry="18" fill="none" stroke="#1F3FAF" stroke-width="5"/>
+  <ellipse cx="142" cy="125" rx="22" ry="18" fill="none" stroke="#1F3FAF" stroke-width="5"/>
+  <rect x="116" y="122" width="8" height="5" fill="#1F3FAF"/>
+  <!-- Tilde eyes -->
+  <path d="M 88 125 Q 93 130 98 125 Q 103 120 108 125" fill="none" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 132 125 Q 137 130 142 125 Q 147 120 152 125" fill="none" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="115,150 125,150 120,158" fill="#F4A0A0" stroke="#0A0A0A" stroke-width="1.5"/>
+  <ellipse cx="120" cy="172" rx="6" ry="4" fill="#0A0A0A"/>
+  <rect x="100" y="220" width="40" height="50" fill="#1F3FAF" stroke="#0A0A0A" stroke-width="3"/>
+  <!-- Z above head -->
+  <text x="195" y="50" font-family="Impact, sans-serif" font-size="32" fill="#FFD93D" stroke="#0A0A0A" stroke-width="2" transform="rotate(8 195 50)">Z</text>
+  <text x="215" y="30" font-family="Impact, sans-serif" font-size="20" fill="#FFD93D" stroke="#0A0A0A" stroke-width="1.5" transform="rotate(8 215 30)">z</text>
+</svg>

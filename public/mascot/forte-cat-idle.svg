@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280">
+  <!-- Tape strip on top of head -->
+  <rect x="80" y="6" width="80" height="18" fill="#FFD93D" opacity="0.7" stroke="#0A0A0A" stroke-width="1.5" transform="rotate(-4 120 15)"/>
+  <!-- Black spiked silhouette (head + ears) -->
+  <polygon points="120,30 60,90 30,80 50,150 70,180 120,210 170,180 190,150 210,80 180,90" fill="#0A0A0A"/>
+  <!-- Tall pointy ears -->
+  <polygon points="70,80 60,15 100,75" fill="#0A0A0A"/>
+  <polygon points="170,80 180,15 140,75" fill="#0A0A0A"/>
+  <!-- Cream face oval -->
+  <ellipse cx="120" cy="130" rx="55" ry="55" fill="#F5EBD8"/>
+  <!-- Glasses: two cobalt ovals connected -->
+  <ellipse cx="98" cy="125" rx="22" ry="18" fill="none" stroke="#1F3FAF" stroke-width="5"/>
+  <ellipse cx="142" cy="125" rx="22" ry="18" fill="none" stroke="#1F3FAF" stroke-width="5"/>
+  <line x1="120" y1="125" x2="120" y2="125" stroke="#1F3FAF" stroke-width="5"/>
+  <rect x="116" y="122" width="8" height="5" fill="#1F3FAF"/>
+  <!-- Yellow slit eyes inside glasses -->
+  <ellipse cx="98" cy="125" rx="6" ry="11" fill="#FFD93D"/>
+  <ellipse cx="142" cy="125" rx="6" ry="11" fill="#FFD93D"/>
+  <ellipse cx="98" cy="125" rx="2" ry="9" fill="#0A0A0A"/>
+  <ellipse cx="142" cy="125" rx="2" ry="9" fill="#0A0A0A"/>
+  <!-- Pink triangle nose -->
+  <polygon points="115,150 125,150 120,158" fill="#F4A0A0" stroke="#0A0A0A" stroke-width="1.5"/>
+  <!-- Neutral mouth -->
+  <path d="M 108 168 Q 120 170 132 168" fill="none" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round"/>
+  <!-- Tiny chest/body suggestion -->
+  <rect x="100" y="220" width="40" height="50" fill="#1F3FAF" stroke="#0A0A0A" stroke-width="3"/>
+</svg>

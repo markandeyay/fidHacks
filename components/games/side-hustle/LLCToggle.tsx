@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Building2, ArrowRightLeft } from 'lucide-react';
 import { calculateTaxOwed } from './TaxPanel';
+import { PaperCard, StickerLabel } from '@/components/paper';
 
 interface LLCToggleProps {
   taxableIncome: number;
@@ -17,98 +17,168 @@ export function LLCToggle({ taxableIncome, deductions, onChange }: LLCToggleProp
 
   const solePropTax = calculateTaxOwed(taxableIncome, deductions);
 
-  const reasonableSalary = netIncome * 0.6;
   const distribution = netIncome * 0.4;
   const seTaxSavings = distribution * 0.9235 * 0.153;
   const llcTax = Math.round(solePropTax - seTaxSavings);
   const savings = Math.round(seTaxSavings);
 
-  const handleToggle = (val: boolean) => {
+  const handleToggle = () => {
+    const val = !llc;
     setLlc(val);
     onChange(val);
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="card"
-    >
-      <div className="px-4 py-3 border-b border-border-default flex items-center gap-2">
-        <Building2 className="w-4 h-4 text-accent-purple" />
-        <span className="text-sm font-semibold text-text-heading">Business Structure</span>
-        <span className="badge badge-purple ml-auto">Senior</span>
-      </div>
-
-      <div className="p-4 space-y-4">
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-text-muted">Structure:</span>
-          <button
-            onClick={() => handleToggle(false)}
-            className={`px-4 py-2 text-sm font-medium rounded-lg border-2 transition-all ${
-              !llc
-                ? 'border-accent-blue bg-accent-blue/10 text-accent-blue'
-                : 'border-border-default text-text-muted hover:border-border-strong'
-            }`}
+    <PaperCard color="cream" seed="llc-toggle" hover={false}>
+      <div style={{ padding: 16 }}>
+        <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+          <span
+            className="font-marker"
+            style={{
+              fontFamily: 'var(--font-marker), Impact, sans-serif',
+              fontSize: 18,
+              letterSpacing: 1,
+              color: 'var(--paper-black)',
+            }}
           >
-            Sole Proprietorship
-          </button>
-          <ArrowRightLeft className="w-4 h-4 text-text-muted" />
-          <button
-            onClick={() => handleToggle(true)}
-            className={`px-4 py-2 text-sm font-medium rounded-lg border-2 transition-all ${
-              llc
-                ? 'border-accent-purple bg-accent-purple/10 text-accent-purple'
-                : 'border-border-default text-text-muted hover:border-border-strong'
-            }`}
-          >
-            LLC (S-Corp)
-          </button>
+            BUSINESS STRUCTURE
+          </span>
+          <StickerLabel color="cherry" size="sm" tilt={2}>
+            Senior
+          </StickerLabel>
         </div>
 
-        <div className="grid grid-cols-2 gap-0 border border-border-default rounded-lg overflow-hidden">
-          <div className={`p-4 border-r border-border-default ${!llc ? 'bg-bg-subtle' : ''}`}>
-            <p className="text-xs text-text-muted font-semibold uppercase tracking-wider mb-1">
-              Sole Proprietor Tax
-            </p>
-            <p className="text-xl tabular-nums text-accent-blue font-bold">
-              ${solePropTax.toLocaleString()}
-            </p>
-            <p className="text-xs text-text-muted mt-2">
-              Full SE tax on all net earnings
-            </p>
-          </div>
-
-          <div className={`p-4 ${llc ? 'bg-bg-subtle' : ''}`}>
-            <p className="text-xs text-text-muted font-semibold uppercase tracking-wider mb-1">
-              LLC Tax (Est.)
-            </p>
-            <p className="text-xl tabular-nums text-accent-purple font-bold">
-              ${llcTax.toLocaleString()}
-            </p>
-            <p className="text-xs text-text-muted mt-2">
-              SE tax only on salary portion (60%)
-            </p>
-          </div>
+        <div className="flex items-center gap-3 mb-4 flex-wrap">
+          <span
+            className="font-marker"
+            style={{
+              fontFamily: 'var(--font-marker), Impact, sans-serif',
+              fontSize: 14,
+              letterSpacing: 1,
+              color: 'var(--paper-black)',
+            }}
+          >
+            {llc ? 'LLC (S-CORP)' : 'SOLE PROP'}
+          </span>
+          <button
+            onClick={handleToggle}
+            className={`toggle-track ${llc ? 'active' : ''}`}
+            role="switch"
+            aria-checked={llc}
+          >
+            <div className={`toggle-thumb ${llc ? 'active' : ''}`} />
+          </button>
+          <span
+            className="font-patrick"
+            style={{ fontSize: 14, color: 'var(--paper-black)' }}
+          >
+            toggle to compare
+          </span>
         </div>
 
-        {netIncome > 10000 ? (
-          <div className="flex items-start gap-2 px-3 py-2.5 bg-fid-green-light border border-fid-green/20 rounded-lg">
-            <div className="w-1.5 h-1.5 rounded-full bg-fid-green mt-1.5 shrink-0" />
-            <p className="text-sm text-fid-green-dark">
-              With ${netIncome.toLocaleString()} net income, LLC election saves approximately
-              ${savings.toLocaleString()} in self-employment taxes.
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <PaperCard color="cream" seed="sole-prop" tilt={-1.5} hover={false}>
+            <div
+              style={{
+                padding: 14,
+                background: !llc ? 'rgba(168,213,162,0.35)' : 'transparent',
+                transition: 'background 0.2s',
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: 'var(--font-marker), Impact, sans-serif',
+                  fontSize: 13,
+                  letterSpacing: 1,
+                  color: 'var(--paper-black)',
+                  marginBottom: 6,
+                }}
+              >
+                SOLE PROPRIETOR TAX
+              </p>
+              <p
+                className="font-mono tabular-nums"
+                style={{ fontSize: 28, fontWeight: 700, color: 'var(--paper-black)' }}
+              >
+                ${solePropTax.toLocaleString()}
+              </p>
+              <p
+                className="font-patrick"
+                style={{ fontSize: 13, color: 'var(--paper-black)', marginTop: 6 }}
+              >
+                Full SE tax on all net earnings
+              </p>
+            </div>
+          </PaperCard>
+
+          <PaperCard color="cream" seed="llc-card" tilt={1.5} hover={false}>
+            <div
+              style={{
+                padding: 14,
+                background: llc ? 'rgba(168,213,162,0.35)' : 'transparent',
+                transition: 'background 0.2s',
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: 'var(--font-marker), Impact, sans-serif',
+                  fontSize: 13,
+                  letterSpacing: 1,
+                  color: 'var(--paper-black)',
+                  marginBottom: 6,
+                }}
+              >
+                LLC TAX (EST.)
+              </p>
+              <p
+                className="font-mono tabular-nums"
+                style={{ fontSize: 28, fontWeight: 700, color: 'var(--paper-black)' }}
+              >
+                ${llcTax.toLocaleString()}
+              </p>
+              <p
+                className="font-patrick"
+                style={{ fontSize: 13, color: 'var(--paper-black)', marginTop: 6 }}
+              >
+                SE tax only on salary portion (60%)
+              </p>
+            </div>
+          </PaperCard>
+        </motion.div>
+
+        <div className="mt-4">
+          {netIncome > 10000 ? (
+            <p
+              className="font-patrick"
+              style={{
+                fontSize: 15,
+                color: 'var(--paper-black)',
+                background: 'var(--paper-mint)',
+                border: '2px dashed var(--paper-black)',
+                padding: '10px 14px',
+                lineHeight: 1.4,
+              }}
+            >
+              With ${netIncome.toLocaleString()} net income, LLC election saves approximately $
+              {savings.toLocaleString()} in self-employment taxes.
             </p>
-          </div>
-        ) : (
-          <div className="flex items-start gap-2 px-3 py-2.5 bg-bg-subtle border border-border-default rounded-lg">
-            <div className="w-1.5 h-1.5 rounded-full bg-text-muted mt-1.5 shrink-0" />
-            <p className="text-sm text-text-muted">
+          ) : (
+            <p
+              className="font-patrick"
+              style={{
+                fontSize: 15,
+                color: 'var(--paper-black)',
+                background: 'var(--paper-coral)',
+                border: '2px dashed var(--paper-black)',
+                padding: '10px 14px',
+                lineHeight: 1.4,
+              }}
+            >
               At lower income levels, LLC setup costs may exceed tax savings.
             </p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </motion.div>
+    </PaperCard>
   );
 }

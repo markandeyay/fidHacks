@@ -4,7 +4,8 @@ import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { BenefitLineItem } from '@/types/offer';
 import benefitsReference from '@/data/benefits-reference.json';
-import { X, Calculator, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
+import { WindowCard, PaperButton, StickerLabel } from '@/components/paper';
+import { CheckCircle2, AlertTriangle } from 'lucide-react';
 
 interface BenefitCalculatorProps {
   benefit: BenefitLineItem;
@@ -65,165 +66,244 @@ export function BenefitCalculator({ benefit, onClose, onApplyValue }: BenefitCal
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-fid-navy/50 backdrop-blur-sm p-4"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'rgba(10,10,10,0.45)',
+        backdropFilter: 'blur(4px)',
+        padding: 16,
+      }}
       onClick={onClose}
     >
-      <motion.div
-        initial={{ scale: 0.95, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.95, opacity: 0, y: 20 }}
-        transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-        className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden"
+      <div
+        style={{ maxWidth: 460, width: '100%' }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-fid-navy px-5 py-3.5 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Calculator className="w-4 h-4 text-white" />
-            <span className="text-white font-semibold text-sm">Benefit Calculator</span>
-          </div>
-          <button
-            onClick={onClose}
-            className="text-white/60 hover:text-white transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="px-5 py-3 bg-fid-green-light/30 border-b border-fid-green-light">
-          <div className="text-xs font-semibold text-fid-green-dark uppercase tracking-wider mb-0.5">
-            Benefit
-          </div>
-          <div className="text-sm font-medium text-text-heading">{benefit.label}</div>
-          <div className="text-[11px] text-text-muted mt-0.5">
-            Listed as: {benefit.rawValue}
-          </div>
-        </div>
-
-        <div className="px-5 py-3 border-b border-border-default">
-          <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-2">
-            Formula
-          </div>
-          <div className="bg-bg-subtle rounded-lg border border-border-default p-3">
-            <code className="text-sm font-medium text-fid-navy block">
-              {reference?.formula || benefit.formula}
-            </code>
-            {reference?.worked_example && (
-              <div className="text-[11px] text-text-muted mt-2 leading-relaxed border-t border-border-default pt-2">
-                <span className="font-medium text-text-body">Example: </span>
-                {reference.worked_example}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {inputKeys.length > 0 ? (
-          <div className="px-5 py-3 border-b border-border-default space-y-3">
-            <div className="text-xs font-semibold uppercase tracking-wider text-text-muted">
-              Enter Values
-            </div>
-            {inputKeys.map((key) => (
-              <div key={key}>
-                <label className="text-[11px] font-medium text-text-body block mb-1 capitalize">
-                  {key.replace(/_/g, ' ')}
-                </label>
-                <input
-                  type="number"
-                  value={inputs[key] || ''}
-                  onChange={(e) =>
-                    setInputs((prev) => ({ ...prev, [key]: e.target.value }))
-                  }
-                  className="input-field text-sm py-2"
-                  placeholder="0"
-                  min="0"
-                />
-              </div>
-            ))}
-
-            {error && (
-              <div className="flex items-center gap-1.5 text-[11px] text-accent-red">
-                <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
-                {error}
-              </div>
-            )}
-
-            <button
-              onClick={handleCalculate}
-              className="btn-primary w-full text-sm flex items-center justify-center gap-2"
+        <WindowCard variant="info" title="CALCULATOR ⊙ ✕" onClose={onClose} tilt={-1}>
+          <div style={{ marginBottom: 12 }}>
+            <div
+              style={{
+                fontFamily: 'var(--font-marker), Impact, sans-serif',
+                fontSize: 13,
+                letterSpacing: 1,
+                textTransform: 'uppercase',
+                marginBottom: 4,
+              }}
             >
-              <Calculator className="w-4 h-4" />
-              Calculate
-            </button>
-          </div>
-        ) : (
-          <div className="px-5 py-3 border-b border-border-default">
-            <div className="text-sm text-text-muted text-center py-2">
-              No field calculator available. Use the formula above to compute the value manually, then enter it into the offer card.
+              Benefit
+            </div>
+            <div style={{ fontFamily: 'var(--font-patrick), cursive', fontSize: 18 }}>
+              {benefit.label}
+            </div>
+            <div
+              style={{
+                fontFamily: 'var(--font-mono), monospace',
+                fontSize: 11,
+                opacity: 0.7,
+                marginTop: 2,
+              }}
+            >
+              Listed as: {benefit.rawValue}
             </div>
           </div>
-        )}
 
-        {result !== null && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            className="px-5 py-3 border-b border-border-default"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-text-muted">
-                Result
-              </span>
-              {isWithinTolerance ? (
-                <span className="badge badge-green text-[10px] flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3" />
-                  Match
-                </span>
-              ) : (
-                <span className="badge badge-amber text-[10px] flex items-center gap-1">
-                  <AlertTriangle className="w-3 h-3" />
-                  Offset
-                </span>
+          <div style={{ marginBottom: 12 }}>
+            <div
+              style={{
+                fontFamily: 'var(--font-marker), Impact, sans-serif',
+                fontSize: 13,
+                letterSpacing: 1,
+                textTransform: 'uppercase',
+                marginBottom: 6,
+              }}
+            >
+              Formula
+            </div>
+            <div
+              style={{
+                background: 'var(--paper-cream)',
+                border: '2px solid var(--paper-black)',
+                padding: 10,
+                fontFamily: 'var(--font-mono), monospace',
+                fontSize: 13,
+              }}
+            >
+              <code>{reference?.formula || benefit.formula}</code>
+              {reference?.worked_example && (
+                <div
+                  style={{
+                    marginTop: 8,
+                    paddingTop: 8,
+                    borderTop: '1px dashed var(--paper-black)',
+                    fontFamily: 'var(--font-patrick), cursive',
+                    fontSize: 13,
+                    opacity: 0.85,
+                  }}
+                >
+                  <strong>Example:</strong> {reference.worked_example}
+                </div>
               )}
             </div>
-            <div className="text-2xl font-bold text-text-heading">
-              ${result.toLocaleString()}
-            </div>
-            {!isWithinTolerance && (
-              <div className="text-[11px] text-accent-amber mt-1">
-                The correct value is approximately ${benefit.trueDollarValue.toLocaleString()}.
-                Your result is off by ${Math.abs(result - benefit.trueDollarValue).toLocaleString()}.
-              </div>
-            )}
-          </motion.div>
-        )}
+          </div>
 
-        <div className="px-5 py-3 flex gap-2.5">
-          <button
-            onClick={onClose}
-            className="btn-outline flex-1 text-sm py-2.5"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={() => {
-              if (result !== null) onApplyValue(result);
-              else onClose();
-            }}
-            disabled={result === null}
-            className={`btn-primary flex-1 text-sm py-2.5 flex items-center justify-center gap-2 ${
-              result === null ? 'opacity-40 cursor-not-allowed' : ''
-            }`}
-          >
-            {result !== null ? (
-              <>
-                Apply Value
-                <ArrowRight className="w-4 h-4" />
-              </>
-            ) : (
-              'Calculate first'
-            )}
-          </button>
-        </div>
-      </motion.div>
+          {inputKeys.length > 0 ? (
+            <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div
+                style={{
+                  fontFamily: 'var(--font-marker), Impact, sans-serif',
+                  fontSize: 13,
+                  letterSpacing: 1,
+                  textTransform: 'uppercase',
+                }}
+              >
+                Enter Values
+              </div>
+              {inputKeys.map((key) => (
+                <div key={key}>
+                  <label
+                    style={{
+                      fontFamily: 'var(--font-patrick), cursive',
+                      fontSize: 13,
+                      display: 'block',
+                      marginBottom: 4,
+                      textTransform: 'capitalize',
+                    }}
+                  >
+                    {key.replace(/_/g, ' ')}
+                  </label>
+                  <input
+                    type="number"
+                    value={inputs[key] || ''}
+                    onChange={(e) =>
+                      setInputs((prev) => ({ ...prev, [key]: e.target.value }))
+                    }
+                    className="input-field"
+                    style={{
+                      fontFamily: 'var(--font-mono), monospace',
+                      fontSize: 14,
+                      width: '100%',
+                    }}
+                    placeholder="0"
+                    min="0"
+                  />
+                </div>
+              ))}
+
+              {error && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    fontFamily: 'var(--font-patrick), cursive',
+                    fontSize: 13,
+                    color: '#D9344B',
+                  }}
+                >
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  {error}
+                </div>
+              )}
+
+              <PaperButton color="yellow" onClick={handleCalculate} style={{ width: '100%' }}>
+                Calculate
+              </PaperButton>
+            </div>
+          ) : (
+            <div style={{ marginBottom: 12, fontFamily: 'var(--font-patrick), cursive', fontSize: 14, textAlign: 'center', padding: '8px 0' }}>
+              No field calculator available. Use the formula above to compute the value manually, then enter it into the offer card.
+            </div>
+          )}
+
+          {result !== null && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              style={{
+                marginBottom: 12,
+                padding: 10,
+                border: '2px solid var(--paper-black)',
+                background: 'var(--paper-cream)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: 6,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'var(--font-marker), Impact, sans-serif',
+                    fontSize: 13,
+                    letterSpacing: 1,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Result
+                </span>
+                {isWithinTolerance ? (
+                  <StickerLabel color="mint" size="sm" tilt={-2}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                      <CheckCircle2 className="w-3 h-3" /> Match
+                    </span>
+                  </StickerLabel>
+                ) : (
+                  <StickerLabel color="yellow" size="sm" tilt={-2}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                      <AlertTriangle className="w-3 h-3" /> Offset
+                    </span>
+                  </StickerLabel>
+                )}
+              </div>
+              <div
+                style={{
+                  fontFamily: 'var(--font-mono), monospace',
+                  fontSize: 24,
+                  fontWeight: 700,
+                }}
+              >
+                ${result.toLocaleString()}
+              </div>
+              {!isWithinTolerance && (
+                <div
+                  style={{
+                    fontFamily: 'var(--font-patrick), cursive',
+                    fontSize: 12,
+                    marginTop: 4,
+                    opacity: 0.85,
+                  }}
+                >
+                  The correct value is approximately ${benefit.trueDollarValue.toLocaleString()}.
+                  Your result is off by ${Math.abs(result - benefit.trueDollarValue).toLocaleString()}.
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+            <PaperButton color="cream" onClick={onClose}>
+              Cancel
+            </PaperButton>
+            <PaperButton
+              color="mint"
+              disabled={result === null}
+              onClick={() => {
+                if (result !== null) onApplyValue(result);
+                else onClose();
+              }}
+            >
+              {result !== null ? 'Apply Value' : 'Calculate first'}
+            </PaperButton>
+          </div>
+        </WindowCard>
+      </div>
     </motion.div>
   );
 }

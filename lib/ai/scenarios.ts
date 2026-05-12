@@ -10,13 +10,14 @@ const FALLBACK_JSON_LOADERS: Record<GameId, () => Promise<Record<string, unknown
 
 export async function loadScenario<T>(
   gameId: GameId,
-  difficulty: Difficulty
+  difficulty: Difficulty,
+  hints?: Record<string, unknown>
 ): Promise<T> {
   try {
     const res = await fetch('/api/scenario/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ gameId, difficulty }),
+      body: JSON.stringify({ gameId, difficulty, hints }),
     });
     const data = await res.json();
     return (data.scenario || data) as T;

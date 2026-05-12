@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Clock, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { PaperCard, StickerLabel, MarkerText } from '@/components/paper';
 
 interface HourlyRatePanelProps {
   grossIncome: number;
@@ -16,9 +16,9 @@ export function HourlyRatePanel({
   hoursWorked,
   campusJobHourlyEquivalent,
 }: HourlyRatePanelProps) {
-  const grossHourly = hoursWorked > 0 ? grossIncome / hoursWorked : 0;
   const postTaxHourly = hoursWorked > 0 ? (grossIncome - taxOwed) / hoursWorked : 0;
   const delta = postTaxHourly - campusJobHourlyEquivalent;
+  const hustleWins = delta >= 0;
   const percentDiff =
     campusJobHourlyEquivalent > 0
       ? ((postTaxHourly / campusJobHourlyEquivalent - 1) * 100)
@@ -28,72 +28,101 @@ export function HourlyRatePanel({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="card"
+      className="space-y-4"
     >
-      <div className="px-4 py-3 border-b border-border-default flex items-center gap-2">
-        <Clock className="w-4 h-4 text-fid-green" />
-        <span className="text-sm font-semibold text-text-heading">Hourly Rate Comparison</span>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <MarkerText size="md">HOURLY RATE COMPARISON</MarkerText>
+        <StickerLabel color={hustleWins ? 'mint' : 'coral'} size="sm" tilt={-2}>
+          {hustleWins
+            ? `Hustle wins +${percentDiff.toFixed(0)}%`
+            : `Campus wins ${percentDiff.toFixed(0)}%`}
+        </StickerLabel>
       </div>
 
-      <div className="p-4 space-y-3">
-        <div className="flex items-center gap-3 text-sm">
-          <span className="text-text-muted w-28 shrink-0">Gross hourly:</span>
-          <span className="text-text-heading tabular-nums font-bold text-base">
-            ${grossHourly.toFixed(2)}
-          </span>
-          <span className="text-text-muted text-xs">(before taxes)</span>
-        </div>
-
-        <div className="flex items-center gap-3 text-sm">
-          <span className="text-text-muted w-28 shrink-0">Net hourly:</span>
-          <span className="text-accent-blue tabular-nums font-bold text-base">
-            ${postTaxHourly.toFixed(2)}
-          </span>
-          <span className="text-text-muted text-xs">(after tax / {hoursWorked} hrs)</span>
-        </div>
-
-        <div className="flex items-center gap-3 text-sm">
-          <span className="text-text-muted w-28 shrink-0">Campus equivalent:</span>
-          <span className="text-text-heading tabular-nums font-bold text-base">
-            ${campusJobHourlyEquivalent.toFixed(2)}
-          </span>
-          <span className="text-text-muted text-xs">(campus rate)</span>
-        </div>
-
-        <div className="border-t border-border-default pt-3 flex items-center gap-3 text-sm">
-          <span className="text-text-muted w-28 shrink-0 font-semibold">Delta:</span>
-          <span
-            className={`tabular-nums font-bold text-base inline-flex items-center gap-1 ${
-              delta > 0 ? 'text-fid-green' : delta < 0 ? 'text-accent-red' : 'text-text-muted'
-            }`}
-          >
-            {delta > 0 ? (
-              <TrendingUp className="w-4 h-4" />
-            ) : delta < 0 ? (
-              <TrendingDown className="w-4 h-4" />
-            ) : (
-              <Minus className="w-4 h-4" />
-            )}
-            {delta >= 0 ? '+' : ''}${delta.toFixed(2)}/hr
-          </span>
-        </div>
-
-        <div className="pt-3 border-t border-border-default text-xs text-text-muted leading-relaxed">
-          {postTaxHourly >= campusJobHourlyEquivalent ? (
-            <p>
-              Side hustle pays approximately {percentDiff.toFixed(0)}% more per hour
-              after taxes compared to a campus job. Consider flexibility, experience,
-              and scalability.
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <PaperCard color="cream" seed="rate-yours" tilt={-1.5} tape="tl" tapeColor="yellow">
+          <div style={{ padding: 16 }}>
+            <p
+              style={{
+                fontFamily: 'var(--font-marker), Impact, sans-serif',
+                fontSize: 14,
+                letterSpacing: 1,
+                marginBottom: 8,
+                color: 'var(--paper-black)',
+              }}
+            >
+              YOUR RATE
             </p>
-          ) : (
-            <p>
-              Effective rate is about {Math.abs(percentDiff).toFixed(0)}% below a campus
-              job after taxes. Consider flexibility, experience, and scalability when
-              evaluating the trade-off.
+            <p
+              className="font-mono tabular-nums"
+              style={{
+                fontSize: 36,
+                fontWeight: 700,
+                color: 'var(--paper-black)',
+                lineHeight: 1.1,
+              }}
+            >
+              ${postTaxHourly.toFixed(2)}
             </p>
-          )}
-        </div>
+            <p
+              className="font-patrick"
+              style={{ fontSize: 14, color: 'var(--paper-black)', marginTop: 6 }}
+            >
+              per hour, after tax ({hoursWorked} hrs)
+            </p>
+          </div>
+        </PaperCard>
+
+        <PaperCard color="cream" seed="rate-campus" tilt={1.5} tape="tr" tapeColor="coral">
+          <div style={{ padding: 16 }}>
+            <p
+              style={{
+                fontFamily: 'var(--font-marker), Impact, sans-serif',
+                fontSize: 14,
+                letterSpacing: 1,
+                marginBottom: 8,
+                color: 'var(--paper-black)',
+              }}
+            >
+              CAMPUS JOB
+            </p>
+            <p
+              className="font-mono tabular-nums"
+              style={{
+                fontSize: 36,
+                fontWeight: 700,
+                color: 'var(--paper-black)',
+                lineHeight: 1.1,
+              }}
+            >
+              ${campusJobHourlyEquivalent.toFixed(2)}
+            </p>
+            <p
+              className="font-patrick"
+              style={{ fontSize: 14, color: 'var(--paper-black)', marginTop: 6 }}
+            >
+              per hour, campus rate
+            </p>
+          </div>
+        </PaperCard>
       </div>
+
+      <p
+        className="font-patrick"
+        style={{ fontSize: 15, color: 'var(--paper-black)', lineHeight: 1.4 }}
+      >
+        {hustleWins ? (
+          <>
+            Side hustle pays approximately {percentDiff.toFixed(0)}% more per hour after taxes
+            compared to a campus job. Consider flexibility, experience, and scalability.
+          </>
+        ) : (
+          <>
+            Effective rate is about {Math.abs(percentDiff).toFixed(0)}% below a campus job after
+            taxes. Consider flexibility, experience, and scalability when evaluating the trade-off.
+          </>
+        )}
+      </p>
     </motion.div>
   );
 }

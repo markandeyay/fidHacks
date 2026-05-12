@@ -2,74 +2,204 @@
   "freshman": [
     {
       "difficulty": "freshman",
-      "startingCash": 1000,
+      "startingCash": 500,
       "timelineYears": 10,
       "tickIntervalMs": 2000,
       "lifeEvents": [
-        { "id": "le1", "yearIndex": 3, "title": "First job starts", "description": "You start your first part-time job and can contribute $50/month.", "effect": { "cashFlow": 600, "forcedChoice": ["hold", "rebalance"] } },
-        { "id": "le2", "yearIndex": 7, "title": "Market downturn", "description": "The market drops 15%. Do you panic or hold?", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } }
+        { "id": "f1-le1", "yearIndex": 2, "title": "Gift from family", "description": "You receive a $300 gift for good grades.", "effect": { "cashFlow": 300, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "f1-le2", "yearIndex": 6, "title": "Textbook emergency", "description": "A required textbook costs $150. Withdraw or rebalance?", "effect": { "cashFlow": -150, "forcedChoice": ["rebalance", "withdraw"] } }
       ],
       "structuredDecisions": [],
-      "marketSeed": 42
+      "marketSeed": 100
+    },
+    {
+      "difficulty": "freshman",
+      "startingCash": 1500,
+      "timelineYears": 10,
+      "tickIntervalMs": 2000,
+      "lifeEvents": [
+        { "id": "f2-le1", "yearIndex": 1, "title": "Part-time job", "description": "You start tutoring and earn $100 per month.", "effect": { "cashFlow": 1200, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "f2-le2", "yearIndex": 8, "title": "Phone breaks", "description": "Your phone breaks and needs a $400 repair.", "effect": { "cashFlow": -400, "forcedChoice": ["rebalance", "withdraw"] } }
+      ],
+      "structuredDecisions": [],
+      "marketSeed": 200
+    },
+    {
+      "difficulty": "freshman",
+      "startingCash": 1200,
+      "timelineYears": 10,
+      "tickIntervalMs": 2000,
+      "lifeEvents": [
+        { "id": "f3-le1", "yearIndex": 4, "title": "Scholarship refund", "description": "You get a $500 scholarship refund.", "effect": { "cashFlow": 500, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "f3-le2", "yearIndex": 9, "title": "Car insurance hike", "description": "Your car insurance goes up by $200.", "effect": { "cashFlow": -200, "forcedChoice": ["rebalance", "withdraw"] } }
+      ],
+      "structuredDecisions": [],
+      "marketSeed": 300
     }
   ],
   "sophomore": [
     {
       "difficulty": "sophomore",
-      "startingCash": 3000,
+      "startingCash": 2000,
       "timelineYears": 15,
       "tickIntervalMs": 2500,
       "lifeEvents": [
-        { "id": "le1", "yearIndex": 2, "title": "Summer internship", "description": "You earn $3,000 over the summer. Invest it?", "effect": { "cashFlow": 3000, "forcedChoice": ["hold", "rebalance"] } },
-        { "id": "le2", "yearIndex": 5, "title": "Car repair needed", "description": "Your car needs $800 in repairs. Withdraw or rebalance?", "effect": { "cashFlow": -800, "forcedChoice": ["rebalance", "withdraw"] } },
-        { "id": "le3", "yearIndex": 10, "title": "Market boom", "description": "The market is up 25% this year. What do you do?", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "rebalance"] } }
+        { "id": "s1-le1", "yearIndex": 2, "title": "Summer job", "description": "You earn $2,500 at a summer job.", "effect": { "cashFlow": 2500, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "s1-le2", "yearIndex": 6, "title": "Laptop replacement", "description": "Your laptop dies. $1,200 for a new one.", "effect": { "cashFlow": -1200, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "s1-le3", "yearIndex": 11, "title": "Market rally", "description": "The market surges 20% this year. What do you do?", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "rebalance"] } }
       ],
       "structuredDecisions": [
-        { "id": "sd1", "yearIndex": 4, "prompt": "Your employer offers a 401k match of 50% up to 6% of salary. Do you contribute?", "options": [{ "label": "Contribute 6%", "correctness": 1.0 }, { "label": "Contribute 3%", "correctness": 0.5 }, { "label": "Don't contribute", "correctness": 0.0 }] }
+        { "id": "s1-sd1", "yearIndex": 4, "prompt": "Your employer offers a 401k match of 50% up to 6% of salary. Do you contribute?", "options": [{ "label": "Contribute 6%", "correctness": 1.0 }, { "label": "Contribute 3%", "correctness": 0.5 }, { "label": "Don't contribute", "correctness": 0.0 }] }
       ],
-      "marketSeed": 123
+      "marketSeed": 400
+    },
+    {
+      "difficulty": "sophomore",
+      "startingCash": 2800,
+      "timelineYears": 15,
+      "tickIntervalMs": 2500,
+      "lifeEvents": [
+        { "id": "s2-le1", "yearIndex": 1, "title": "Side hustle", "description": "You start a small online shop earning $150 per month.", "effect": { "cashFlow": 1800, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "s2-le2", "yearIndex": 7, "title": "Unexpected move", "description": "You need to move apartments. $900 in costs.", "effect": { "cashFlow": -900, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "s2-le3", "yearIndex": 13, "title": "Market correction", "description": "The market drops 10%. Hold or withdraw?", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "s2-sd1", "yearIndex": 5, "prompt": "You get a $500 bonus. What do you do?", "options": [{ "label": "Invest all of it", "correctness": 1.0 }, { "label": "Invest half, spend half", "correctness": 0.6 }, { "label": "Spend all of it", "correctness": 0.0 }] }
+      ],
+      "marketSeed": 500
+    },
+    {
+      "difficulty": "sophomore",
+      "startingCash": 3500,
+      "timelineYears": 15,
+      "tickIntervalMs": 2500,
+      "lifeEvents": [
+        { "id": "s3-le1", "yearIndex": 3, "title": "Research stipend", "description": "You win a $2,000 research stipend.", "effect": { "cashFlow": 2000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "s3-le2", "yearIndex": 8, "title": "Medical bill", "description": "You have a $600 medical expense.", "effect": { "cashFlow": -600, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "s3-le3", "yearIndex": 12, "title": "Bull market", "description": "The market is up 30% this year.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "rebalance"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "s3-sd1", "yearIndex": 9, "prompt": "A friend pitches a 'sure thing' crypto investment. What do you do?", "options": [{ "label": "Stick to your plan", "correctness": 1.0 }, { "label": "Invest a small amount", "correctness": 0.4 }, { "label": "Invest heavily", "correctness": 0.0 }] }
+      ],
+      "marketSeed": 600
     }
   ],
   "junior": [
     {
       "difficulty": "junior",
-      "startingCash": 5000,
+      "startingCash": 4000,
       "timelineYears": 20,
       "tickIntervalMs": 3000,
       "lifeEvents": [
-        { "id": "le1", "yearIndex": 1, "title": "First real job", "description": "You start your career with a $45k salary. You can invest $200/month.", "effect": { "cashFlow": 2400, "forcedChoice": ["hold", "rebalance"] } },
-        { "id": "le2", "yearIndex": 5, "title": "Medical emergency", "description": "Unexpected $2,000 medical bill. What do you do?", "effect": { "cashFlow": -2000, "forcedChoice": ["rebalance", "withdraw"] } },
-        { "id": "le3", "yearIndex": 8, "title": "Market crash", "description": "Major market crash. Your portfolio is down 30%.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
-        { "id": "le4", "yearIndex": 12, "title": "Promotion raise", "description": "You got promoted! You can increase contributions by $150/month.", "effect": { "cashFlow": 1800, "forcedChoice": ["hold", "rebalance"] } }
+        { "id": "j1-le1", "yearIndex": 1, "title": "First salary", "description": "You start earning $50k. Invest $250 per month.", "effect": { "cashFlow": 3000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "j1-le2", "yearIndex": 5, "title": "Emergency fund drain", "description": "Your car and fridge break at the same time. $3,000.", "effect": { "cashFlow": -3000, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "j1-le3", "yearIndex": 10, "title": "Recession hits", "description": "Market drops 25%. Hold or withdraw?", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
+        { "id": "j1-le4", "yearIndex": 16, "title": "Big raise", "description": "You get a promotion. Extra $200 per month to invest.", "effect": { "cashFlow": 2400, "forcedChoice": ["hold", "rebalance"] } }
       ],
       "structuredDecisions": [
-        { "id": "sd1", "yearIndex": 2, "prompt": "You receive a $1,000 bonus. What do you do?", "options": [{ "label": "Invest all of it", "correctness": 1.0 }, { "label": "Invest half, spend half", "correctness": 0.6 }, { "label": "Spend all of it", "correctness": 0.0 }] },
-        { "id": "sd2", "yearIndex": 6, "prompt": "A friend recommends a 'hot stock' guaranteed to double. What do you do?", "options": [{ "label": "Stick to your plan", "correctness": 1.0 }, { "label": "Invest a small amount", "correctness": 0.4 }, { "label": "Invest heavily", "correctness": 0.0 }] }
+        { "id": "j1-sd1", "yearIndex": 3, "prompt": "You receive a $2,000 bonus. What do you do?", "options": [{ "label": "Invest all of it", "correctness": 1.0 }, { "label": "Invest half, spend half", "correctness": 0.6 }, { "label": "Spend all of it", "correctness": 0.0 }] },
+        { "id": "j1-sd2", "yearIndex": 8, "prompt": "Should you open a Roth IRA or Traditional IRA?", "options": [{ "label": "Roth IRA (pay taxes now)", "correctness": 0.9 }, { "label": "Traditional IRA (defer taxes)", "correctness": 0.7 }, { "label": "Neither", "correctness": 0.0 }] }
       ],
-      "marketSeed": 777
+      "marketSeed": 700
+    },
+    {
+      "difficulty": "junior",
+      "startingCash": 5500,
+      "timelineYears": 20,
+      "tickIntervalMs": 3000,
+      "lifeEvents": [
+        { "id": "j2-le1", "yearIndex": 2, "title": "Freelance gig", "description": "You land a freelance contract worth $4,000.", "effect": { "cashFlow": 4000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "j2-le2", "yearIndex": 6, "title": "Student loan payment starts", "description": "You must start paying $200 per month.", "effect": { "cashFlow": -2400, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "j2-le3", "yearIndex": 11, "title": "Tech bubble burst", "description": "Your tech-heavy portfolio drops 35%.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
+        { "id": "j2-le4", "yearIndex": 17, "title": "Stock options vest", "description": "Your startup stock options vest. $5,000 value.", "effect": { "cashFlow": 5000, "forcedChoice": ["hold", "rebalance"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "j2-sd1", "yearIndex": 4, "prompt": "A coworker recommends a 'hot stock' guaranteed to double. What do you do?", "options": [{ "label": "Stick to your plan", "correctness": 1.0 }, { "label": "Invest a small amount", "correctness": 0.4 }, { "label": "Invest heavily", "correctness": 0.0 }] },
+        { "id": "j2-sd2", "yearIndex": 13, "prompt": "Your portfolio is 90% stocks at age 35. Should you rebalance?", "options": [{ "label": "Shift to 70/30 stocks/bonds", "correctness": 1.0 }, { "label": "Keep 90/10", "correctness": 0.5 }, { "label": "Go 100% bonds", "correctness": 0.2 }] }
+      ],
+      "marketSeed": 800
+    },
+    {
+      "difficulty": "junior",
+      "startingCash": 6000,
+      "timelineYears": 20,
+      "tickIntervalMs": 3000,
+      "lifeEvents": [
+        { "id": "j3-le1", "yearIndex": 1, "title": "Signing bonus", "description": "You get a $3,000 signing bonus at your new job.", "effect": { "cashFlow": 3000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "j3-le2", "yearIndex": 5, "title": "Wedding expense", "description": "Your best friend's wedding costs $1,500 in travel and gifts.", "effect": { "cashFlow": -1500, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "j3-le3", "yearIndex": 9, "title": "Market volatility", "description": "Market swings wildly. Stay the course?", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
+        { "id": "j3-le4", "yearIndex": 14, "title": "Side business income", "description": "Your side business earns $2,000 profit.", "effect": { "cashFlow": 2000, "forcedChoice": ["hold", "rebalance"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "j3-sd1", "yearIndex": 7, "prompt": "You have $1,000 extra this month. What do you do?", "options": [{ "label": "Add to investments", "correctness": 1.0 }, { "label": "Split between invest and save", "correctness": 0.7 }, { "label": "Spend it", "correctness": 0.0 }] },
+        { "id": "j3-sd2", "yearIndex": 18, "prompt": "You inherit $10,000. How do you handle it?", "options": [{ "label": "Invest in diversified index funds", "correctness": 1.0 }, { "label": "Buy individual stocks", "correctness": 0.5 }, { "label": "Leave it in savings", "correctness": 0.3 }] }
+      ],
+      "marketSeed": 900
     }
   ],
   "senior": [
+    {
+      "difficulty": "senior",
+      "startingCash": 8000,
+      "timelineYears": 30,
+      "tickIntervalMs": 3600,
+      "lifeEvents": [
+        { "id": "sr1-le1", "yearIndex": 2, "title": "Home savings goal", "description": "You need $25,000 for a down payment in 4 years.", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "sr1-le2", "yearIndex": 5, "title": "Job loss", "description": "Laid off. Need 6 months of expenses ($10,000).", "effect": { "cashFlow": -10000, "forcedChoice": ["withdraw", "rebalance"] } },
+        { "id": "sr1-le3", "yearIndex": 10, "title": "Long recession", "description": "Portfolio down 20% over 2 years.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
+        { "id": "sr1-le4", "yearIndex": 16, "title": "New baby", "description": "Growing family. $6,000 in new expenses.", "effect": { "cashFlow": -6000, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "sr1-le5", "yearIndex": 22, "title": "Inheritance", "description": "You inherit $20,000.", "effect": { "cashFlow": 20000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "sr1-le6", "yearIndex": 27, "title": "Pre-retirement", "description": "3 years to retirement. De-risk?", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "hold"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "sr1-sd1", "yearIndex": 1, "prompt": "Employer offers 401k match: 100% up to 5%. Contribute?", "options": [{ "label": "Max out the match (5%)", "correctness": 1.0 }, { "label": "Contribute 3%", "correctness": 0.6 }, { "label": "Skip it", "correctness": 0.0 }] },
+        { "id": "sr1-sd2", "yearIndex": 8, "prompt": "Should you open a Roth IRA or Traditional IRA?", "options": [{ "label": "Roth IRA (pay taxes now)", "correctness": 0.9 }, { "label": "Traditional IRA (defer taxes)", "correctness": 0.7 }, { "label": "Neither", "correctness": 0.0 }] },
+        { "id": "sr1-sd3", "yearIndex": 14, "prompt": "Your portfolio is 80% stocks at age 45. Should you rebalance?", "options": [{ "label": "Shift to 60/40 stocks/bonds", "correctness": 1.0 }, { "label": "Keep 80/20", "correctness": 0.5 }, { "label": "Go 100% bonds", "correctness": 0.2 }] },
+        { "id": "sr1-sd4", "yearIndex": 24, "prompt": "Should you pay off mortgage early or invest extra?", "options": [{ "label": "Invest extra (higher expected return)", "correctness": 0.8 }, { "label": "Pay off mortgage (guaranteed return)", "correctness": 0.7 }, { "label": "Spend the extra money", "correctness": 0.0 }] }
+      ],
+      "marketSeed": 1000
+    },
     {
       "difficulty": "senior",
       "startingCash": 10000,
       "timelineYears": 30,
       "tickIntervalMs": 3600,
       "lifeEvents": [
-        { "id": "le1", "yearIndex": 2, "title": "First home down payment", "description": "You're saving for a house. Need $20,000 in 3 years.", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "withdraw"] } },
-        { "id": "le2", "yearIndex": 5, "title": "You got laid off", "description": "Unexpected job loss. 6 months of expenses needed.", "effect": { "cashFlow": -8000, "forcedChoice": ["withdraw", "rebalance"] } },
-        { "id": "le3", "yearIndex": 10, "title": "Market recession", "description": "Extended recession. Portfolio down 20% over 2 years.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
-        { "id": "le4", "yearIndex": 15, "title": "Child on the way", "description": "Growing family. Need to rebalance for stability.", "effect": { "cashFlow": -5000, "forcedChoice": ["rebalance", "withdraw"] } },
-        { "id": "le5", "yearIndex": 20, "title": "Inheritance received", "description": "You inherit $25,000. How do you invest it?", "effect": { "cashFlow": 25000, "forcedChoice": ["hold", "rebalance"] } },
-        { "id": "le6", "yearIndex": 25, "title": "Pre-retirement check", "description": "5 years to retirement. Time to de-risk?", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "hold"] } }
+        { "id": "sr2-le1", "yearIndex": 3, "title": "Buy a home", "description": "You need $30,000 for a down payment soon.", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "sr2-le2", "yearIndex": 6, "title": "Medical emergency", "description": "Major surgery costs $8,000 out of pocket.", "effect": { "cashFlow": -8000, "forcedChoice": ["withdraw", "rebalance"] } },
+        { "id": "sr2-le3", "yearIndex": 12, "title": "Bear market", "description": "Market drops 30% over a year.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
+        { "id": "sr2-le4", "yearIndex": 18, "title": "College fund", "description": "You need to start a college fund. $5,000 initial.", "effect": { "cashFlow": -5000, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "sr2-le5", "yearIndex": 25, "title": "Inheritance", "description": "You inherit $30,000 from a relative.", "effect": { "cashFlow": 30000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "sr2-le6", "yearIndex": 28, "title": "Near retirement", "description": "2 years to retirement. Final allocation check.", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "hold"] } }
       ],
       "structuredDecisions": [
-        { "id": "sd1", "yearIndex": 1, "prompt": "Employer offers 401k match: 100% up to 5%. Contribute?", "options": [{ "label": "Max out the match (5%)", "correctness": 1.0 }, { "label": "Contribute 3%", "correctness": 0.6 }, { "label": "Skip it", "correctness": 0.0 }] },
-        { "id": "sd2", "yearIndex": 8, "prompt": "Should you open a Roth IRA or Traditional IRA?", "options": [{ "label": "Roth IRA (pay taxes now)", "correctness": 0.9 }, { "label": "Traditional IRA (defer taxes)", "correctness": 0.7 }, { "label": "Neither", "correctness": 0.0 }] },
-        { "id": "sd3", "yearIndex": 14, "prompt": "Your portfolio is 80% stocks at age 40. Should you rebalance?", "options": [{ "label": "Shift to 60/40 stocks/bonds", "correctness": 1.0 }, { "label": "Keep 80/20", "correctness": 0.5 }, { "label": "Go 100% bonds", "correctness": 0.2 }] },
-        { "id": "sd4", "yearIndex": 22, "prompt": "Should you pay off mortgage early or invest extra?", "options": [{ "label": "Invest extra (higher expected return)", "correctness": 0.8 }, { "label": "Pay off mortgage (guaranteed return)", "correctness": 0.7 }, { "label": "Spend the extra money", "correctness": 0.0 }] }
+        { "id": "sr2-sd1", "yearIndex": 2, "prompt": "Employer offers 401k match: 50% up to 6%. Contribute?", "options": [{ "label": "Max out the match (6%)", "correctness": 1.0 }, { "label": "Contribute 3%", "correctness": 0.5 }, { "label": "Skip it", "correctness": 0.0 }] },
+        { "id": "sr2-sd2", "yearIndex": 9, "prompt": "Should you open a Roth IRA or Traditional IRA?", "options": [{ "label": "Roth IRA (pay taxes now)", "correctness": 0.9 }, { "label": "Traditional IRA (defer taxes)", "correctness": 0.7 }, { "label": "Neither", "correctness": 0.0 }] },
+        { "id": "sr2-sd3", "yearIndex": 15, "prompt": "Your portfolio is 75% stocks at age 50. Should you rebalance?", "options": [{ "label": "Shift to 50/50 stocks/bonds", "correctness": 1.0 }, { "label": "Keep 75/25", "correctness": 0.5 }, { "label": "Go 100% bonds", "correctness": 0.2 }] },
+        { "id": "sr2-sd4", "yearIndex": 22, "prompt": "Should you pay off mortgage early or invest extra?", "options": [{ "label": "Invest extra (higher expected return)", "correctness": 0.8 }, { "label": "Pay off mortgage (guaranteed return)", "correctness": 0.7 }, { "label": "Spend the extra money", "correctness": 0.0 }] }
       ],
-      "marketSeed": 2025
+      "marketSeed": 1100
+    },
+    {
+      "difficulty": "senior",
+      "startingCash": 12000,
+      "timelineYears": 30,
+      "tickIntervalMs": 3600,
+      "lifeEvents": [
+        { "id": "sr3-le1", "yearIndex": 2, "title": "Dream home", "description": "Saving for a $40,000 down payment.", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "sr3-le2", "yearIndex": 5, "title": "Job transition", "description": "You switch jobs. 3 months gap = $9,000 needed.", "effect": { "cashFlow": -9000, "forcedChoice": ["withdraw", "rebalance"] } },
+        { "id": "sr3-le3", "yearIndex": 11, "title": "Market crash", "description": "Global crisis. Portfolio down 35%.", "effect": { "cashFlow": 0, "forcedChoice": ["hold", "withdraw"] } },
+        { "id": "sr3-le4", "yearIndex": 17, "title": "Second child", "description": "Family grows. $7,000 in costs.", "effect": { "cashFlow": -7000, "forcedChoice": ["rebalance", "withdraw"] } },
+        { "id": "sr3-le5", "yearIndex": 23, "title": "Windfall", "description": "You sell a side business for $25,000.", "effect": { "cashFlow": 25000, "forcedChoice": ["hold", "rebalance"] } },
+        { "id": "sr3-le6", "yearIndex": 29, "title": "Retirement year", "description": "Final year before retirement. Secure allocation?", "effect": { "cashFlow": 0, "forcedChoice": ["rebalance", "hold"] } }
+      ],
+      "structuredDecisions": [
+        { "id": "sr3-sd1", "yearIndex": 1, "prompt": "Employer offers 401k match: 100% up to 4%. Contribute?", "options": [{ "label": "Max out the match (4%)", "correctness": 1.0 }, { "label": "Contribute 2%", "correctness": 0.5 }, { "label": "Skip it", "correctness": 0.0 }] },
+        { "id": "sr3-sd2", "yearIndex": 7, "prompt": "Should you open a Roth IRA or Traditional IRA?", "options": [{ "label": "Roth IRA (pay taxes now)", "correctness": 0.9 }, { "label": "Traditional IRA (defer taxes)", "correctness": 0.7 }, { "label": "Neither", "correctness": 0.0 }] },
+        { "id": "sr3-sd3", "yearIndex": 14, "prompt": "Your portfolio is 85% stocks at age 42. Should you rebalance?", "options": [{ "label": "Shift to 65/35 stocks/bonds", "correctness": 1.0 }, { "label": "Keep 85/15", "correctness": 0.5 }, { "label": "Go 100% bonds", "correctness": 0.2 }] },
+        { "id": "sr3-sd4", "yearIndex": 20, "prompt": "Should you pay off mortgage early or invest extra?", "options": [{ "label": "Invest extra (higher expected return)", "correctness": 0.8 }, { "label": "Pay off mortgage (guaranteed return)", "correctness": 0.7 }, { "label": "Spend the extra money", "correctness": 0.0 }] }
+      ],
+      "marketSeed": 1200
     }
   ]
 }
